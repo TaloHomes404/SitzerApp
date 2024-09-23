@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Sitzer</string>
+    <string name="title_activity_register_screen">RegisterScreen</string>
+    <string name="welcome_screen_desc">Transform your sitting habits and improve your posture with our easy-to-follow exercises and reminders. App empowers you to take control of your health, ensuring you feel energized and aligned throughout the day. \n \nJoin us on the journey to a healthier, more active lifestyle—your spine will thank you!</string>
+    <string name="title_activity_login_screen">LoginScreen</string>
+    <string name="title_activity_google_button">GoogleButton</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="title_activity_workout_screen">WorkoutScreen</string>
+    <string name="title_activity_exercise_pick_screen">ExercisePickScreen</string>
+    <string name="plank_desc">The plank is a core-strengthening exercise that targets multiple muscle groups, including the abs, back, shoulders, and legs. To perform a plank, lie face down, then lift your body onto your forearms and toes, keeping your body straight from head to heels. Engage your core and hold this position without sagging your back or raising your hips.</string>
+    <string name="title_activity_profile_screen">ProfileScreen</string>
+</resources>
