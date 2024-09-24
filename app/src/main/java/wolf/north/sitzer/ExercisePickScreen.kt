@@ -139,7 +139,7 @@ fun ExercisePickScreen() {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "1 Set - 40 seconds",
+                        text = "1 Set - 60 seconds",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium
                     )

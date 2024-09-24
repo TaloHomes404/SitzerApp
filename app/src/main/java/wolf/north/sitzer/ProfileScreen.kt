@@ -69,17 +69,17 @@ fun UserProfileScreen() {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         // Duże zdjęcie użytkownika w formie koła
                         Image(
-                            painter = painterResource(id = R.drawable.profilepfp), // Wstaw własny obrazek
+                            painter = painterResource(id = R.drawable.pfpp), // Wstaw własny obrazek
                             contentDescription = null,
                             modifier = Modifier
-                                .size(80.dp) // Rozmiar zdjęcia
+                                .size(70.dp) // Rozmiar zdjęcia
                                 .clip(CircleShape), // Zaokrąglone zdjęcie
-                            contentScale = ContentScale.Fit
+
                         )
                         Spacer(modifier = Modifier.width(16.dp))
                         Column {
                             Text(
-                                text = "Hello, User name",
+                                text = "Hello, User name!",
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White
@@ -103,7 +103,7 @@ fun UserProfileScreen() {
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = colorResource(id = R.color.welcome_screen_bg) // Zmień na żądany kolor
-                )
+                ), expandedHeight = 75.dp
             )
         },
         content = { paddingValues ->
