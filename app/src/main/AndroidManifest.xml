@@ -13,42 +13,7 @@
         android:theme="@style/Theme.Sitzer"
         tools:targetApi="31">
         <activity
-            android:name=".ProfileScreen"
-            android:exported="false"
-            android:label="@string/title_activity_profile_screen"
-            android:theme="@style/Theme.Sitzer" />
-        <activity
-            android:name=".ExercisePickScreen"
-            android:exported="false"
-            android:label="@string/title_activity_exercise_pick_screen"
-            android:theme="@style/Theme.Sitzer" />
-        <activity
-            android:name=".WorkoutScreen"
-            android:exported="false"
-            android:label="@string/title_activity_workout_screen"
-            android:theme="@style/Theme.Sitzer" />
-        <activity
-            android:name=".HomeScreen"
-            android:exported="false"
-            android:label="@string/title_activity_home_screen"
-            android:theme="@style/Theme.Sitzer" />
-        <activity
-            android:name=".comps.GoogleButton"
-            android:exported="false"
-            android:label="@string/title_activity_google_button"
-            android:theme="@style/Theme.Sitzer" />
-        <activity
-            android:name=".LoginScreen"
-            android:exported="false"
-            android:label="@string/title_activity_login_screen"
-            android:theme="@style/Theme.Sitzer" />
-        <activity
-            android:name=".RegisterScreen"
-            android:exported="false"
-            android:label="@string/title_activity_register_screen"
-            android:theme="@style/Theme.Sitzer" />
-        <activity
-            android:name=".MainActivity"
+            android:name="wolf.north.sitzer.mvvm.view.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Sitzer">
