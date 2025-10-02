@@ -32,7 +32,7 @@ import wolf.north.sitzer.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WorkoutSelectionScreen() {
+fun HomeScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -256,5 +256,5 @@ fun WorkoutCardSecond(imageRes: Int, title: String) {
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewWorkoutSelectionScreen() {
-    WorkoutSelectionScreen()
+    HomeScreen()
 }

@@ -54,7 +54,7 @@ import wolf.north.sitzer.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserProfileScreen() {
+fun ProfileScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -344,5 +344,5 @@ fun SimpleBarChart() {
 @Preview(showSystemUi = true)
 @Composable
 fun UserProfileScreenPreview() {
-    UserProfileScreen()
+    ProfileScreen()
 }

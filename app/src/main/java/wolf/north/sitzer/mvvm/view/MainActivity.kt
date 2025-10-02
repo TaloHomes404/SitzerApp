@@ -30,18 +30,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import wolf.north.sitzer.R
+import wolf.north.sitzer.navigation.AppNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WelcomeScreen()
+            AppNavigation()
         }
     }
 }
 
 @Composable
-fun WelcomeScreen() {
+fun SplashScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -130,6 +131,6 @@ fun WelcomeScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun WelcomeScreenPreview() {
-    WelcomeScreen()
+    SplashScreen()
 }
 
