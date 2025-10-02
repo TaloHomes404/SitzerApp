@@ -1,4 +1,4 @@
-package wolf.north.sitzer
+package wolf.north.sitzer.mvvm.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

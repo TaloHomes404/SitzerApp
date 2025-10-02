@@ -1,4 +1,4 @@
-package wolf.north.sitzer
+package wolf.north.sitzer.mvvm.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
