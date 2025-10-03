@@ -39,17 +39,22 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.GoogleButton
+import wolf.north.sitzer.mvvm.viewmodel.LoginScreenViewModel
 import wolf.north.sitzer.navigation.Screens
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen( navController: NavHostController = rememberNavController()) {
+fun LoginScreen(
+    navController: NavHostController = rememberNavController(),
+    viewModel: LoginScreenViewModel = hiltViewModel()
+) {
     Scaffold(
         topBar = {
             Column {
@@ -89,7 +94,6 @@ fun LoginScreen( navController: NavHostController = rememberNavController()) {
 
 
             Spacer(modifier = Modifier.height(16.dp))
-            // Container na białym tle z zaokrąglonymi rogami
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -114,23 +118,23 @@ fun LoginScreen( navController: NavHostController = rememberNavController()) {
                         modifier = Modifier.padding(bottom = 32.dp)
                     )
 
-                    // Pola tekstowe
+                    //Email text field
                     OutlinedTextField(
-                        value = "E-mail",
-                        onValueChange = {  },
+                        value = viewModel.email,
+                        onValueChange = viewModel::changeEmail,
                         leadingIcon = {
                             Icon(Icons.Default.Email, contentDescription = null)
                         },
-                        label = { Text(text = "Email") },
-                        placeholder = { Text(text = "abc@gmail.com") },
+                        label = { Text("Email") },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
                     )
 
+                    //Password Text field
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = {  },
+                        value = viewModel.password,
+                        onValueChange = viewModel::changePassword,
                         leadingIcon = {
                             Icon(Icons.Default.Key, contentDescription = null)
                         },
@@ -138,7 +142,6 @@ fun LoginScreen( navController: NavHostController = rememberNavController()) {
                             Icon(Icons.Default.VisibilityOff, contentDescription = null)
                         },
                         label = { Text(text = "Password") },
-                        placeholder = { Text(text = "*******") },
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         modifier = Modifier
@@ -157,13 +160,16 @@ fun LoginScreen( navController: NavHostController = rememberNavController()) {
 
                     // Przycisk logowania
                     ElevatedButton(
-                        onClick = { navController.navigate(Screens.Register) },
+                        onClick = {
+                            viewModel.login()
+                            navController.navigate(Screens.Register)
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
                         modifier = Modifier
-                            .fillMaxWidth(0.5f) // Zmniejszenie szerokości przycisku
+                            .fillMaxWidth(0.5f)
                             .padding(top = 36.dp)
                             .height(48.dp),
-                        shape = RoundedCornerShape(24.dp) // Zaokrąglone krawędzie
+                        shape = RoundedCornerShape(24.dp)
                     ) {
                         Text(text = "Sign in", fontSize = 24.sp)
                     }

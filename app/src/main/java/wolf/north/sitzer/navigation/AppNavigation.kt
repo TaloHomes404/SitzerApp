@@ -19,10 +19,14 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
     NavHost(
         navController = navController,
         startDestination = Screens.SplashScreen
-    ){
+    ) {
         composable(Screens.Exercises) { ExercisePickScreen(navController = navController) }
         composable(Screens.Home) { HomeScreen(navController = navController) }
-        composable(Screens.Login) { LoginScreen(navController = navController) }
+        composable(Screens.Login) {
+            LoginScreen(
+                navController = navController
+            )
+        }
         composable(Screens.Register) { RegisterScreen(navController = navController) }
         composable(Screens.Workout) { WorkoutScreen(navController = navController) }
         composable(Screens.Profile) { ProfileScreen(navController = navController) }

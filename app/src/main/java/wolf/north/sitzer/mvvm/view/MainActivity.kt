@@ -35,10 +35,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import wolf.north.sitzer.R
 import wolf.north.sitzer.navigation.AppNavigation
 import wolf.north.sitzer.navigation.Screens
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun SplashScreen( navController: NavHostController  = rememberNavController() ) {
+fun SplashScreen(navController: NavHostController = rememberNavController()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -105,9 +107,11 @@ fun SplashScreen( navController: NavHostController  = rememberNavController() ) 
             Spacer(modifier = Modifier.weight(1f)) // Wypełnia przestrzeń, aby przycisk był na dole
 
             Button(
-                onClick = { navController.navigate(Screens.Login ) {
-                    popUpTo(Screens.SplashScreen) {inclusive = true}
-                } },
+                onClick = {
+                    navController.navigate(Screens.Login) {
+                        popUpTo(Screens.SplashScreen) { inclusive = true }
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)), // przycisk fioletowy
                 shape = RoundedCornerShape(10.dp), // zaokrąglenie przycisku
                 modifier = Modifier
