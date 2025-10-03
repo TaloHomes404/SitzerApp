@@ -28,10 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,18 +39,20 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.GoogleButton
+import wolf.north.sitzer.navigation.Screens
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen( navController: NavHostController = rememberNavController()) {
     Scaffold(
         topBar = {
             Column {
-                // Pierwszy biały pasek z napisem "Coffee"
                 TopAppBar(
                     title = {
                         Text(text = "Posture Training", fontSize = 28.sp, color = Color.Black)
@@ -63,7 +61,6 @@ fun LoginScreen() {
                         containerColor = Color.White
                     )
                 )
-                // Czarny pasek z napisem "house"
                 TopAppBar(
                     title = {
                         Text(
@@ -89,8 +86,6 @@ fun LoginScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
 
             ) {
-            var email by remember { mutableStateOf("") }
-            var password by remember { mutableStateOf("") }
 
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -121,8 +116,8 @@ fun LoginScreen() {
 
                     // Pola tekstowe
                     OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
+                        value = "E-mail",
+                        onValueChange = {  },
                         leadingIcon = {
                             Icon(Icons.Default.Email, contentDescription = null)
                         },
@@ -134,8 +129,8 @@ fun LoginScreen() {
                     )
 
                     OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
+                        value = "",
+                        onValueChange = {  },
                         leadingIcon = {
                             Icon(Icons.Default.Key, contentDescription = null)
                         },
@@ -162,7 +157,7 @@ fun LoginScreen() {
 
                     // Przycisk logowania
                     ElevatedButton(
-                        onClick = { /* Action */ },
+                        onClick = { navController.navigate(Screens.Register) },
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
                         modifier = Modifier
                             .fillMaxWidth(0.5f) // Zmniejszenie szerokości przycisku

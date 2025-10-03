@@ -6,16 +6,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowRightAlt
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,8 +33,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.navigation.AppNavigation
+import wolf.north.sitzer.navigation.Screens
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +49,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen( navController: NavHostController  = rememberNavController() ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -98,7 +105,9 @@ fun SplashScreen() {
             Spacer(modifier = Modifier.weight(1f)) // Wypełnia przestrzeń, aby przycisk był na dole
 
             Button(
-                onClick = { /* Action */ },
+                onClick = { navController.navigate(Screens.Login ) {
+                    popUpTo(Screens.SplashScreen) {inclusive = true}
+                } },
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)), // przycisk fioletowy
                 shape = RoundedCornerShape(10.dp), // zaokrąglenie przycisku
                 modifier = Modifier
@@ -130,7 +139,7 @@ fun SplashScreen() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun WelcomeScreenPreview() {
+fun SplashScreenPreview() {
     SplashScreen()
 }
 

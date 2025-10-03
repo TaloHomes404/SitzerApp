@@ -50,11 +50,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
+import wolf.north.sitzer.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(  navController: NavHostController = rememberNavController()) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -66,7 +69,7 @@ fun ProfileScreen() {
                             contentDescription = null,
                             modifier = Modifier
                                 .size(70.dp) // Rozmiar zdjęcia
-                                .clip(CircleShape), // Zaokrąglone zdjęcie
+                                .clip(CircleShape).padding(), // Zaokrąglone zdjęcie
 
                         )
                         Spacer(modifier = Modifier.width(16.dp))
@@ -274,14 +277,14 @@ fun ProfileScreen() {
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(onClick = { /* Handle Menu click */ }) {
+                    IconButton(onClick = { navController.navigate(Screens.Home) }) {
                         Icon(
                             imageVector = Icons.Outlined.Menu,
                             contentDescription = "Menu",
                             tint = Color.Gray
                         )
                     }
-                    IconButton(onClick = { /* Handle Favorite click */ }) {
+                    IconButton(onClick = { navController.navigate(Screens.Workout)}) {
                         Icon(
                             imageVector = Icons.Outlined.Timer,
                             contentDescription = "Favorite",

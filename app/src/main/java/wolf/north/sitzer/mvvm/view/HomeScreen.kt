@@ -28,11 +28,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
+import wolf.north.sitzer.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(  navController: NavHostController = rememberNavController()) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -155,18 +158,18 @@ fun HomeScreen() {
                             tint = Color.White
                         )
                     }
-                    IconButton(onClick = { /* Handle Favorite click */ }) {
+                    IconButton(onClick = { navController.navigate(Screens.Workout) }) {
                         Icon(
                             imageVector = Icons.Outlined.Timer,
                             contentDescription = "Favorite",
                             tint = Color.Gray
                         )
                     }
-                    IconButton(onClick = { /* Handle Profile click */ }) {
+                    IconButton(onClick = { navController.navigate(Screens.Profile) }) {
                         Icon(
                             imageVector = Icons.Outlined.Person,
                             contentDescription = "Profile",
-                            tint = Color.Gray
+                            tint = Color.Gray,
                         )
                     }
                 }

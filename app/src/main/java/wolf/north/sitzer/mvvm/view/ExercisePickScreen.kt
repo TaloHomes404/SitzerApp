@@ -41,12 +41,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import wolf.north.sitzer.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExercisePickScreen() {
+fun ExercisePickScreen( navController: NavHostController = rememberNavController()) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -145,7 +147,7 @@ fun ExercisePickScreen() {
 
 @Preview(showSystemUi = true)
 @Composable
-fun ExercisePickScreenPreviev() {
+fun ExercisePickScreenPreview() {
     ExercisePickScreen()
 }
 
