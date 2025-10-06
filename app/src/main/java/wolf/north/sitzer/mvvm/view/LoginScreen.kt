@@ -44,8 +44,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.GoogleButton
+import wolf.north.sitzer.database.UserDao
 import wolf.north.sitzer.mvvm.viewmodel.LoginScreenViewModel
 import wolf.north.sitzer.navigation.Screens
+import wolf.north.sitzer.repository.UserRepository
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -188,8 +190,10 @@ fun LoginScreen(
 }
 
 
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, apiLevel = 34)
 @Composable
 fun LoginScreenPreview() {
     LoginScreen()
 }
+
+

@@ -32,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,9 +48,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
+import wolf.north.sitzer.mvvm.viewmodel.RegisterScreenViewModel
+import wolf.north.sitzer.navigation.Screens
 
 /*
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -182,7 +186,18 @@ fun RegisterScreen() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen( navController: NavHostController = rememberNavController() ) {
+fun RegisterScreen(
+    navController: NavHostController = rememberNavController(),
+    viewModel: RegisterScreenViewModel = hiltViewModel()
+) {
+    // Uruchamianie sekwencji jeżeli rejestracja się powiodła
+    LaunchedEffect(viewModel.registrationSuccess) {
+        if (viewModel.registrationSuccess) {
+            navController.navigate(Screens.Home) {
+                popUpTo(Screens.Register) { inclusive = true }
+            }
+        }
+    }
     Scaffold(
         topBar = {
             Column {
@@ -334,7 +349,8 @@ fun RegisterScreen( navController: NavHostController = rememberNavController() )
                             modifier = Modifier
                                 .fillMaxWidth(0.5f) // Zmniejszenie szerokości przycisku
                                 .padding(top = 8.dp)
-                                .height(48.dp).align(Alignment.CenterHorizontally),
+                                .height(48.dp)
+                                .align(Alignment.CenterHorizontally),
                             shape = RoundedCornerShape(24.dp) // Zaokrąglone krawędzie
                         ) {
                             Text(text = "Register", fontSize = 20.sp)
