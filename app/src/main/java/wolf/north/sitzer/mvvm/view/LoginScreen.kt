@@ -2,6 +2,7 @@ package wolf.north.sitzer.mvvm.view
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,10 +45,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.GoogleButton
-import wolf.north.sitzer.database.UserDao
 import wolf.north.sitzer.mvvm.viewmodel.LoginScreenViewModel
 import wolf.north.sitzer.navigation.Screens
-import wolf.north.sitzer.repository.UserRepository
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -154,17 +153,23 @@ fun LoginScreen(
                     // Linki pod formularzem
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
+                        horizontalArrangement = Arrangement.SpaceBetween,
+
+                        ) {
                         Text(text = "Forgot password?", color = Color.Gray)
-                        Text(text = "Create an account", color = Color.Gray)
+                        //Login screen text for creating new account
+                        Text(
+                            text = "Create an account",
+                            color = Color.Gray,
+                            modifier = Modifier.clickable {
+                                navController.navigate(Screens.Register)
+                            })
                     }
 
                     // Przycisk logowania
                     ElevatedButton(
                         onClick = {
                             viewModel.login()
-                            navController.navigate(Screens.Register)
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
                         modifier = Modifier
