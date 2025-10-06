@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,6 +57,15 @@ fun LoginScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: LoginScreenViewModel = hiltViewModel()
 ) {
+
+    //Inicjacja nawigacji gdy logowanie sie powiedzie
+    LaunchedEffect(viewModel.loginSuccess) {
+        if (viewModel.loginSuccess) {
+            navController.navigate(Screens.Home) { popUpTo(Screens.Login) { inclusive = true } }
+        }
+    }
+
+
     Scaffold(
         topBar = {
             Column {
@@ -119,6 +129,13 @@ fun LoginScreen(
                         modifier = Modifier.padding(bottom = 32.dp)
                     )
 
+                    Text(
+                        text = viewModel.errorMessage,
+                        fontSize = 22.sp,
+                        color = Color.Red,
+                        fontWeight = FontWeight.Bold,
+                    )
+
                     //Email text field
                     OutlinedTextField(
                         value = viewModel.email,
@@ -156,7 +173,11 @@ fun LoginScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
 
                         ) {
-                        Text(text = "Forgot password?", color = Color.Gray)
+                        Text(
+                            text = "Forgot password?",
+                            color = Color.Gray
+                        ) //TODO: zaimplementowac funkcje przywracania hasła
+
                         //Login screen text for creating new account
                         Text(
                             text = "Create an account",
@@ -187,7 +208,7 @@ fun LoginScreen(
                         horizontalArrangement = Arrangement.Center
                     ) {
                     }
-                    GoogleButton()
+                    GoogleButton() //TODO: zaimplementowac logowanie przez google
                 }
             }
         }
