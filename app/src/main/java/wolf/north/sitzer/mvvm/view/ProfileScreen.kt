@@ -1,8 +1,5 @@
-package wolf.north.sitzer
+package wolf.north.sitzer.mvvm.view
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircleOutline
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.NotificationAdd
 import androidx.compose.material.icons.filled.Person
@@ -34,9 +30,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -50,18 +44,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import wolf.north.sitzer.ui.theme.SitzerTheme
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import wolf.north.sitzer.R
+import wolf.north.sitzer.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserProfileScreen() {
+fun ProfileScreen(  navController: NavHostController = rememberNavController()) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -73,7 +69,7 @@ fun UserProfileScreen() {
                             contentDescription = null,
                             modifier = Modifier
                                 .size(70.dp) // Rozmiar zdjęcia
-                                .clip(CircleShape), // Zaokrąglone zdjęcie
+                                .clip(CircleShape).padding(), // Zaokrąglone zdjęcie
 
                         )
                         Spacer(modifier = Modifier.width(16.dp))
@@ -281,14 +277,14 @@ fun UserProfileScreen() {
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(onClick = { /* Handle Menu click */ }) {
+                    IconButton(onClick = { navController.navigate(Screens.Home) }) {
                         Icon(
                             imageVector = Icons.Outlined.Menu,
                             contentDescription = "Menu",
                             tint = Color.Gray
                         )
                     }
-                    IconButton(onClick = { /* Handle Favorite click */ }) {
+                    IconButton(onClick = { navController.navigate(Screens.Workout)}) {
                         Icon(
                             imageVector = Icons.Outlined.Timer,
                             contentDescription = "Favorite",
@@ -351,5 +347,5 @@ fun SimpleBarChart() {
 @Preview(showSystemUi = true)
 @Composable
 fun UserProfileScreenPreview() {
-    UserProfileScreen()
+    ProfileScreen()
 }

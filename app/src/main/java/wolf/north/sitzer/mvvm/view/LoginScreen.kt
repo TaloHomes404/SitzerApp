@@ -1,10 +1,8 @@
-package wolf.north.sitzer
+package wolf.north.sitzer.mvvm.view
 
 import android.annotation.SuppressLint
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,30 +13,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,22 +38,37 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.GoogleButton
-import wolf.north.sitzer.ui.theme.SitzerTheme
+import wolf.north.sitzer.mvvm.viewmodel.LoginScreenViewModel
+import wolf.north.sitzer.navigation.Screens
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navController: NavHostController = rememberNavController(),
+    viewModel: LoginScreenViewModel = hiltViewModel()
+) {
+
+    //Inicjacja nawigacji gdy logowanie sie powiedzie
+    LaunchedEffect(viewModel.loginSuccess) {
+        if (viewModel.loginSuccess) {
+            navController.navigate(Screens.Home) { popUpTo(Screens.Login) { inclusive = true } }
+        }
+    }
+
+
     Scaffold(
         topBar = {
             Column {
-                // Pierwszy biały pasek z napisem "Coffee"
                 TopAppBar(
                     title = {
                         Text(text = "Posture Training", fontSize = 28.sp, color = Color.Black)
@@ -71,7 +77,6 @@ fun LoginScreen() {
                         containerColor = Color.White
                     )
                 )
-                // Czarny pasek z napisem "house"
                 TopAppBar(
                     title = {
                         Text(
@@ -97,12 +102,9 @@ fun LoginScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
 
             ) {
-            var email by remember { mutableStateOf("") }
-            var password by remember { mutableStateOf("") }
 
 
             Spacer(modifier = Modifier.height(16.dp))
-            // Container na białym tle z zaokrąglonymi rogami
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -127,23 +129,30 @@ fun LoginScreen() {
                         modifier = Modifier.padding(bottom = 32.dp)
                     )
 
-                    // Pola tekstowe
+                    Text(
+                        text = viewModel.errorMessage,
+                        fontSize = 22.sp,
+                        color = Color.Red,
+                        fontWeight = FontWeight.Bold,
+                    )
+
+                    //Email text field
                     OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
+                        value = viewModel.email,
+                        onValueChange = viewModel::changeEmail,
                         leadingIcon = {
                             Icon(Icons.Default.Email, contentDescription = null)
                         },
-                        label = { Text(text = "Email") },
-                        placeholder = { Text(text = "abc@gmail.com") },
+                        label = { Text("Email") },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
                     )
 
+                    //Password Text field
                     OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
+                        value = viewModel.password,
+                        onValueChange = viewModel::changePassword,
                         leadingIcon = {
                             Icon(Icons.Default.Key, contentDescription = null)
                         },
@@ -151,7 +160,6 @@ fun LoginScreen() {
                             Icon(Icons.Default.VisibilityOff, contentDescription = null)
                         },
                         label = { Text(text = "Password") },
-                        placeholder = { Text(text = "*******") },
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         modifier = Modifier
@@ -162,21 +170,34 @@ fun LoginScreen() {
                     // Linki pod formularzem
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(text = "Forgot password?", color = Color.Gray)
-                        Text(text = "Create an account", color = Color.Gray)
+                        horizontalArrangement = Arrangement.SpaceBetween,
+
+                        ) {
+                        Text(
+                            text = "Forgot password?",
+                            color = Color.Gray
+                        ) //TODO: zaimplementowac funkcje przywracania hasła
+
+                        //Login screen text for creating new account
+                        Text(
+                            text = "Create an account",
+                            color = Color.Gray,
+                            modifier = Modifier.clickable {
+                                navController.navigate(Screens.Register)
+                            })
                     }
 
                     // Przycisk logowania
                     ElevatedButton(
-                        onClick = { /* Action */ },
+                        onClick = {
+                            viewModel.login()
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
                         modifier = Modifier
-                            .fillMaxWidth(0.5f) // Zmniejszenie szerokości przycisku
+                            .fillMaxWidth(0.5f)
                             .padding(top = 36.dp)
                             .height(48.dp),
-                        shape = RoundedCornerShape(24.dp) // Zaokrąglone krawędzie
+                        shape = RoundedCornerShape(24.dp)
                     ) {
                         Text(text = "Sign in", fontSize = 24.sp)
                     }
@@ -187,7 +208,7 @@ fun LoginScreen() {
                         horizontalArrangement = Arrangement.Center
                     ) {
                     }
-                    GoogleButton()
+                    GoogleButton() //TODO: zaimplementowac logowanie przez google
                 }
             }
         }
@@ -195,8 +216,10 @@ fun LoginScreen() {
 }
 
 
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, apiLevel = 34)
 @Composable
 fun LoginScreenPreview() {
     LoginScreen()
 }
+
+

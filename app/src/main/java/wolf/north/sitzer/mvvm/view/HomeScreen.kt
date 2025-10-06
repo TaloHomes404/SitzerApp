@@ -1,51 +1,72 @@
+package wolf.north.sitzer.mvvm.view
+
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Timer
-import androidx.compose.material3.*
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
+import wolf.north.sitzer.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WorkoutSelectionScreen() {
+fun HomeScreen(navController: NavHostController = rememberNavController()) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        IconButton(onClick = { /* Back action */ }) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
-                        }
+
                         Spacer(modifier = Modifier.width(25.dp))
                         Text(text = "Select your workout", color = Color.White)
                     }
                 },
                 actions = {
                     IconButton(onClick = { /* Obsługa kliknięcia ikony */ }) {
-                        Icon(Icons.Outlined.MoreVert, contentDescription = "More", tint = Color.White)
+                        Icon(
+                            Icons.Outlined.MoreVert,
+                            contentDescription = "More",
+                            tint = Color.White
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -153,18 +174,18 @@ fun WorkoutSelectionScreen() {
                             tint = Color.White
                         )
                     }
-                    IconButton(onClick = { /* Handle Favorite click */ }) {
+                    IconButton(onClick = { navController.navigate(Screens.Workout) }) {
                         Icon(
                             imageVector = Icons.Outlined.Timer,
                             contentDescription = "Favorite",
                             tint = Color.Gray
                         )
                     }
-                    IconButton(onClick = { /* Handle Profile click */ }) {
+                    IconButton(onClick = { navController.navigate(Screens.Profile) }) {
                         Icon(
                             imageVector = Icons.Outlined.Person,
                             contentDescription = "Profile",
-                            tint = Color.Gray
+                            tint = Color.Gray,
                         )
                     }
                 }
@@ -254,5 +275,5 @@ fun WorkoutCardSecond(imageRes: Int, title: String) {
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewWorkoutSelectionScreen() {
-    WorkoutSelectionScreen()
+    HomeScreen()
 }
