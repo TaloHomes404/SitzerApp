@@ -10,4 +10,6 @@
     <string name="plank_desc">The plank is a core-strengthening exercise that targets multiple muscle groups, including the abs, back, shoulders, and legs. To perform a plank, lie face down, then lift your body onto your forearms and toes, keeping your body straight from head to heels. Engage your core and hold this position without sagging your back or raising your hips.</string>
     <string name="title_activity_profile_screen">ProfileScreen</string>
     <string name="title_activity_app_navigation">AppNavigation</string>
+    <string name="title_activity_onboarding_introduction_overlay">OnboardingIntroductionOverlay
+    </string>
 </resources>
