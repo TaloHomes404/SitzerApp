@@ -80,7 +80,7 @@ fun WorkoutScreen( navController: NavHostController = rememberNavController()) {
                                     modifier = Modifier.fillMaxSize()
                                 ) {
                                     Icon(
-                                        painter = painterResource(id = R.drawable.pain),
+                                        painter = painterResource(id = R.drawable.neckpainimg),
                                         contentDescription = null,
                                         modifier = Modifier.size(70.dp),
                                         tint = Color.Unspecified

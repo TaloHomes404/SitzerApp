@@ -390,7 +390,7 @@ fun ProfileOnboardingInfo() {
 
 @Preview(showBackground = true, showSystemUi = true, apiLevel = 34)
 @Composable
-fun GreetingPreview() {
+fun OnboardingPreview() {
     SitzerTheme {
         FinalOnboardingInfo()
     }
