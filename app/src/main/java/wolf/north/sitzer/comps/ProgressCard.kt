@@ -39,7 +39,7 @@ fun ProgressCard(
     Card(
         modifier = Modifier
             .width(160.dp)
-            .height(200.dp),
+            .height(180.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(6.dp),
     ) {
@@ -53,7 +53,7 @@ fun ProgressCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp, end = 4.dp),
+                    .padding(top = 6.dp, end = 4.dp),
                 horizontalArrangement = Arrangement.End
             ) {
                 Icon(
@@ -112,7 +112,7 @@ fun ProgressCardNumberIndicator(
     Card(
         modifier = Modifier
             .width(160.dp)
-            .height(200.dp),
+            .height(180.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(6.dp),
     ) {
@@ -127,7 +127,7 @@ fun ProgressCardNumberIndicator(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp, end = 4.dp),
+                    .padding(top = 6.dp, end = 4.dp),
                 horizontalArrangement = Arrangement.End
             ) {
                 Icon(
@@ -145,9 +145,10 @@ fun ProgressCardNumberIndicator(
 
                 Text(
                     text = "$caloriesBurned🔥",
-                    fontSize = 34.sp,
+                    fontSize = 36.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Red
+                    color = Color.Red,
+                    letterSpacing = 1.5.sp
                 )
             }
 

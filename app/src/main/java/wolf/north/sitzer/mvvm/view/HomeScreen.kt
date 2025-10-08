@@ -1,6 +1,6 @@
 package wolf.north.sitzer.mvvm.view
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,14 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Timer
+import androidx.compose.material.icons.outlined.SportsGymnastics
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -26,12 +24,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
+import wolf.north.sitzer.comps.CategoriesCarousel
 import wolf.north.sitzer.comps.ProgressCard
 import wolf.north.sitzer.comps.ProgressCardNumberIndicator
 import wolf.north.sitzer.comps.WorkoutCardButtoned
@@ -48,6 +50,10 @@ import wolf.north.sitzer.navigation.Screens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController = rememberNavController()) {
+
+    //State to remember selected category
+    var selectedCategory by remember { mutableStateOf("All") }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -57,15 +63,6 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        // Duże zdjęcie użytkownika w formie koła
-                        Image(
-                            painter = painterResource(id = R.drawable.pfpp),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(60.dp) // Rozmiar zdjęcia
-                                .clip(CircleShape)
-                                .padding()
-                        )
                         Text(
                             text = "Select your workout",
                             color = Color.White,
@@ -95,7 +92,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     .padding(8.dp)
             ) {
 
-                SectionTitle("Challenge Yourself With Featured Workout!")
+                SectionTitle("Challenge Yourself With Featured \nDaily Workout!")
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
@@ -118,7 +115,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SectionTitle("Weekly Progress")
-                    Text("See All")
+                    Text("See All", modifier = Modifier.padding(start = 8.dp, bottom = 8.dp))
                 }
 
 
@@ -129,7 +126,26 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 //3rd row
-                SectionTitle("Categories")
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 16.dp, top = 2.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    SectionTitle("Categories")
+                    Text("See All", modifier = Modifier.padding(start = 8.dp, bottom = 8.dp))
+                }
+
+                CategoriesCarousel(
+                    selectedCategory = selectedCategory,
+                    onCategorySelected = { newCategory -> selectedCategory = newCategory })
+                val filteredCategories = if (selectedCategory == "All") {
+                    //allWorkouts //TODO: zaimplementowac filtorwanie planow
+                } else {
+                    // allWorkouts.filter { it.category == selectedCategory }
+                }
+
             }
         },
         bottomBar = {
@@ -149,30 +165,49 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    IconButton(onClick = { /* Handle Menu click */ }) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+
                         Icon(
-                            imageVector = Icons.Outlined.Menu,
+                            imageVector = Icons.Outlined.Home,
                             contentDescription = "Menu",
                             tint = Color.White
                         )
+
+                        Text("Home", color = Color.White)
+
                     }
-                    IconButton(onClick = { navController.navigate(Screens.Workout) }) {
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
                         Icon(
-                            imageVector = Icons.Outlined.Timer,
-                            contentDescription = "Favorite",
-                            tint = Color.Gray
+                            imageVector = Icons.Outlined.SportsGymnastics,
+                            contentDescription = "Workouts list bottom icon",
+                            tint = Color.Gray,
+                            modifier = Modifier.clickable { navController.navigate(Screens.Workout) }
                         )
+                        Text("Workouts", color = Color.Gray)
                     }
-                    IconButton(onClick = { navController.navigate(Screens.Profile) }) {
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
                         Icon(
                             imageVector = Icons.Outlined.Person,
                             contentDescription = "Profile",
                             tint = Color.Gray,
+                            modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
                         )
+                        Text("Profile", color = Color.Gray)
                     }
                 }
             }
-        },
+        }
     )
 }
 

@@ -35,8 +35,8 @@ fun WorkoutCard(image: Int, workoutName: String, description: String) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Card(
                 modifier = Modifier
-                    .width(360.dp)  // Możesz zwiększyć np. do 400.dp
-                    .height(230.dp) // Mniejsza wysokość, bardziej prostokątna
+                    .width(360.dp)
+                    .height(230.dp)
                     .padding(bottom = 16.dp),
                 shape = RoundedCornerShape(8.dp),
                 elevation = CardDefaults.cardElevation(6.dp)
