@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -72,6 +73,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
 
     Scaffold(
+        containerColor = Color(0xFFF8F9FA),
         topBar = {
             TopAppBar(
                 title = {
@@ -88,7 +90,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* Obsługa kliknięcia ikony */ }) {
+                    IconButton(onClick = { }) {
                         Icon(
                             Icons.Outlined.Notifications,
                             contentDescription = "notification icon",
@@ -106,10 +108,12 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(6.dp)
             ) {
 
-                SectionTitle("Challenge Yourself With Featured \nDaily Workout!")
+                SectionTitle(
+                    "Challenge Yourself With Featured \nDaily Workout!",
+                )
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
@@ -121,18 +125,16 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     )
                 }
 
-                Spacer(modifier = Modifier.height(2.dp))
 
                 // 2nd row
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 8.dp, end = 16.dp),
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SectionTitle("Weekly Progress")
-                    Text("See All", modifier = Modifier.padding(start = 8.dp, bottom = 8.dp))
+                    Text("See All", modifier = Modifier.padding(end = 8.dp))
                 }
 
 
@@ -140,18 +142,16 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     ProgressCard(0.33f, "1/3", "Workout Sessions", "This Week")
                     ProgressCardNumberIndicator(138, "Calories Burned", "This Week")
                 }
-                Spacer(modifier = Modifier.height(8.dp))
 
                 //3rd row
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 8.dp, end = 16.dp, top = 2.dp),
+                        .fillMaxWidth().padding(top = 4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SectionTitle("Categories")
-                    Text("See All", modifier = Modifier.padding(start = 8.dp, bottom = 8.dp))
+                    Text("See All", modifier = Modifier.padding(end = 8.dp))
                 }
 
                 CategoriesCarousel(
@@ -160,9 +160,10 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // LazyRow z przefiltrowanymi planami
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                // LazyColumn z przefiltrowanymi planami
+                LazyColumn (
+                    Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     contentPadding = PaddingValues(horizontal = 16.dp)
                 ) {
                     items(filteredPlans) { plan ->
@@ -235,13 +236,14 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 }
 
 @Composable
-fun SectionTitle(title: String) {
+fun SectionTitle(title: String, modifier: Modifier = Modifier) {
     Text(
         text = title,
         fontSize = 22.sp,
         fontWeight = FontWeight.SemiBold,
         color = Color(0xFF1A1A1A),
-        lineHeight = 28.sp
+        lineHeight = 28.sp,
+        modifier = Modifier.padding(start = 8.dp, bottom = 2.dp)
     )
 }
 
