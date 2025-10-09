@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -17,14 +15,11 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.SportsGymnastics
 import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -75,11 +70,10 @@ fun ExercisePlan(image: Int, planName: String, duration: Int, exercisesCount: In
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Card(
                 modifier = Modifier
-                    .width(360.dp)
-                    .height(230.dp)
-                    .padding(bottom = 16.dp),
-                shape = RoundedCornerShape(8.dp),
-                elevation = CardDefaults.cardElevation(6.dp)
+                    .width(320.dp)
+                    .height(200.dp),
+                shape = RoundedCornerShape(16.dp),
+                elevation = CardDefaults.cardElevation(2.dp)
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Image(
@@ -89,63 +83,45 @@ fun ExercisePlan(image: Int, planName: String, duration: Int, exercisesCount: In
                         modifier = Modifier.fillMaxSize()
                     )
 
+                    //box gradientowy
                     Box(
                         modifier = Modifier
-                            .align(Alignment.BottomStart)
-                            .fillMaxHeight()
-                            .fillMaxWidth()
+                            .fillMaxSize()
                             .background(
                                 Brush.horizontalGradient(
                                     colors = listOf(
-                                        Color.Black.copy(alpha = 0.83f),
+                                        Color.Black.copy(alpha = 0.7f),
                                         Color.Transparent
-
-                                    )
+                                    ),
+                                    startX = 0f,
+                                    endX = 600f
                                 )
                             )
-                            .padding(16.dp)
                     ) {
                         Column(
-                            modifier = Modifier.align(Alignment.CenterStart),
-                            verticalArrangement = Arrangement.Center
+                            modifier = Modifier
+                                .align(Alignment.CenterStart)
+                                .padding(20.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             Text(
                                 "Bulletproof \nLower-Back",
                                 color = Color.White,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.ExtraBold
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.Bold,
+                                lineHeight = 28.sp
                             )
-                            ElevatedButton(onClick = {}) {
-                                Row(
-                                   horizontalArrangement = Arrangement.Center,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-
-                                    Icon(
-                                        imageVector = Icons.Outlined.SportsGymnastics,
-                                        contentDescription = "Menu",
-                                        tint = Color.Black
-                                    )
-
-                                    Text("8 Exercises")
-
-                                }
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                InfoChip(
+                                    icon = Icons.Outlined.SportsGymnastics,
+                                    text = "$exercisesCount Exercises"
+                                )
                             }
-                            ElevatedButton(onClick = {}) {
-                                Row(
-                                    horizontalArrangement = Arrangement.Center,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-
-                                    Icon(
-                                        imageVector = Icons.Outlined.Timer,
-                                        contentDescription = "Menu",
-                                        tint = Color.Black
-                                    )
-
-                                    Text("15 Minutes")
-
-                                }
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                InfoChip(
+                                    icon = Icons.Outlined.Timer,
+                                    text = "$duration Minutes"
+                                )
                             }
                         }
                     }

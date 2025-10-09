@@ -106,7 +106,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(8.dp)
+                    .padding(6.dp)
             ) {
 
                 SectionTitle("Challenge Yourself With Featured \nDaily Workout!")
@@ -121,7 +121,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     )
                 }
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(2.dp))
 
                 // 2nd row
                 Row(
@@ -238,10 +238,10 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 fun SectionTitle(title: String) {
     Text(
         text = title,
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Bold,
-        color = Color.Black,
-        modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
+        fontSize = 22.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = Color(0xFF1A1A1A),
+        lineHeight = 28.sp
     )
 }
 

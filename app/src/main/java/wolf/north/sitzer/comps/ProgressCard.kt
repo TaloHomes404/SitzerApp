@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.MoreVert
@@ -24,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,21 +41,25 @@ fun ProgressCard(
     Card(
         modifier = Modifier
             .width(160.dp)
-            .height(180.dp),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(6.dp),
+            .height(180.dp)
+            .padding(horizontal = 8.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        elevation = CardDefaults.cardElevation(1.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(2.dp),
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+            // Ikona więcej
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 6.dp, end = 4.dp),
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
                 Icon(
@@ -66,40 +72,52 @@ fun ProgressCard(
                 )
             }
 
-            Box(contentAlignment = Alignment.Center) {
+            // Główny wskaźnik
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.weight(1f)
+            ) {
                 CircularProgressIndicator(
                     progress = { progress },
-                    modifier = Modifier.size(100.dp),
-                    color = Color.Blue,
+                    modifier = Modifier.size(60.dp),
+                    color = Color(0xFF4B6FFF),
                     strokeWidth = 6.dp,
-                    trackColor = Color.LightGray,
+                    trackColor = Color(0xFFE8EAF0),
                     gapSize = 0.dp
                 )
                 Text(
                     text = workoutsCountWeekly,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold, letterSpacing = 3.sp
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 3.sp,
+                    color = Color(0xFF1A1A1A)
                 )
             }
 
+            // Opisy
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.wrapContentHeight()
             ) {
                 Text(
                     text = progressCardTitle,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 2.dp)
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF1A1A1A),
+                    textAlign = TextAlign.Center,
+                    maxLines = 1
                 )
                 Text(
                     text = progressCardDescription,
                     fontSize = 12.sp,
-                    color = Color.DarkGray,
+                    color = Color(0xFF8E8E93),
+                    textAlign = TextAlign.Center,
+                    maxLines = 1
                 )
             }
         }
     }
+
 }
 
 
@@ -112,22 +130,25 @@ fun ProgressCardNumberIndicator(
     Card(
         modifier = Modifier
             .width(160.dp)
-            .height(180.dp),
-        shape = RoundedCornerShape(10.dp),
-        elevation = CardDefaults.cardElevation(6.dp),
+            .height(180.dp)
+            .padding(horizontal = 8.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        elevation = CardDefaults.cardElevation(1.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(2.dp),
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-
+            // Ikona więcej
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 6.dp, end = 4.dp),
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
                 Icon(
@@ -140,9 +161,11 @@ fun ProgressCardNumberIndicator(
                 )
             }
 
-
-            Box(contentAlignment = Alignment.Center) {
-
+            // Główny wskaźnik
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.weight(1f)
+            ) {
                 Text(
                     text = "$caloriesBurned🔥",
                     fontSize = 36.sp,
@@ -152,20 +175,25 @@ fun ProgressCardNumberIndicator(
                 )
             }
 
+            // Opisy
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.wrapContentHeight()
             ) {
                 Text(
                     text = progressCardTitle,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 2.dp)
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF1A1A1A),
+                    textAlign = TextAlign.Center,
+                    maxLines = 1
                 )
                 Text(
                     text = progressCardDescription,
                     fontSize = 12.sp,
-                    color = Color.DarkGray,
+                    color = Color(0xFF8E8E93),
+                    textAlign = TextAlign.Center,
+                    maxLines = 1
                 )
             }
         }
