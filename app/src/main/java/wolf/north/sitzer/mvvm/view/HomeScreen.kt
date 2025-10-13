@@ -107,7 +107,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
+                    .padding(paddingValues).padding(vertical = 8.dp)
             ) {
 
                 SectionTitle(
@@ -115,7 +115,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 )
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
                     WorkoutCardButtoned(
@@ -134,24 +134,24 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SectionTitle("Weekly Progress")
-                    Text("See All", modifier = Modifier.padding(end = 8.dp))
+                    Text("See All", modifier = Modifier.padding(end = 12.dp))
                 }
 
 
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                    ProgressCard(0.33f, "1/3", "Workout Sessions", "This Week")
-                    ProgressCardNumberIndicator(138, "Calories Burned", "This Week")
+                Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
+                    ProgressCard(0.00f, "0/3", "Workout Sessions", "This Week")
+                    ProgressCardNumberIndicator(0, "Calories Burned", "This Week")
                 }
 
                 //3rd row
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth().padding(top = 4.dp),
+                        .fillMaxWidth().padding(top = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SectionTitle("Categories")
-                    Text("See All", modifier = Modifier.padding(end = 8.dp))
+                    Text("See All", modifier = Modifier.padding(end = 12.dp))
                 }
 
                 CategoriesCarousel(
@@ -243,7 +243,8 @@ fun SectionTitle(title: String, modifier: Modifier = Modifier) {
         fontWeight = FontWeight.SemiBold,
         color = Color(0xFF1A1A1A),
         lineHeight = 28.sp,
-        modifier = Modifier.padding(start = 8.dp, bottom = 2.dp)
+        letterSpacing = 0.25.sp,
+        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp, top = 8.dp)
     )
 }
 
