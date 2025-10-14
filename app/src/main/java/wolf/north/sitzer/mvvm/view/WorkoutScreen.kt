@@ -14,7 +14,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.SportsGymnastics
 import androidx.compose.material3.BottomAppBar
@@ -59,7 +61,7 @@ fun WorkoutScreen(navController: NavHostController = rememberNavController()) {
                         modifier = Modifier.padding(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Select Plan")
+                        Text("Select Plan", color = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = colorResource(id = R.color.welcome_screen_bg))
@@ -76,12 +78,13 @@ fun WorkoutScreen(navController: NavHostController = rememberNavController()) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 8.dp, end = 16.dp, top = 4.dp),
+                        .padding(start = 8.dp, end = 16.dp, top = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SectionTitle("Select A Workout Plan")
-                    Text("More Filters", modifier = Modifier.padding(start = 8.dp, bottom = 8.dp))
+                    Text("More Filters")
+
                 }
 
                 CategoriesCarousel(

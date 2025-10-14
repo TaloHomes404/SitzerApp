@@ -115,7 +115,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 )
 
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp),
+                    modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, top = 2.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
                     WorkoutCardButtoned(
