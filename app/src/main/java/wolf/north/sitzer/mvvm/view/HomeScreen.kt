@@ -216,7 +216,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                             imageVector = Icons.Outlined.SportsGymnastics,
                             contentDescription = "Workouts list bottom icon",
                             tint = Color.Gray,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Workout) }
+                            modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
                         )
                         Text("Workouts", color = Color.Gray)
                     }

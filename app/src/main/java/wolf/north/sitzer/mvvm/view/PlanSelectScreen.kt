@@ -14,9 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.SportsGymnastics
 import androidx.compose.material3.BottomAppBar
@@ -47,7 +45,7 @@ import wolf.north.sitzer.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WorkoutScreen(navController: NavHostController = rememberNavController()) {
+fun PlanSelectScreen(navController: NavHostController = rememberNavController()) {
 
     val viewModel: PlansViewModel = viewModel()
     val selectedCategory by viewModel.selectedCategory.collectAsState()
@@ -147,7 +145,7 @@ fun WorkoutScreen(navController: NavHostController = rememberNavController()) {
                             imageVector = Icons.Outlined.SportsGymnastics,
                             contentDescription = "Workouts list bottom icon",
                             tint = Color.White,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Workout) }
+                            modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
                         )
                         Text("Workouts", color = Color.Gray)
                     }
@@ -173,5 +171,5 @@ fun WorkoutScreen(navController: NavHostController = rememberNavController()) {
 @Preview(showSystemUi = true)
 @Composable
 fun CustomSelectionScreenPreview() {
-    WorkoutScreen()
+    PlanSelectScreen()
 }

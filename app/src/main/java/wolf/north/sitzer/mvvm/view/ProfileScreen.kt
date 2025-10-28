@@ -273,7 +273,7 @@ fun ProfileScreen(  navController: NavHostController = rememberNavController()) 
                             tint = Color.Gray
                         )
                     }
-                    IconButton(onClick = { navController.navigate(Screens.Workout)}) {
+                    IconButton(onClick = { navController.navigate(Screens.Plans)}) {
                         Icon(
                             imageVector = Icons.Outlined.Timer,
                             contentDescription = "Favorite",
