@@ -1,6 +1,7 @@
 package wolf.north.sitzer.mvvm.view
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +35,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -219,7 +222,156 @@ fun LoginScreen(
 @Preview(showSystemUi = true, apiLevel = 34)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    //LoginScreen()
+
+    LoginScreenForPrev()
+}
+
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LoginScreenForPrev(
+
+) {
+
+
+    Scaffold(
+    ) { paddingValues ->
+        // Layout contentu
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues) // Dodaj padding do layoutu
+                .background(colorResource(R.color.welcome_screen_bg)),
+            horizontalAlignment = Alignment.CenterHorizontally,
+
+            ) {
+
+
+            //Column with centered logo for login page
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.sitzer_logo_nobg),
+                    contentDescription = "login site Sitzer logo",
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = 60.dp,
+                            topEnd = 60.dp,
+                            bottomEnd = 0.dp,
+                            bottomStart = 0.dp
+                        )
+                    )
+                    .background(Color.White)
+                    .padding(16.dp)
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = "Login",
+                        fontSize = 30.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    Text(
+                        text = "",
+                        fontSize = 22.sp,
+                        color = Color.Red,
+                        fontWeight = FontWeight.Bold,
+                    )
+
+                    //Email text field
+                    OutlinedTextField(
+                        value = "",
+                        onValueChange = { },
+                        leadingIcon = {
+                            Icon(Icons.Default.Email, contentDescription = null)
+                        },
+                        label = { Text("Email") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
+                    )
+
+                    //Password Text field
+                    OutlinedTextField(
+                        value = "",
+                        onValueChange = { },
+                        leadingIcon = {
+                            Icon(Icons.Default.Key, contentDescription = null)
+                        },
+                        trailingIcon = {
+                            Icon(Icons.Default.VisibilityOff, contentDescription = null)
+                        },
+                        label = { Text(text = "Password") },
+                        visualTransformation = PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
+                    )
+
+                    // Linki pod formularzem
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+
+                        ) {
+                        Text(
+                            text = "Forgot password?",
+                            color = Color.Gray
+                        ) //TODO: zaimplementowac funkcje przywracania hasła
+
+                        //Login screen text for creating new account
+                        Text(
+                            text = "Create an account",
+                            color = Color.Gray,
+                            modifier = Modifier.clickable {
+
+                            })
+                    }
+
+                    // Przycisk logowania
+                    ElevatedButton(
+                        onClick = {
+
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
+                        modifier = Modifier
+                            .fillMaxWidth(0.5f)
+                            .padding(top = 36.dp)
+                            .height(48.dp),
+                        shape = RoundedCornerShape(24.dp)
+                    ) {
+                        Text(text = "Sign in", fontSize = 24.sp)
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp, bottom = 8.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                    }
+                    GoogleButton() //TODO: zaimplementowac logowanie przez google
+                }
+            }
+        }
+    }
 }
 
 

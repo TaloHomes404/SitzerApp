@@ -1,5 +1,6 @@
 package wolf.north.sitzer.mvvm.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,7 +35,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -79,13 +82,14 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 title = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        horizontalArrangement = Arrangement.SpaceAround,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(
-                            text = "Select your workout",
-                            color = Color.White,
-                            textAlign = TextAlign.Center
+                        Image(
+                            painter = painterResource(R.drawable.sitzer_logo_nobg),
+                            contentDescription = "login site Sitzer logo",
+                            contentScale = ContentScale.Crop,
+                            alignment = Alignment.Center
                         )
                     }
                 },
