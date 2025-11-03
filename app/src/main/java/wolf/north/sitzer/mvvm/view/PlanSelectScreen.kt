@@ -2,6 +2,7 @@ package wolf.north.sitzer.mvvm.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,8 +44,11 @@ import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.CategoriesCarousel
 import wolf.north.sitzer.comps.ExercisePlan
+import wolf.north.sitzer.comps.SelectedPlanBottomSheet
+import wolf.north.sitzer.mvvm.model.Plan
 import wolf.north.sitzer.mvvm.viewmodel.PlansViewModel
 import wolf.north.sitzer.navigation.Screens
+import wolf.north.sitzer.repository.ExerciseRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,6 +57,10 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
     val viewModel: PlansViewModel = viewModel()
     val selectedCategory by viewModel.selectedCategory.collectAsState()
     val filteredPlans = viewModel.getPlansSortByCategory()
+
+    //bottom sheet control vals
+    var showBottomSheet by remember { mutableStateOf(false) }
+    var selectedPlan by remember { mutableStateOf<Plan?>(null) }
 
     Scaffold(
         topBar = {
@@ -91,7 +102,7 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // LazyColumn z przefiltrowanymi planami
+                // LazyColumn with plans + filters
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -99,7 +110,21 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     contentPadding = PaddingValues(horizontal = 16.dp)
                 ) {
                     items(filteredPlans) { plan ->
-                        ExercisePlan(plan.imageRes, plan.name, plan.duration, plan.exerciseCount)
+
+                        //Box for onClick functionality to show bottomsheet + select plan
+                        Box(
+                            modifier = Modifier.clickable {
+                                selectedPlan = plan
+                                showBottomSheet = true
+                            }
+                        ) {
+                            ExercisePlan(
+                                plan.imageRes,
+                                plan.name,
+                                plan.duration,
+                                plan.exerciseCount
+                            )
+                        }
                     }
                 }
             }
@@ -166,6 +191,20 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
             }
         }
     )
+
+    //Show bottomsheet implementation on PlanSelectScreen
+    if (showBottomSheet && selectedPlan != null) {
+        SelectedPlanBottomSheet(
+            plan = selectedPlan!!,
+            onDismiss = { showBottomSheet = false },
+            onStartWorkout = {
+                showBottomSheet = false
+                navController.navigate(Screens.Exercises)
+            },
+            exercises = ExerciseRepository.getExercisesForPlan(selectedPlan!!.id)
+        )
+    }
+
 }
 
 @Preview(showSystemUi = true)
