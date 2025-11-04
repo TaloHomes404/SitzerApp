@@ -6,6 +6,6 @@ object Screens {
     const val Register = "register"
     const val Profile = "profile"
     const val Plans = "plans"
-    const val Exercises = "exercises"
+    const val WorkoutHub = "workouthub"
     const val SplashScreen = "splashscreen"
 }
