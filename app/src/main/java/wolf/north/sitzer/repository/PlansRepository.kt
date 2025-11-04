@@ -9,7 +9,7 @@ object PlansRepository {
     fun getAllPlans(): List<Plan> {
         return listOf(
             Plan(
-                id = "1",
+                id = 1,
                 name = "Posture Fix",
                 category = "Full Body",
                 imageRes = R.drawable.stretch_img,
@@ -18,7 +18,7 @@ object PlansRepository {
                 difficulty = "Beginner"
             ),
             Plan(
-                id = "2",
+                id = 2,
                 name = "Neck Pain Relief",
                 category = "Upper Body",
                 imageRes = R.drawable.neck_exercise,
@@ -27,7 +27,7 @@ object PlansRepository {
                 difficulty = "Beginner"
             ),
             Plan(
-                id = "3",
+                id = 3,
                 name = "Strong Lower Back",
                 category = "Lower Body",
                 imageRes = R.drawable.lowerback_exercise,

@@ -392,6 +392,25 @@ fun ProfileOnboardingInfo() {
 @Composable
 fun OnboardingPreview() {
     SitzerTheme {
-        FinalOnboardingInfo()
+
+        //Start of app - display this
+        //OnboardingIntroductionOverlay()
+
+        //Proceed to
+        //OurMissionCard()
+
+        //Introduce to home screen
+        //HomeOnboardingInfo()
+
+        //Show info about bottom bar workout list
+        //WorkoutOnboardingInfo()
+
+        //Show info about bottom bar profile
+        //ProfileOnboardingInfo()
+
+        //Final greeting and ready to go info
+        //FinalOnboardingInfo()
+
+
     }
 }

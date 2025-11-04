@@ -1,4 +1,8 @@
 package wolf.north.sitzer.mvvm.model
 
-class Exercise {
+data class Exercise(
+    val name: String,
+
+) {
+
 }

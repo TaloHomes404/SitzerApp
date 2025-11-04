@@ -62,6 +62,35 @@ fun CategoriesCarousel(selectedCategory: String, onCategorySelected: (String) ->
     }
 }
 
+@Composable
+fun DifficultyCarousel(selectedDifficulty: String, onDifficultySelected: (String) -> Unit) {
+
+    //List of difficulties
+    val difficulties = listOf(
+        "Beginner",
+        "Novice",
+        "Intermediate",
+        "Advanced"
+    )
+
+    //Difficulty lazyrow with section name (on default this option is hidden)
+    //added to filter options on click
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    ) {
+        items(difficulties) { difficulty ->
+            FilterChip(
+                selected = (selectedDifficulty == difficulty),
+                onClick = { onDifficultySelected(difficulty) },
+                label = {Text(difficulty)}
+            )
+
+        }
+    }
+
+}
+
 
 @Composable
 fun ExercisePlan(image: Int, planName: String, duration: Int, exercisesCount: Int) {
@@ -136,7 +165,8 @@ fun ExercisePlan(image: Int, planName: String, duration: Int, exercisesCount: In
 fun CategoriesPreview() {
     SitzerTheme {
         Row {
-            ExercisePlan(R.drawable.cobraposeimg, "Lower Back", 25, 8)
+            //ExercisePlan(R.drawable.cobraposeimg, "Lower Back", 25, 8)
+
         }
     }
 }

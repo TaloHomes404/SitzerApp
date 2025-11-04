@@ -1,8 +1,8 @@
 package wolf.north.sitzer.mvvm.view
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,18 +12,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.SportsGymnastics
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -31,131 +28,72 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.CategoriesCarousel
 import wolf.north.sitzer.comps.ExercisePlan
-import wolf.north.sitzer.comps.ProgressCard
-import wolf.north.sitzer.comps.ProgressCardNumberIndicator
-import wolf.north.sitzer.comps.WorkoutCardButtoned
+import wolf.north.sitzer.comps.SelectedPlanBottomSheet
+import wolf.north.sitzer.mvvm.model.Plan
 import wolf.north.sitzer.mvvm.viewmodel.PlansViewModel
 import wolf.north.sitzer.navigation.Screens
+import wolf.north.sitzer.repository.ExerciseRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController = rememberNavController()) {
+fun PlanSelectScreen(navController: NavHostController = rememberNavController()) {
 
-//    //State to remember selected category
-//    var selectedCategory by remember { mutableStateOf("All") }
-//
-//
-//    val allPlans = remember { PlansRepository.getAllPlans() }
-//    val filteredPlans = remember(selectedCategory) {
-//        PlansRepository.getPlansSortByCategory(selectedCategory)
-//    }
     val viewModel: PlansViewModel = viewModel()
     val selectedCategory by viewModel.selectedCategory.collectAsState()
     val filteredPlans = viewModel.getPlansSortByCategory()
 
-
-
-
+    //bottom sheet control vals
+    var showBottomSheet by remember { mutableStateOf(false) }
+    var selectedPlan by remember { mutableStateOf<Plan?>(null) }
 
     Scaffold(
-        containerColor = Color(0xFFF8F9FA),
         topBar = {
             TopAppBar(
                 title = {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceAround,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(R.drawable.sitzer_logo_nobg),
-                            contentDescription = "login site Sitzer logo",
-                            contentScale = ContentScale.Crop,
-                            alignment = Alignment.Center
-                        )
+                        Text("Select Plan", color = Color.White)
                     }
                 },
-                actions = {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            Icons.Outlined.Notifications,
-                            contentDescription = "notification icon",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(id = R.color.welcome_screen_bg) // Zmień na żądany kolor
-                )
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = colorResource(id = R.color.welcome_screen_bg))
             )
         },
         content = { paddingValues ->
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues).padding(vertical = 8.dp)
+                    .padding(paddingValues)
             ) {
-
-                SectionTitle(
-                    "Challenge Yourself With Featured \nDaily Workout!",
-                )
-
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, top = 2.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    WorkoutCardButtoned(
-                        R.drawable.mobilityimgcard,
-                        "Mobility Morning",
-                        "Start Session"
-                    )
-                }
-
-
-                // 2nd row
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    SectionTitle("Weekly Progress")
-                    Text("See All", modifier = Modifier.padding(end = 12.dp))
-                }
-
-
-                Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
-                    ProgressCard(0.00f, "0/3", "Workout Sessions", "This Week")
-                    ProgressCardNumberIndicator(0, "Calories Burned", "This Week")
-                }
-
                 //3rd row
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth().padding(top = 8.dp),
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 16.dp, top = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    SectionTitle("Categories")
-                    Text("See All", modifier = Modifier.padding(end = 12.dp))
+                    SectionTitle("Select A Workout Plan")
+                    Text("More Filters")
+
                 }
 
                 CategoriesCarousel(
@@ -164,14 +102,29 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // LazyColumn z przefiltrowanymi planami
-                LazyColumn (
-                    Modifier.fillMaxWidth(),
+                // LazyColumn with plans + filters
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = PaddingValues(horizontal = 16.dp)
                 ) {
                     items(filteredPlans) { plan ->
-                        ExercisePlan(plan.imageRes, plan.name, plan.duration, plan.exerciseCount)
+
+                        //Box for onClick functionality to show bottomsheet + select plan
+                        Box(
+                            modifier = Modifier.clickable {
+                                selectedPlan = plan
+                                showBottomSheet = true
+                            }
+                        ) {
+                            ExercisePlan(
+                                plan.imageRes,
+                                plan.name,
+                                plan.duration,
+                                plan.exerciseCount
+                            )
+                        }
                     }
                 }
             }
@@ -201,10 +154,11 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                         Icon(
                             imageVector = Icons.Outlined.Home,
                             contentDescription = "Menu",
-                            tint = Color.White
+                            tint = Color.Gray,
+                            modifier = Modifier.clickable { navController.navigate(Screens.Home) }
                         )
 
-                        Text("Home", color = Color.White)
+                        Text("Home", color = Color.Gray)
 
                     }
 
@@ -215,7 +169,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                         Icon(
                             imageVector = Icons.Outlined.SportsGymnastics,
                             contentDescription = "Workouts list bottom icon",
-                            tint = Color.Gray,
+                            tint = Color.White,
                             modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
                         )
                         Text("Workouts", color = Color.Gray)
@@ -237,24 +191,24 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             }
         }
     )
-}
 
-@Composable
-fun SectionTitle(title: String, modifier: Modifier = Modifier) {
-    Text(
-        text = title,
-        fontSize = 22.sp,
-        fontWeight = FontWeight.SemiBold,
-        color = Color(0xFF1A1A1A),
-        lineHeight = 28.sp,
-        letterSpacing = 0.25.sp,
-        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp, top = 8.dp)
-    )
-}
+    //Show bottomsheet implementation on PlanSelectScreen
+    if (showBottomSheet && selectedPlan != null) {
+        SelectedPlanBottomSheet(
+            plan = selectedPlan!!,
+            onDismiss = { showBottomSheet = false },
+            onStartWorkout = {
+                showBottomSheet = false
+                navController.navigate(Screens.Exercises)
+            },
+            exercises = ExerciseRepository.getExercisesForPlan(selectedPlan!!.id)
+        )
+    }
 
+}
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewWorkoutSelectionScreen() {
-    HomeScreen()
+fun CustomSelectionScreenPreview() {
+    PlanSelectScreen()
 }

@@ -3,7 +3,7 @@ package wolf.north.sitzer.mvvm.model
 //Data class (Model) for plans in program
 
 data class Plan(
-    val id: String,
+    val id: Int,
     val name: String,
     val category: String,  //For sorting (Full-body, lower, upper etc)
     val imageRes: Int,

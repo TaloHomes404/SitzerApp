@@ -63,23 +63,12 @@ fun ProfileScreen(  navController: NavHostController = rememberNavController()) 
             TopAppBar(
                 title = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        // Duże zdjęcie użytkownika w formie koła
-                        Image(
-                            painter = painterResource(id = R.drawable.pfpp), // Wstaw własny obrazek
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(70.dp) // Rozmiar zdjęcia
-                                .clip(CircleShape).padding(), // Zaokrąglone zdjęcie
 
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
+
+
+
                         Column {
-                            Text(
-                                text = "Hello, User name!",
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
+
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(text = "First Timer", fontSize = 14.sp, color = Color.White)
                                 Spacer(modifier = Modifier.width(8.dp))
@@ -284,7 +273,7 @@ fun ProfileScreen(  navController: NavHostController = rememberNavController()) 
                             tint = Color.Gray
                         )
                     }
-                    IconButton(onClick = { navController.navigate(Screens.Workout)}) {
+                    IconButton(onClick = { navController.navigate(Screens.Plans)}) {
                         Icon(
                             imageVector = Icons.Outlined.Timer,
                             contentDescription = "Favorite",

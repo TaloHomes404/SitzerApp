@@ -1,8 +1,10 @@
 package wolf.north.sitzer.mvvm.view
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,7 +40,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -361,8 +365,159 @@ fun RegisterScreen(
         }
     }
 }
+
 @Preview(showSystemUi = true)
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen()
+    //RegisterScreen()
+    RegisterScreenForPrev()
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RegisterScreenForPrev(
+
+) {
+
+    Scaffold(
+    ) { paddingValues ->
+
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .background(colorResource(R.color.welcome_screen_bg)),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+
+            //Column with logo for register site with back button
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.sitzer_logo_nobg),
+                    contentDescription = "register site Sitzer logo",
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            // Container na białym tle z zaokrąglonymi rogami
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = 80.dp,
+                            topEnd = 80.dp,
+                            bottomEnd = 0.dp,
+                            bottomStart = 0.dp
+                        )
+                    )
+                    .background(Color.White)
+                    .padding(16.dp)
+            ) {
+
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = "Create new account",
+                        fontSize = 28.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    Text(
+                        text = "",
+                        fontSize = 22.sp,
+                        color = Color.Red,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    // Zastosowanie OutlinedTextField z poprawnymi labelami
+                    Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
+                        OutlinedTextField(
+                            leadingIcon = {
+                                Icon(Icons.Default.Person, contentDescription = null)
+                            },
+                            value = "",
+                            onValueChange = { },
+                            label = { Text(text = "First Name") },
+                            placeholder = { Text(text = "Enter your first name") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp)
+                        )
+
+
+                        OutlinedTextField(
+                            value = "",
+                            leadingIcon = {
+                                Icon(Icons.Default.Email, contentDescription = null)
+                            },
+                            onValueChange = { },
+                            label = { Text(text = "Email") },
+                            placeholder = { Text(text = "Enter your email") },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                        )
+
+                        OutlinedTextField(
+                            leadingIcon = {
+                                Icon(Icons.Default.Key, contentDescription = null)
+                            },
+                            trailingIcon = {
+                                Icon(Icons.Default.VisibilityOff, contentDescription = null)
+                            },
+                            value = "",
+                            onValueChange = { },
+                            label = { Text(text = "Password") },
+                            placeholder = { Text(text = "Enter your password") },
+                            visualTransformation = PasswordVisualTransformation(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                        )
+
+                        OutlinedTextField(
+                            leadingIcon = {
+                                Icon(Icons.Default.Close, contentDescription = null)
+                            },
+                            value = "",
+                            onValueChange = { },
+                            label = { Text(text = "Confirm Password") },
+                            placeholder = { Text(text = "Confirm your password") },
+                            visualTransformation = PasswordVisualTransformation(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 24.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                        )
+
+                        ElevatedButton(
+                            onClick = { },
+                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
+                            modifier = Modifier
+                                .fillMaxWidth(0.5f) // Zmniejszenie szerokości przycisku
+                                .padding(top = 8.dp)
+                                .height(48.dp)
+                                .align(Alignment.CenterHorizontally),
+                            shape = RoundedCornerShape(24.dp) // Zaokrąglone krawędzie
+                        ) {
+                            Text(text = "Register", fontSize = 20.sp)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
