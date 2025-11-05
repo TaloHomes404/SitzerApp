@@ -3,22 +3,18 @@ package wolf.north.sitzer.mvvm.view
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Key
@@ -28,12 +24,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -56,133 +49,6 @@ import wolf.north.sitzer.R
 import wolf.north.sitzer.mvvm.viewmodel.RegisterScreenViewModel
 import wolf.north.sitzer.navigation.Screens
 
-/*
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun RegisterScreen() {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Create your account",
-                        fontSize = 24.sp,
-                        color = Color.Black,
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { */
-/* Navigate back *//*
- }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White,
-                    titleContentColor = Color.Black
-                )
-            )
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top // Zmieniono na Top, by umieścić formularz wyżej
-        ) {
-            var firstName by remember { mutableStateOf("") }
-            var email by remember { mutableStateOf("") }
-            var password by remember { mutableStateOf("") }
-            var confirmPassword by remember { mutableStateOf("") }
-
-            // Zastosowanie OutlinedTextField z poprawnymi labelami
-            Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
-                OutlinedTextField(
-                    leadingIcon = {
-                        Icon(Icons.Default.Person, contentDescription = null)
-                    },
-                    value = firstName,
-                    onValueChange = { firstName = it },
-                    label = { Text(text = "First Name") },
-                    placeholder = { Text(text = "Enter your first name") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp)
-                )
-
-
-                OutlinedTextField(
-                    value = email,
-                    leadingIcon = {
-                        Icon(Icons.Default.Email, contentDescription = null)
-                    },
-                    onValueChange = { email = it },
-                    label = { Text(text = "Email") },
-                    placeholder = { Text(text = "Enter your email") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-                )
-
-                OutlinedTextField(
-                    leadingIcon = {
-                        Icon(Icons.Default.Key, contentDescription = null)
-                    },
-                    trailingIcon = {
-                        Icon(Icons.Default.VisibilityOff, contentDescription = null)
-                    },
-                    value = password,
-                    onValueChange = { password = it },
-                    label = { Text(text = "Password") },
-                    placeholder = { Text(text = "Enter your password") },
-                    visualTransformation = PasswordVisualTransformation(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-                )
-
-                OutlinedTextField(
-                    leadingIcon = {
-                        Icon(Icons.Default.Close, contentDescription = null)
-                    },
-                    value = confirmPassword,
-                    onValueChange = { confirmPassword = it },
-                    label = { Text(text = "Confirm Password") },
-                    placeholder = { Text(text = "Confirm your password") },
-                    visualTransformation = PasswordVisualTransformation(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 24.dp),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-                )
-            }
-
-            // Użycie ElevatedButton z poprzedniego ekranu
-            // Przycisk logowania
-            ElevatedButton(
-                onClick = { */
-/* Action *//*
- },
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
-                modifier = Modifier
-                    .fillMaxWidth(0.5f) // Zmniejszenie szerokości przycisku
-                    .padding(top = 8.dp)
-                    .height(48.dp),
-                shape = RoundedCornerShape(24.dp) // Zaokrąglone krawędzie
-            ) {
-                Text(text = "Register", fontSize = 20.sp)
-            }
-        }
-    }
-}
-*/
-
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -199,57 +65,33 @@ fun RegisterScreen(
             }
         }
     }
+
     Scaffold(
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(onClick = { /* Back action */ }) {
-                                Icon(
-                                    Icons.Default.ArrowBack,
-                                    contentDescription = "Back",
-                                    tint = Color.Black,
-                                    modifier = Modifier.clickable {
-                                        navController.navigateUp()
-                                    }
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(25.dp))
-                            Text(text = "Create new account", color = Color.Black)
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.White
-                    )
-                )
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = "Mobile Application Register Site",
-                            fontSize = 20.sp,
-                            color = Color.White
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = colorResource(R.color.welcome_screen_bg)
-                    )
-                )
-            }
-        }
     ) { paddingValues ->
-        // Layout contentu
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues) // Dodaj padding do layoutu
-                .background(colorResource(R.color.welcome_screen_bg)), // Białe tło z lekkim odcieniem
+                .padding(paddingValues)
+                .background(colorResource(R.color.welcome_screen_bg)),
             horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
 
+            // Logo na górze
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
+                Image(
+                    painter = painterResource(R.drawable.sitzer_logo_nobg),
+                    contentDescription = "register site Sitzer logo",
+                    contentScale = ContentScale.Crop
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
+
             // Container na białym tle z zaokrąglonymi rogami
             Box(
                 modifier = Modifier
@@ -257,31 +99,31 @@ fun RegisterScreen(
                     .fillMaxHeight()
                     .clip(
                         RoundedCornerShape(
-                            topStart = 80.dp,
-                            topEnd = 80.dp,
+                            topStart = 32.dp,
+                            topEnd = 32.dp,
                             bottomEnd = 0.dp,
                             bottomStart = 0.dp
                         )
                     )
                     .background(Color.White)
-                    .padding(16.dp)
+                    .padding(24.dp)
             ) {
-
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "Register new account",
-                        fontSize = 30.sp,
+                        text = "Create new account",
+                        fontSize = 28.sp,
                         color = Color.Black,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 32.dp)
+                        modifier = Modifier.padding(bottom = 16.dp)
                     )
 
                     Text(
                         text = viewModel.errorMessage,
-                        fontSize = 22.sp,
+                        fontSize = 14.sp,
                         color = Color.Red,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(vertical = 8.dp)
                     )
 
                     // Zastosowanie OutlinedTextField z poprawnymi labelami
@@ -298,7 +140,6 @@ fun RegisterScreen(
                                 .fillMaxWidth()
                                 .padding(bottom = 12.dp)
                         )
-
 
                         OutlinedTextField(
                             value = viewModel.email,
@@ -349,13 +190,17 @@ fun RegisterScreen(
 
                         ElevatedButton(
                             onClick = { viewModel.RegisterUser() },
+                            elevation = ButtonDefaults.elevatedButtonElevation(
+                                defaultElevation = 4.dp,
+                                pressedElevation = 8.dp
+                            ),
                             colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
                             modifier = Modifier
-                                .fillMaxWidth(0.5f) // Zmniejszenie szerokości przycisku
+                                .fillMaxWidth(0.5f)
                                 .padding(top = 8.dp)
                                 .height(48.dp)
                                 .align(Alignment.CenterHorizontally),
-                            shape = RoundedCornerShape(24.dp) // Zaokrąglone krawędzie
+                            shape = RoundedCornerShape(24.dp)
                         ) {
                             Text(text = "Register", fontSize = 20.sp)
                         }
@@ -369,155 +214,7 @@ fun RegisterScreen(
 @Preview(showSystemUi = true)
 @Composable
 fun RegisterScreenPreview() {
-    //RegisterScreen()
-    RegisterScreenForPrev()
+    RegisterScreen()
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun RegisterScreenForPrev(
 
-) {
-
-    Scaffold(
-    ) { paddingValues ->
-
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .background(colorResource(R.color.welcome_screen_bg)),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-
-            //Column with logo for register site with back button
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.sitzer_logo_nobg),
-                    contentDescription = "register site Sitzer logo",
-                    contentScale = ContentScale.Crop
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            // Container na białym tle z zaokrąglonymi rogami
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .clip(
-                        RoundedCornerShape(
-                            topStart = 80.dp,
-                            topEnd = 80.dp,
-                            bottomEnd = 0.dp,
-                            bottomStart = 0.dp
-                        )
-                    )
-                    .background(Color.White)
-                    .padding(16.dp)
-            ) {
-
-
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "Create new account",
-                        fontSize = 28.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    Text(
-                        text = "",
-                        fontSize = 22.sp,
-                        color = Color.Red,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    // Zastosowanie OutlinedTextField z poprawnymi labelami
-                    Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
-                        OutlinedTextField(
-                            leadingIcon = {
-                                Icon(Icons.Default.Person, contentDescription = null)
-                            },
-                            value = "",
-                            onValueChange = { },
-                            label = { Text(text = "First Name") },
-                            placeholder = { Text(text = "Enter your first name") },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 12.dp)
-                        )
-
-
-                        OutlinedTextField(
-                            value = "",
-                            leadingIcon = {
-                                Icon(Icons.Default.Email, contentDescription = null)
-                            },
-                            onValueChange = { },
-                            label = { Text(text = "Email") },
-                            placeholder = { Text(text = "Enter your email") },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 12.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-                        )
-
-                        OutlinedTextField(
-                            leadingIcon = {
-                                Icon(Icons.Default.Key, contentDescription = null)
-                            },
-                            trailingIcon = {
-                                Icon(Icons.Default.VisibilityOff, contentDescription = null)
-                            },
-                            value = "",
-                            onValueChange = { },
-                            label = { Text(text = "Password") },
-                            placeholder = { Text(text = "Enter your password") },
-                            visualTransformation = PasswordVisualTransformation(),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 12.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-                        )
-
-                        OutlinedTextField(
-                            leadingIcon = {
-                                Icon(Icons.Default.Close, contentDescription = null)
-                            },
-                            value = "",
-                            onValueChange = { },
-                            label = { Text(text = "Confirm Password") },
-                            placeholder = { Text(text = "Confirm your password") },
-                            visualTransformation = PasswordVisualTransformation(),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 24.dp),
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-                        )
-
-                        ElevatedButton(
-                            onClick = { },
-                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f) // Zmniejszenie szerokości przycisku
-                                .padding(top = 8.dp)
-                                .height(48.dp)
-                                .align(Alignment.CenterHorizontally),
-                            shape = RoundedCornerShape(24.dp) // Zaokrąglone krawędzie
-                        ) {
-                            Text(text = "Register", fontSize = 20.sp)
-                        }
-                    }
-                }
-            }
-        }
-    }
-}

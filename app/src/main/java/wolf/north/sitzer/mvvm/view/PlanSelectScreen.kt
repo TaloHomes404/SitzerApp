@@ -199,7 +199,7 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
             onDismiss = { showBottomSheet = false },
             onStartWorkout = {
                 showBottomSheet = false
-                navController.navigate(Screens.Exercises)
+                navController.navigate(Screens.WorkoutHub)
             },
             exercises = ExerciseRepository.getExercisesForPlan(selectedPlan!!.id)
         )
