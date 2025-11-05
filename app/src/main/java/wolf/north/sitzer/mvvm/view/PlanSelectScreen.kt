@@ -148,14 +148,14 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.clickable { navController.navigate(Screens.Home) }
                     ) {
 
                         Icon(
                             imageVector = Icons.Outlined.Home,
                             contentDescription = "Menu",
                             tint = Color.Gray,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Home) }
                         )
 
                         Text("Home", color = Color.Gray)
@@ -164,26 +164,26 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.SportsGymnastics,
                             contentDescription = "Workouts list bottom icon",
                             tint = Color.White,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
                         )
                         Text("Workouts", color = Color.Gray)
                     }
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Person,
                             contentDescription = "Profile",
                             tint = Color.Gray,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
                         )
                         Text("Profile", color = Color.Gray)
                     }

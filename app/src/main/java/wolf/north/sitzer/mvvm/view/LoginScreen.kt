@@ -1,6 +1,7 @@
 package wolf.north.sitzer.mvvm.view
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -115,13 +116,15 @@ fun LoginScreen(
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
 
-                    Text(
-                        text = viewModel.errorMessage,
-                        fontSize = 14.sp,
-                        color = Color.Red,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
+                    AnimatedVisibility(visible = viewModel.errorMessage.isNotEmpty()) {
+                        Text(
+                            text = viewModel.errorMessage,
+                            fontSize = 14.sp,
+                            color = Color.Red,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                    }
 
                     //Email text field
                     OutlinedTextField(

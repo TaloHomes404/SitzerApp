@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -39,7 +38,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -111,23 +109,21 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues).padding(vertical = 8.dp)
+                    .padding(paddingValues)
+                    .padding(vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
 
                 SectionTitle(
                     "Challenge Yourself With Featured \nDaily Workout!",
                 )
 
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, top = 2.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    WorkoutCardButtoned(
-                        R.drawable.mobilityimgcard,
-                        "Mobility Morning",
-                        "Start Session"
-                    )
-                }
+                WorkoutCardButtoned(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 2.dp),
+                    image = R.drawable.mobilityimgcard,
+                    workoutName = "Mobility Morning",
+                    buttonText = "Start Session"
+                )
 
 
                 // 2nd row
@@ -138,11 +134,24 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SectionTitle("Weekly Progress")
-                    Text("See All", modifier = Modifier.padding(end = 12.dp))
+                    Text(
+                        "See All",
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .clickable { /* action */ },
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = colorResource(R.color.welcome_screen_bg)
+                    )
                 }
 
 
-                Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
                     ProgressCard(0.00f, "0/3", "Workout Sessions", "This Week")
                     ProgressCardNumberIndicator(0, "Calories Burned", "This Week")
                 }
@@ -150,12 +159,21 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 //3rd row
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth().padding(top = 8.dp),
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SectionTitle("Categories")
-                    Text("See All", modifier = Modifier.padding(end = 12.dp))
+                    Text(
+                        "See All",
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .clickable { /* action */ },
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = colorResource(R.color.welcome_screen_bg)
+                    )
                 }
 
                 CategoriesCarousel(
@@ -165,7 +183,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // LazyColumn z przefiltrowanymi planami
-                LazyColumn (
+                LazyColumn(
                     Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     contentPadding = PaddingValues(horizontal = 16.dp)
@@ -210,26 +228,26 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.SportsGymnastics,
                             contentDescription = "Workouts list bottom icon",
                             tint = Color.Gray,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
                         )
                         Text("Workouts", color = Color.Gray)
                     }
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Person,
                             contentDescription = "Profile",
                             tint = Color.Gray,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
                         )
                         Text("Profile", color = Color.Gray)
                     }
@@ -240,7 +258,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 }
 
 @Composable
-fun SectionTitle(title: String, modifier: Modifier = Modifier) {
+fun SectionTitle(title: String) {
     Text(
         text = title,
         fontSize = 22.sp,

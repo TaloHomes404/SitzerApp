@@ -1,6 +1,7 @@
 package wolf.north.sitzer.mvvm.view
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -112,20 +113,22 @@ fun RegisterScreen(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
                         text = "Create new account",
-                        fontSize = 28.sp,
+                        fontSize = 30.sp,
                         color = Color.Black,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
 
-                    Text(
-                        text = viewModel.errorMessage,
-                        fontSize = 14.sp,
-                        color = Color.Red,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    )
 
+                    AnimatedVisibility(visible = viewModel.errorMessage.isNotEmpty()) {
+                        Text(
+                            text = viewModel.errorMessage,
+                            fontSize = 14.sp,
+                            color = Color.Red,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                    }
                     // Zastosowanie OutlinedTextField z poprawnymi labelami
                     Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
                         OutlinedTextField(
@@ -138,7 +141,7 @@ fun RegisterScreen(
                             placeholder = { Text(text = "Enter your first name") },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 12.dp)
+                                .padding(bottom = 16.dp)
                         )
 
                         OutlinedTextField(
