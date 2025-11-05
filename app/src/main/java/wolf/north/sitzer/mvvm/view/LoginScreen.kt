@@ -1,6 +1,7 @@
 package wolf.north.sitzer.mvvm.view
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,8 +28,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -48,7 +47,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
-import wolf.north.sitzer.comps.GoogleButton
 import wolf.north.sitzer.mvvm.viewmodel.LoginScreenViewModel
 import wolf.north.sitzer.navigation.Screens
 
@@ -68,60 +66,46 @@ fun LoginScreen(
         }
     }
 
-
     Scaffold(
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Text(text = "Posture Training", fontSize = 28.sp, color = Color.Black)
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.White
-                    )
-                )
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = "Mobile Application Login Site",
-                            fontSize = 20.sp,
-                            color = Color.White
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = colorResource(R.color.welcome_screen_bg)
-                    )
-                )
-            }
-        }
     ) { paddingValues ->
         // Layout contentu
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues) // Dodaj padding do layoutu
-                .background(colorResource(R.color.welcome_screen_bg)), // Białe tło z lekkim odcieniem
+                .padding(paddingValues)
+                .background(colorResource(R.color.welcome_screen_bg)),
             horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
 
+            // Logo na górze
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
+                Image(
+                    painter = painterResource(R.drawable.sitzer_logo_nobg),
+                    contentDescription = "login site Sitzer logo",
+                    contentScale = ContentScale.Crop
+                )
+            }
 
+            Spacer(modifier = Modifier.height(12.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
                     .clip(
                         RoundedCornerShape(
-                            topStart = 80.dp,
-                            topEnd = 80.dp,
+                            topStart = 32.dp,
+                            topEnd = 32.dp,
                             bottomEnd = 0.dp,
                             bottomStart = 0.dp
                         )
                     )
                     .background(Color.White)
-                    .padding(16.dp)
+                    .padding(24.dp)
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
@@ -129,15 +113,18 @@ fun LoginScreen(
                         fontSize = 30.sp,
                         color = Color.Black,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 32.dp)
+                        modifier = Modifier.padding(bottom = 16.dp)
                     )
 
-                    Text(
-                        text = viewModel.errorMessage,
-                        fontSize = 22.sp,
-                        color = Color.Red,
-                        fontWeight = FontWeight.Bold,
-                    )
+                    AnimatedVisibility(visible = viewModel.errorMessage.isNotEmpty()) {
+                        Text(
+                            text = viewModel.errorMessage,
+                            fontSize = 14.sp,
+                            color = Color.Red,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                    }
 
                     //Email text field
                     OutlinedTextField(
@@ -174,8 +161,7 @@ fun LoginScreen(
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
-
-                        ) {
+                    ) {
                         Text(
                             text = "Forgot password?",
                             color = Color.Gray
@@ -195,6 +181,12 @@ fun LoginScreen(
                         onClick = {
                             viewModel.login()
                         },
+                        enabled = viewModel.email.isNotBlank() && viewModel.password.isNotBlank(),
+                        elevation = ButtonDefaults.elevatedButtonElevation(
+                            defaultElevation = 4.dp,
+                            pressedElevation = 8.dp
+                        ),
+
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
                         modifier = Modifier
                             .fillMaxWidth(0.5f)
@@ -204,174 +196,19 @@ fun LoginScreen(
                     ) {
                         Text(text = "Sign in", fontSize = 24.sp)
                     }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp, bottom = 8.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                    }
-                    GoogleButton() //TODO: zaimplementowac logowanie przez google
+
                 }
             }
         }
     }
 }
-
 
 @Preview(showSystemUi = true, apiLevel = 34)
 @Composable
 fun LoginScreenPreview() {
-    //LoginScreen()
-
-    LoginScreenForPrev()
+    LoginScreen()
 }
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun LoginScreenForPrev(
-
-) {
-
-
-    Scaffold(
-    ) { paddingValues ->
-        // Layout contentu
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues) // Dodaj padding do layoutu
-                .background(colorResource(R.color.welcome_screen_bg)),
-            horizontalAlignment = Alignment.CenterHorizontally,
-
-            ) {
-
-
-            //Column with centered logo for login page
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.sitzer_logo_nobg),
-                    contentDescription = "login site Sitzer logo",
-                    contentScale = ContentScale.Crop
-                )
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .clip(
-                        RoundedCornerShape(
-                            topStart = 60.dp,
-                            topEnd = 60.dp,
-                            bottomEnd = 0.dp,
-                            bottomStart = 0.dp
-                        )
-                    )
-                    .background(Color.White)
-                    .padding(16.dp)
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "Login",
-                        fontSize = 30.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-
-                    Text(
-                        text = "",
-                        fontSize = 22.sp,
-                        color = Color.Red,
-                        fontWeight = FontWeight.Bold,
-                    )
-
-                    //Email text field
-                    OutlinedTextField(
-                        value = "",
-                        onValueChange = { },
-                        leadingIcon = {
-                            Icon(Icons.Default.Email, contentDescription = null)
-                        },
-                        label = { Text("Email") },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                    )
-
-                    //Password Text field
-                    OutlinedTextField(
-                        value = "",
-                        onValueChange = { },
-                        leadingIcon = {
-                            Icon(Icons.Default.Key, contentDescription = null)
-                        },
-                        trailingIcon = {
-                            Icon(Icons.Default.VisibilityOff, contentDescription = null)
-                        },
-                        label = { Text(text = "Password") },
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                    )
-
-                    // Linki pod formularzem
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-
-                        ) {
-                        Text(
-                            text = "Forgot password?",
-                            color = Color.Gray
-                        ) //TODO: zaimplementowac funkcje przywracania hasła
-
-                        //Login screen text for creating new account
-                        Text(
-                            text = "Create an account",
-                            color = Color.Gray,
-                            modifier = Modifier.clickable {
-
-                            })
-                    }
-
-                    // Przycisk logowania
-                    ElevatedButton(
-                        onClick = {
-
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
-                        modifier = Modifier
-                            .fillMaxWidth(0.5f)
-                            .padding(top = 36.dp)
-                            .height(48.dp),
-                        shape = RoundedCornerShape(24.dp)
-                    ) {
-                        Text(text = "Sign in", fontSize = 24.sp)
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp, bottom = 8.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                    }
-                    GoogleButton() //TODO: zaimplementowac logowanie przez google
-                }
-            }
-        }
-    }
-}
 
 
