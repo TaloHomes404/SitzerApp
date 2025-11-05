@@ -1,9 +1,10 @@
 package wolf.north.sitzer.mvvm.view
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,24 +14,29 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircleOutline
+import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.NotificationAdd
+import androidx.compose.material.icons.filled.Help
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Timer
+import androidx.compose.material.icons.outlined.SportsGymnastics
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -38,14 +44,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -53,202 +54,26 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
-import wolf.north.sitzer.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(  navController: NavHostController = rememberNavController()) {
+fun ProfileScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
+) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-
-
-
-
-                        Column {
-
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(text = "First Timer", fontSize = 14.sp, color = Color.White)
-                                Spacer(modifier = Modifier.width(8.dp))
-                                LinearProgressIndicator(
-                                    progress = 0.2f, // Przykładowy postęp
-                                    color = Color.White,
-                                    trackColor = Color.Black,
-                                    strokeCap = StrokeCap.Square,
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .height(8.dp)
-                                )
-                                Text(text = "Beginner", fontSize = 14.sp, color = Color.White)
-                            }
-                        }
+                    Row(
+                        modifier = Modifier.padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Profile", color = Color.White)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(id = R.color.welcome_screen_bg) // Zmień na żądany kolor
-                ), expandedHeight = 75.dp
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = colorResource(id = R.color.welcome_screen_bg))
             )
-        },
-        content = { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .background(Color(0xFFECEFF1))
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp) // Przestrzenie między elementami
-            ) {
-                // Nagłówek "Statistics"
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "Statistics", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                    Text(text = "Show all", color = Color.Gray, fontSize = 16.sp)
-                }
-                Text(text = "Exercises: 6", color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                Text(text = "Calories burned: 129,9kcal", color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-
-                // Dodanie wykresu pod nagłówkiem "Statistics"
-                SimpleBarChart() // Wstawienie wykresu zajmującego całą szerokość ekranu
-
-                // Nagłówek "Trainings"
-                Text(text = "Last trainings sessions", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-
-                // Pierwsza karta
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(4.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            Text(text = "Lower Back Exercises", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                            Text(text = "Plan made for strenghtening lower back", fontSize = 14.sp)
-                            Text(text = "Exercises made: 5", fontSize = 14.sp)
-                        }
-                        // Mały kwadracik z obrazkiem ćwiczenia
-                        Image(
-                            painter = painterResource(id = R.drawable.stretch_img), // Wstaw własny obrazek
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(80.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .padding(end = 8.dp),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                }
-
-                // Druga karta
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(4.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            Text(text = "Neck Pain Relief", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                            Text(
-                                text = "Series of exercises for tightened neck muscles",
-                                fontSize = 14.sp
-                            )
-                            Text(text = "Exercises made: 1", fontSize = 14.sp)
-                        }
-                        // Mały kwadracik z obrazkiem ćwiczenia
-                        Image(
-                            painter = painterResource(id = R.drawable.neck_exercise), // Wstaw własny obrazek
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(80.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .padding(end = 8.dp),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Prostokąt z ikonami i tekstem
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .background(colorResource(id = R.color.welcome_screen_bg))
-                        .padding(horizontal = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    IconButton(onClick = { /* Akcja lewa ikona */ }) {
-                        Icon(
-                            Icons.Default.NotificationAdd,
-                            contentDescription = "Notification icon",
-                            tint = Color.White
-                        )
-                    }
-                    Text(text = "Notification options", fontSize = 22.sp, color = Color.White)
-                    IconButton(onClick = { /* Akcja prawa ikona */ }) {
-                        Icon(
-                            Icons.Default.AddCircleOutline,
-                            contentDescription = "Settings",
-                            tint = Color.White
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Drugi prostokąt z ikonami i tekstem
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .background(colorResource(id = R.color.welcome_screen_bg))
-                        .padding(horizontal = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    IconButton(onClick = { /* Akcja lewa ikona */ }) {
-                        Icon(
-                            Icons.Default.Person,
-                            contentDescription = "edit icon",
-                            tint = Color.White
-                        )
-                    }
-                    Text(text = "Edit profile informations", fontSize = 22.sp, color = Color.White)
-                    IconButton(onClick = { /* Akcja prawa ikona */ }) {
-                        Icon(
-                            Icons.Default.Edit,
-                            contentDescription = "Settings",
-                            tint = Color.White
-                        )
-                    }
-                }
-            }
         },
         bottomBar = {
             BottomAppBar(
@@ -266,75 +91,263 @@ fun ProfileScreen(  navController: NavHostController = rememberNavController()) 
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(onClick = { navController.navigate(Screens.Home) }) {
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+
                         Icon(
-                            imageVector = Icons.Outlined.Menu,
+                            imageVector = Icons.Outlined.Home,
                             contentDescription = "Menu",
-                            tint = Color.Gray
+                            tint = Color.Gray,
+                            modifier = Modifier.clickable { /* navController.navigate(Screens.Home) */ }
                         )
+
+                        Text("Home", color = Color.Gray)
+
                     }
-                    IconButton(onClick = { navController.navigate(Screens.Plans)}) {
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
                         Icon(
-                            imageVector = Icons.Outlined.Timer,
-                            contentDescription = "Favorite",
-                            tint = Color.Gray
+                            imageVector = Icons.Outlined.SportsGymnastics,
+                            contentDescription = "Workouts list bottom icon",
+                            tint = Color.Gray,
+                            modifier = Modifier.clickable { /* navController.navigate(Screens.Plans) */ }
                         )
+                        Text("Workouts", color = Color.Gray)
                     }
-                    IconButton(onClick = { /* Handle Profile click */ }) {
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
                         Icon(
                             imageVector = Icons.Outlined.Person,
                             contentDescription = "Profile",
-                            tint = Color.White
+                            tint = Color.White,
+                            modifier = Modifier.clickable { /* navController.navigate(Screens.Profile) */ }
                         )
+                        Text("Profile", color = Color.White)
                     }
                 }
             }
         }
-    )
-}
-@Composable
-fun SimpleBarChart() {
-    val daysOfWeek = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
-    val values = listOf(1f, 2f, 0f, 1f, 2f, 0f, 1f) // Losowe wartości
+    ) { paddingValues ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .background(MaterialTheme.colorScheme.background)
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(16.dp))
 
-    Canvas(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .padding(16.dp)
-    ) {
-        val barWidth = size.width / (values.size * 2)
-        val maxValue = values.maxOrNull() ?: 0f
-        val barHeightRatio = size.height / maxValue
+            Box(
+                modifier = Modifier.size(120.dp),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(120.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Zdjęcie profilowe",
+                        modifier = Modifier.size(60.dp),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
 
-        values.forEachIndexed { index, value ->
-            val x = barWidth * (1 + index * 2)
-            val y = size.height - (value * barHeightRatio)
+                Surface(
+                    modifier = Modifier
+                        .size(36.dp)
+                        .border(3.dp, MaterialTheme.colorScheme.background, CircleShape),
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.primary
+                ) {
+                    IconButton(
+                        onClick = {},
+                        modifier = Modifier.size(36.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = "Edytuj profil",
+                            tint = Color.White,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                }
+            }
 
-            // Rysowanie słupka
-            drawRect(
-                color = Color.Blue,
-                topLeft = Offset(x, y),
-                size = Size(barWidth, value * barHeightRatio)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "userName",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold
             )
 
-            // Rysowanie podpisów dni tygodnia
-            drawContext.canvas.nativeCanvas.drawText(
-                daysOfWeek[index],
-                x + barWidth / 4,
-                size.height + 22f, // Mały odstęp pod wykresem
-                android.graphics.Paint().apply {
-                    textAlign = android.graphics.Paint.Align.CENTER
-                    textSize = 35f
-                    color = android.graphics.Color.BLACK
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = "userEmail",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                StatisticItem(
+                    icon = "⏱️",
+                    value = "0h 0m",
+                    label = "Total time"
+                )
+                StatisticItem(
+                    icon = "🔥",
+                    value = "2124 cal",
+                    label = "Calories burned"
+                )
+                StatisticItem(
+                    icon = "🏋️‍♀️",
+                    value = "420",
+                    label = "Sessions"
+                )
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    MenuOption(
+                        icon = Icons.Default.Person,
+                        text = "Profile info",
+                        onClick = { }
+                    )
+                    MenuOption(
+                        icon = Icons.Default.Settings,
+                        text = "Settings",
+                        onClick = {}
+                    )
+                    MenuOption(
+                        icon = Icons.Default.Notifications,
+                        text = "Notification",
+                        onClick = {}
+                    )
+                    MenuOption(
+                        icon = Icons.Default.Help,
+                        text = "Help",
+                        onClick = { },
+                        showDivider = false
+                    )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun StatisticItem(
+    icon: String,
+    value: String,
+    label: String
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = icon,
+            fontSize = 28.sp
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = value,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+@Composable
+private fun MenuOption(
+    icon: ImageVector,
+    text: String,
+    onClick: () -> Unit,
+    showDivider: Boolean = true
+) {
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(horizontal = 8.dp, vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = text,
+                tint = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.size(24.dp)
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.weight(1f)
+            )
+
+            Icon(
+                imageVector = Icons.Default.ArrowForwardIos,
+                contentDescription = "Przejdź do $text",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(16.dp)
+            )
+        }
+
+        if (showDivider) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .padding(horizontal = 16.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
             )
         }
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun UserProfileScreenPreview() {
-    ProfileScreen()
+private fun ProfileScreenPreview() {
+    MaterialTheme {
+        ProfileScreen()
+    }
 }
