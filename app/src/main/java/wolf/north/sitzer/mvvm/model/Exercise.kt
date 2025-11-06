@@ -1,8 +1,13 @@
 package wolf.north.sitzer.mvvm.model
 
-data class Exercise(
-    val name: String,
+import wolf.north.sitzer.enums.MuscleGroup
 
+data class Exercise(
+    val id: Int,
+    val name: String,
+    val description: String,
+    val muscleGroup: MuscleGroup,
+    val videoUrl: String
 ) {
 
 }

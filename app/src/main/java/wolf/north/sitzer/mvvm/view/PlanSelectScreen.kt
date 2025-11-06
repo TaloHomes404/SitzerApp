@@ -44,6 +44,7 @@ import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.CategoriesCarousel
 import wolf.north.sitzer.comps.ExercisePlan
+import wolf.north.sitzer.comps.MoreFiltersDialog
 import wolf.north.sitzer.comps.SelectedPlanBottomSheet
 import wolf.north.sitzer.mvvm.model.Plan
 import wolf.north.sitzer.mvvm.viewmodel.PlansViewModel
@@ -61,6 +62,8 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
     //bottom sheet control vals
     var showBottomSheet by remember { mutableStateOf(false) }
     var selectedPlan by remember { mutableStateOf<Plan?>(null) }
+    //more filters dialogbox
+    var showMoreFiltersDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -92,7 +95,9 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SectionTitle("Select A Workout Plan")
-                    Text("More Filters")
+                    Text(
+                        "More Filters",
+                        modifier = Modifier.clickable { showMoreFiltersDialog = true })
 
                 }
 
@@ -127,7 +132,19 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                         }
                     }
                 }
+                MoreFiltersDialog(
+                    onDismiss = { showMoreFiltersDialog = false },
+                    onClear = {  },
+                    onDone = {
+                        // Tu obsłuż wybrane filtry
+                        //TODO: zrobić czyszczenie filtrów
+                        showMoreFiltersDialog = false
+                    }
+                )
+
             }
+
+
         },
         bottomBar = {
             BottomAppBar(

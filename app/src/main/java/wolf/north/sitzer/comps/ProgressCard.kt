@@ -39,10 +39,11 @@ fun ProgressCard(
     progressCardDescription: String
 ) {
     Card(
-        modifier = Modifier
-            .width(160.dp)
-            .height(180.dp)
-            .padding(horizontal = 8.dp),
+        modifier = Modifier.run {
+            width(160.dp)
+                .height(160.dp)
+                .padding(horizontal = 8.dp)
+        },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White
@@ -56,22 +57,6 @@ fun ProgressCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Ikona więcej
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Icon(
-                    Icons.Outlined.MoreVert,
-                    contentDescription = "display more progress card",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clickable { }
-                )
-            }
-
             // Główny wskaźnik
             Box(
                 contentAlignment = Alignment.Center,
@@ -130,7 +115,7 @@ fun ProgressCardNumberIndicator(
     Card(
         modifier = Modifier
             .width(160.dp)
-            .height(180.dp)
+            .height(160.dp)
             .padding(horizontal = 8.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
@@ -145,22 +130,6 @@ fun ProgressCardNumberIndicator(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Ikona więcej
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Icon(
-                    Icons.Outlined.MoreVert,
-                    contentDescription = "display more progress card",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clickable { }
-                )
-            }
-
             // Główny wskaźnik
             Box(
                 contentAlignment = Alignment.Center,
