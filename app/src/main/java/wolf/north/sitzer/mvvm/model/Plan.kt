@@ -1,12 +1,14 @@
 package wolf.north.sitzer.mvvm.model
 
+import wolf.north.sitzer.enums.PlanDifficulty
+
 //Data class (Model) for plans in program
 
 data class Plan(
     val id: Int,
     val name: String,
     val description: String,
-    val category: String,  //For sorting (Full-body, lower, upper etc)
+    val category: PlanDifficulty,  //For sorting (Full-body, lower, upper etc)
     val imageRes: Int,
     val exercises: List<Exercise>,
     val exerciseCount: Int,

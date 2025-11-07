@@ -12,3 +12,9 @@ enum class MuscleGroup {
     WRISTS
 
 }
+
+enum class Difficulty {
+    BEGINNER,
+    INTERMEDIATE,
+    ADVANCED
+}

@@ -1,7 +1,7 @@
 package wolf.north.sitzer.enums
 
-enum class Difficulty {
+enum class PlanDifficulty {
     BEGINNER,
-    INTERMEDIATE,
+    MEDIUM,
     ADVANCED
 }

@@ -32,7 +32,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.ui.theme.SitzerTheme
 
 @Composable
@@ -68,7 +67,6 @@ fun DifficultyCarousel(selectedDifficulty: String, onDifficultySelected: (String
     //List of difficulties
     val difficulties = listOf(
         "Beginner",
-        "Novice",
         "Intermediate",
         "Advanced"
     )
@@ -83,7 +81,7 @@ fun DifficultyCarousel(selectedDifficulty: String, onDifficultySelected: (String
             FilterChip(
                 selected = (selectedDifficulty == difficulty),
                 onClick = { onDifficultySelected(difficulty) },
-                label = {Text(difficulty)}
+                label = { Text(difficulty) }
             )
 
         }

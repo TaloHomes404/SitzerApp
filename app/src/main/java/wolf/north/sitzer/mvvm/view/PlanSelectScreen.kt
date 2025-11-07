@@ -43,6 +43,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.CategoriesCarousel
+import wolf.north.sitzer.comps.DifficultyCarousel
 import wolf.north.sitzer.comps.ExercisePlan
 import wolf.north.sitzer.comps.MoreFiltersDialog
 import wolf.north.sitzer.comps.SelectedPlanBottomSheet
@@ -64,6 +65,8 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
     var selectedPlan by remember { mutableStateOf<Plan?>(null) }
     //more filters dialogbox
     var showMoreFiltersDialog by remember { mutableStateOf(false) }
+    //more filters sorting options show vals
+    var showDifficultyCarousel by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -105,6 +108,8 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     selectedCategory = selectedCategory,
                     onCategorySelected = { viewModel.selectedCategory(it) })
 
+                if (showDifficultyCarousel) DifficultyCarousel() { }
+
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // LazyColumn with plans + filters
@@ -134,10 +139,10 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                 }
                 MoreFiltersDialog(
                     onDismiss = { showMoreFiltersDialog = false },
-                    onClear = {  },
+                    onClear = {
+                        showMoreFiltersDialog = false
+                    },
                     onDone = {
-                        // Tu obsłuż wybrane filtry
-                        //TODO: zrobić czyszczenie filtrów
                         showMoreFiltersDialog = false
                     }
                 )
