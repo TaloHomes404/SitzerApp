@@ -47,18 +47,19 @@ import wolf.north.sitzer.comps.DifficultyCarousel
 import wolf.north.sitzer.comps.ExercisePlan
 import wolf.north.sitzer.comps.MoreFiltersDialog
 import wolf.north.sitzer.comps.SelectedPlanBottomSheet
+import wolf.north.sitzer.enums.PlanDifficulty
 import wolf.north.sitzer.mvvm.model.Plan
-import wolf.north.sitzer.mvvm.viewmodel.PlansViewModel
+import wolf.north.sitzer.mvvm.viewmodel.PlanSelectScreenViewModel
 import wolf.north.sitzer.navigation.Screens
-import wolf.north.sitzer.repository.ExerciseRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlanSelectScreen(navController: NavHostController = rememberNavController()) {
 
-    val viewModel: PlansViewModel = viewModel()
+    val viewModel: PlanSelectScreenViewModel = viewModel()
     val selectedCategory by viewModel.selectedCategory.collectAsState()
-    val filteredPlans = viewModel.getPlansSortByCategory()
+    val selectedDifficulty by viewModel.selectedDifficulty.collectAsState()
+    val filteredPlans by viewModel.plans.collectAsState()
 
     //bottom sheet control vals
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -108,7 +109,16 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     selectedCategory = selectedCategory,
                     onCategorySelected = { viewModel.selectedCategory(it) })
 
-                if (showDifficultyCarousel) DifficultyCarousel() { }
+                if (showDifficultyCarousel) {
+                    DifficultyCarousel(
+                        selectedDifficulty = selectedDifficulty?.name ?: "",
+                        onDifficultySelected = { difficultyName ->
+                            viewModel.selectedDifficulty(
+                                PlanDifficulty.valueOf(difficultyName)
+                            )
+                        })
+
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -223,7 +233,7 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                 showBottomSheet = false
                 navController.navigate(Screens.WorkoutHub)
             },
-            exercises = ExerciseRepository.getExercisesForPlan(selectedPlan!!.id)
+            exercises = selectedPlan!!.exercises
         )
     }
 

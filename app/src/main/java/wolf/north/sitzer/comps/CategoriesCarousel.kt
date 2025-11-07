@@ -33,19 +33,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import wolf.north.sitzer.comps.ui.theme.SitzerTheme
+import wolf.north.sitzer.enums.MuscleGroup
 
 @Composable
-fun CategoriesCarousel(selectedCategory: String, onCategorySelected: (String) -> Unit) {
+fun CategoriesCarousel(selectedCategory: MuscleGroup?, onCategorySelected: (MuscleGroup) -> Unit) {
 
     //List of category
-    val categories = listOf(
-        "All",
-        "Full Body",
-        "Upper Body",
-        "Lower Body",
-        "Mobility"
-    )
-
+    val categories = MuscleGroup.entries.toTypedArray()
 
     //Categories lazyrow
     LazyRow(
@@ -56,7 +50,9 @@ fun CategoriesCarousel(selectedCategory: String, onCategorySelected: (String) ->
             FilterChip(
                 selected = (selectedCategory == category),
                 onClick = { onCategorySelected(category) },
-                label = { Text(category) })
+                label = {
+                    Text(category.name.lowercase().replaceFirstChar { it.uppercase() }) }
+            )
         }
     }
 }

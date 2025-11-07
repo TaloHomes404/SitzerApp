@@ -9,25 +9,5 @@ import wolf.north.sitzer.repository.PlansRepository
 
 class PlansViewModel : ViewModel() {
 
-    private val _selectedCategory = MutableStateFlow("All")
-    val selectedCategory: StateFlow<String> = _selectedCategory.asStateFlow()
 
-    private val _plans = MutableStateFlow<List<Plan>>(emptyList())
-    val plans: StateFlow<List<Plan>> = _plans.asStateFlow()
-
-    init {
-        loadPlans()
-    }
-
-    fun loadPlans() {
-        _plans.value = PlansRepository.getAllPlans()
-    }
-
-    fun selectedCategory(category: String) {
-        _selectedCategory.value = category
-    }
-
-    fun getPlansSortByCategory(): List<Plan> {
-        return PlansRepository.getPlansSortByCategory(_selectedCategory.value)
-    }
 }

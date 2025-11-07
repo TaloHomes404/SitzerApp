@@ -130,7 +130,7 @@ fun SelectedPlanBottomSheet(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = plan.difficulty,
+                    text = plan.difficulty.name,
                     color = Color.White.copy(alpha = 0.7f),
                     fontSize = 14.sp,
                     lineHeight = 20.sp
@@ -273,9 +273,5 @@ fun ExerciseItem(exercise: Exercise) {
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-private fun SelectedPlanBottomSheetPreview() {
-}
 
 

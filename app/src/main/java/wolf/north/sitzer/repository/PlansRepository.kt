@@ -1,6 +1,6 @@
 package wolf.north.sitzer.repository
 
-import wolf.north.sitzer.enums.Difficulty
+import wolf.north.sitzer.enums.MuscleGroup
 import wolf.north.sitzer.enums.PlanDifficulty
 import wolf.north.sitzer.mvvm.model.Plan
 
@@ -15,7 +15,7 @@ object PlansRepository {
             id = 1,
             name = "Posture Reset",
             description = "Full-body session to release tension and activate postural muscles. Perfect after long hours at a desk.",
-            category = PlanDifficulty.BEGINNER,
+            category = MuscleGroup.CORE,
             imageRes = 1,
             exercises = listOf(
                 ExerciseRepository.exerciseList[6],  // Chin Tucks
@@ -26,7 +26,7 @@ object PlansRepository {
             ),
             exerciseCount = 5,
             duration = 10,
-            difficulty = Difficulty.ADVANCED.name,
+            difficulty = PlanDifficulty.BEGINNER,
             isPremium = false
         ),
 
@@ -34,7 +34,7 @@ object PlansRepository {
             id = 4,
             name = "Upper Mobility Flow",
             description = "A gentle sequence that opens the chest, improves shoulder mobility and relieves neck tension.",
-            category = PlanDifficulty.BEGINNER,
+            category = MuscleGroup.CORE,
             imageRes = 1,
             exercises = listOf(
                 ExerciseRepository.exerciseList[22], // Doorway Stretch
@@ -45,7 +45,7 @@ object PlansRepository {
             ),
             exerciseCount = 5,
             duration = 10,
-            difficulty = Difficulty.BEGINNER.name,
+            difficulty = PlanDifficulty.BEGINNER,
             isPremium = false
         ),
 
@@ -53,7 +53,7 @@ object PlansRepository {
             id = 3,
             name = "Lower Body Balance",
             description = "Improve hip and leg stability through bodyweight movements that build functional strength and posture.",
-            category = PlanDifficulty.MEDIUM,
+            category = MuscleGroup.LEGS,
             imageRes = 1,
             exercises = listOf(
                 ExerciseRepository.exerciseList[4],  // Bodyweight Squats
@@ -64,14 +64,14 @@ object PlansRepository {
             ),
             exerciseCount = 5,
             duration = 15,
-            difficulty = Difficulty.BEGINNER.name,
+            difficulty = PlanDifficulty.BEGINNER,
             isPremium = false
         ),
         Plan(
             id = 2,
             name = "Core Stabilization",
             description = "Strengthen deep core muscles and improve spinal stability for better posture and movement control.",
-            category = PlanDifficulty.BEGINNER,
+            category = MuscleGroup.CORE,
             imageRes = 1,
             exercises = listOf(
                 ExerciseRepository.exerciseList[0], // Plank
@@ -82,15 +82,23 @@ object PlansRepository {
             ),
             exerciseCount = 5,
             duration = 12,
-            difficulty = Difficulty.BEGINNER.name,
+            difficulty = PlanDifficulty.BEGINNER,
             isPremium = false
         )
     )
 
 
-    //Method to load all plans
-    fun getAllPlans(): List<Plan> {
-        return plansList
+    //Method to filter plans later in program
+    //example: click category/difficulty (or both) on carousel
+    //load plans sorted by one/both/none filter
+    fun getPlansFiltered(
+        category: MuscleGroup? = null,
+        difficulty: PlanDifficulty? = null
+    ): List<Plan> {
+        return plansList.filter { plan ->
+            (category == null || plan.category == category) &&
+                    (difficulty == null || plan.difficulty == difficulty)
+        }
     }
 
 
