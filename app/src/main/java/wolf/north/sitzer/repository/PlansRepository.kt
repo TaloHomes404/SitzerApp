@@ -88,6 +88,29 @@ object PlansRepository {
     )
 
 
+    //daily plans in rotation
+    val dailyPlansList = listOf(
+        Plan(
+            id = 1,
+            name = "Monday Stretching",
+            description = "No better start of the week than stretching whole body making it ready for week",
+            category = MuscleGroup.CORE,
+            imageRes = 1,
+            exercises = listOf(
+                ExerciseRepository.exerciseList[6],  // Chin Tucks
+                ExerciseRepository.exerciseList[9],  // Wall Angels
+                ExerciseRepository.exerciseList[19], // Superman Hold
+                ExerciseRepository.exerciseList[14], // Cobra Pose
+                ExerciseRepository.exerciseList[3]   // Dead Bug
+            ),
+            exerciseCount = 5,
+            duration = 10,
+            difficulty = PlanDifficulty.BEGINNER,
+            isPremium = false
+        ),
+    )
+
+
     //Method to filter plans later in program
     //example: click category/difficulty (or both) on carousel
     //load plans sorted by one/both/none filter

@@ -50,28 +50,20 @@ import wolf.north.sitzer.comps.ExercisePlan
 import wolf.north.sitzer.comps.ProgressCard
 import wolf.north.sitzer.comps.ProgressCardNumberIndicator
 import wolf.north.sitzer.comps.WorkoutCardButtoned
-import wolf.north.sitzer.mvvm.viewmodel.PlansViewModel
+import wolf.north.sitzer.mvvm.viewmodel.HomeScreenViewModel
 import wolf.north.sitzer.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
-//    //State to remember selected category
-//    var selectedCategory by remember { mutableStateOf("All") }
-//
-//
-//    val allPlans = remember { PlansRepository.getAllPlans() }
-//    val filteredPlans = remember(selectedCategory) {
-//        PlansRepository.getPlansSortByCategory(selectedCategory)
-//    }
-    val viewModel: PlansViewModel = viewModel()
+    //vm
+    val viewModel: HomeScreenViewModel = viewModel()
+    //list of plans
+    val plans by viewModel.plans.collectAsState()
+    //category selected (or to be selected)
     val selectedCategory by viewModel.selectedCategory.collectAsState()
-    val filteredPlans = viewModel.getPlansSortByCategory()
-
-
-
-
+    val filteredPlans = viewModel.getPlansForCategory(selectedCategory)
 
     Scaffold(
         containerColor = Color(0xFFF8F9FA),
@@ -119,7 +111,9 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 )
 
                 WorkoutCardButtoned(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 2.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 2.dp),
                     image = R.drawable.mobilityimgcard,
                     workoutName = "Mobility Morning",
                     buttonText = "Start Session"
@@ -178,7 +172,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
                 CategoriesCarousel(
                     selectedCategory = selectedCategory,
-                    onCategorySelected = { viewModel.selectedCategory(it) })
+                    onCategorySelected = { viewModel.onCategorySelected(it) })
 
                 Spacer(modifier = Modifier.height(8.dp))
 
