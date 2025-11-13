@@ -8,7 +8,7 @@ fun OnboardingManager(
     viewModel: HomeScreenViewModel,
     currentStep: Int
 ) {
-
+    //Manager to control onboarding overlay display
     when (currentStep) {
         0 -> OnboardingIntroductionOverlay(onNext = { viewModel.nextOnboardingStep() })
         1 -> OurMissionCard(onNext = { viewModel.nextOnboardingStep() })
