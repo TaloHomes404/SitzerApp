@@ -28,8 +28,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,12 +48,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.delay
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.CategoriesCarousel
 import wolf.north.sitzer.comps.ExercisePlan
 import wolf.north.sitzer.comps.ProgressCard
 import wolf.north.sitzer.comps.ProgressCardNumberIndicator
 import wolf.north.sitzer.comps.WorkoutCardButtoned
+import wolf.north.sitzer.comps.onboarding.OnboardingManager
 import wolf.north.sitzer.mvvm.viewmodel.HomeScreenViewModel
 import wolf.north.sitzer.navigation.Screens
 
@@ -64,6 +70,19 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
     //category selected (or to be selected)
     val selectedCategory by viewModel.selectedCategory.collectAsState()
     val filteredPlans = viewModel.getPlansForCategory(selectedCategory)
+    //sharedpreferences onboarding value to control state
+    val hasSeenOnboarding by viewModel.hasSeenOverboarding.collectAsState()
+    val onboardingStep by viewModel.currentOnboardingStep.collectAsState()
+    var showOnboarding by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if (!hasSeenOnboarding) {
+            delay(1000)
+            showOnboarding = true
+        }
+    }
+
+
 
     Scaffold(
         containerColor = Color(0xFFF8F9FA),
@@ -93,7 +112,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(id = R.color.welcome_screen_bg) // Zmień na żądany kolor
+                    containerColor = colorResource(id = R.color.welcome_screen_bg)
                 )
             )
         },
@@ -186,6 +205,12 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                         ExercisePlan(plan.imageRes, plan.name, plan.duration, plan.exerciseCount)
                     }
                 }
+
+                //Turn on onboarding overlay after 1s with launchedeffect
+                if (showOnboarding && !hasSeenOnboarding) {
+                    OnboardingManager(viewModel = viewModel, currentStep = onboardingStep)
+                }
+
             }
         },
         bottomBar = {

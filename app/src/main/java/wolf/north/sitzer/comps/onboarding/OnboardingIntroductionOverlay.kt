@@ -1,4 +1,4 @@
-package wolf.north.sitzer.comps
+package wolf.north.sitzer.comps.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,7 +38,7 @@ import wolf.north.sitzer.comps.ui.theme.SitzerTheme
 
 
 @Composable
-fun OnboardingIntroductionOverlay() {
+fun OnboardingIntroductionOverlay(onNext: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -74,7 +74,7 @@ fun OnboardingIntroductionOverlay() {
 
                 }
             }
-            ElevatedButton(onClick = {}, Modifier.width(160.dp)) {
+            ElevatedButton(onClick = onNext, Modifier.width(160.dp)) {
                 Text("Continue")
             }
         }
@@ -83,7 +83,7 @@ fun OnboardingIntroductionOverlay() {
 }
 
 @Composable
-fun FinalOnboardingInfo() {
+fun FinalOnboardingInfo(onContinue: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -119,7 +119,7 @@ fun FinalOnboardingInfo() {
 
                 }
             }
-            ElevatedButton(onClick = {}, Modifier.width(160.dp)) {
+            ElevatedButton(onClick = onContinue, Modifier.width(160.dp)) {
                 Text("Ready")
             }
         }
@@ -128,7 +128,7 @@ fun FinalOnboardingInfo() {
 }
 
 @Composable
-fun OurMissionCard() {
+fun OurMissionCard(onNext: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -204,7 +204,7 @@ fun OurMissionCard() {
                                 fontSize = 14.sp
                             )
 
-                            ElevatedButton(onClick = {}, Modifier.width(160.dp)) {
+                            ElevatedButton(onClick = onNext, Modifier.width(160.dp)) {
                                 Text("Continue")
                             }
                         }
@@ -219,7 +219,7 @@ fun OurMissionCard() {
 }
 
 @Composable
-fun HomeOnboardingInfo() {
+fun HomeOnboardingInfo(onNext: () -> Unit) {
     Box(
         contentAlignment = Alignment.BottomStart,
         modifier = Modifier
@@ -270,7 +270,7 @@ fun HomeOnboardingInfo() {
 
                 }
             }
-            ElevatedButton(onClick = {}, Modifier.width(160.dp)) {
+            ElevatedButton(onClick = onNext, Modifier.width(160.dp)) {
                 Text("Continue")
             }
         }
@@ -279,7 +279,7 @@ fun HomeOnboardingInfo() {
 }
 
 @Composable
-fun WorkoutOnboardingInfo() {
+fun WorkoutOnboardingInfo(onNext: () -> Unit) {
     Box(
         contentAlignment = Alignment.BottomCenter,
         modifier = Modifier
@@ -330,7 +330,7 @@ fun WorkoutOnboardingInfo() {
 
                 }
             }
-            ElevatedButton(onClick = {}, Modifier.width(160.dp)) {
+            ElevatedButton(onClick = onNext, Modifier.width(160.dp)) {
                 Text("Continue")
             }
         }
@@ -339,7 +339,7 @@ fun WorkoutOnboardingInfo() {
 }
 
 @Composable
-fun ProfileOnboardingInfo() {
+fun ProfileOnboardingInfo(onNext: () -> Unit) {
     Box(
         contentAlignment = Alignment.BottomEnd,
         modifier = Modifier
@@ -379,7 +379,7 @@ fun ProfileOnboardingInfo() {
 
                 }
             }
-            ElevatedButton(onClick = {}, Modifier.width(160.dp)) {
+            ElevatedButton(onClick = onNext, Modifier.width(160.dp)) {
                 Text("Continue")
             }
         }
