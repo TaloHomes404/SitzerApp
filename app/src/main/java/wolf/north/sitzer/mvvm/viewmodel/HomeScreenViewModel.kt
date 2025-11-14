@@ -2,6 +2,7 @@ package wolf.north.sitzer.mvvm.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -12,8 +13,11 @@ import wolf.north.sitzer.enums.MuscleGroup
 import wolf.north.sitzer.mvvm.model.Plan
 import wolf.north.sitzer.repository.PlansRepository
 import wolf.north.sitzer.repository.datastore.UserPreferencesRepository
+import javax.inject.Inject
 
-class HomeScreenViewModel(private val userPreferences: UserPreferencesRepository) : ViewModel() {
+@HiltViewModel
+class HomeScreenViewModel @Inject constructor(private val userPreferences: UserPreferencesRepository) :
+    ViewModel() {
 
     //vals for onboarding in homescreen (datastore + overlay)
     val hasSeenOverboarding = userPreferences.hasSeenOnboarding.stateIn(

@@ -1,6 +1,7 @@
 package wolf.north.sitzer.mvvm.view
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -192,7 +193,9 @@ fun RegisterScreen(
                         )
 
                         ElevatedButton(
-                            onClick = { viewModel.RegisterUser() },
+                            onClick = {
+                                Log.d("REGISTER", "Clicked register")
+                                viewModel.RegisterUser() },
                             elevation = ButtonDefaults.elevatedButtonElevation(
                                 defaultElevation = 4.dp,
                                 pressedElevation = 8.dp

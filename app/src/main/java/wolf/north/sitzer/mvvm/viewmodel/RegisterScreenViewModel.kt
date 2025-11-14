@@ -1,5 +1,6 @@
 package wolf.north.sitzer.mvvm.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -45,6 +46,7 @@ class RegisterScreenViewModel @Inject constructor(private val repository: UserRe
         viewModelScope.launch {
 
             try {
+                Log.d("REGISTER", "RegisterUser() run")
                 repository.registerUserWithCredentials(firstName, email, password)
                 registrationSuccess = true
 

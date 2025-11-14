@@ -45,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -64,7 +65,7 @@ import wolf.north.sitzer.navigation.Screens
 fun HomeScreen(navController: NavHostController = rememberNavController()) {
 
     //vm
-    val viewModel: HomeScreenViewModel = viewModel()
+    val viewModel: HomeScreenViewModel = hiltViewModel()
     //list of plans
     val plans by viewModel.plans.collectAsState()
     //category selected (or to be selected)

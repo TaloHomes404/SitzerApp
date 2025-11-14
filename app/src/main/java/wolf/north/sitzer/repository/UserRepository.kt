@@ -1,5 +1,6 @@
 package wolf.north.sitzer.repository
 
+import android.util.Log
 import wolf.north.sitzer.database.UserDao
 import wolf.north.sitzer.database.UserEntity
 import wolf.north.sitzer.mvvm.model.User
@@ -10,6 +11,7 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(private val userDao: UserDao) {
 
     suspend fun registerUserWithCredentials(firstName: String, email: String, password: String) {
+        Log.d("REGISTER", "Calling Firebase")
         val userEntity = UserEntity(firstName = firstName, email = email, password = password)
         userDao.insertUser(userEntity)
     }
