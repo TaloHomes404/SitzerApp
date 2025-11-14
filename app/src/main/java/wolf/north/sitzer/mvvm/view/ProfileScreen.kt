@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Notifications
@@ -36,12 +35,18 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,9 +58,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
+import wolf.north.sitzer.comps.profile.ProfileInfoBottomSheet
+import wolf.north.sitzer.mvvm.viewmodel.ProfileScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,6 +71,14 @@ fun ProfileScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
+
+    //vm
+    val viewmodel: ProfileScreenViewModel = viewModel()
+
+    //profile info change bottom sheet controler
+    var showProfileBottomSheet by remember { mutableStateOf(false) }
+    val profileSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -198,7 +214,7 @@ fun ProfileScreen(
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                )
+            )
 
             Spacer(modifier = Modifier.height(4.dp))
 
@@ -247,7 +263,7 @@ fun ProfileScreen(
                     MenuOption(
                         icon = Icons.Default.Person,
                         text = "Profile info",
-                        onClick = { }
+                        onClick = { showProfileBottomSheet = true }
                     )
                     MenuOption(
                         icon = Icons.Default.Settings,
@@ -267,6 +283,15 @@ fun ProfileScreen(
                     )
                 }
             }
+        }
+    }
+    if (showProfileBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showProfileBottomSheet = false },
+            sheetState = profileSheetState,
+            containerColor = Color(0xFF1C1C1E)
+        ) {
+            ProfileInfoBottomSheet(viewmodel, onDismiss = { showProfileBottomSheet = false })
         }
     }
 }

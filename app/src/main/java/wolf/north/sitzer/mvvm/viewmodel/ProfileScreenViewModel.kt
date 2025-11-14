@@ -1,11 +1,17 @@
 package wolf.north.sitzer.mvvm.viewmodel
 
 import android.net.Uri
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import wolf.north.sitzer.repository.datastore.NotificationsPreferencesRepository
 
 
 data class ProfileUiState(
@@ -21,11 +27,34 @@ data class ProfileUiState(
     val errorMessage: String? = null
 )
 
-class ProfileScreenViewModel() : ViewModel() {
+data class NotificationSettingsUi(
+    val daily: Boolean = true,
+    val planOfTheDay: Boolean = true,
+    val weeklySummary: Boolean = true
+)
+
+
+class ProfileScreenViewModel(private val notificationRepo: NotificationsPreferencesRepository) :
+    ViewModel() {
 
     //vals to hold user profile model in uistate
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState
+
+    //configurations asigned to val (notifications pref flow)
+    val notificationSettings: StateFlow<NotificationSettingsUi> =
+        notificationRepo.notificationPrefs.map { prefs ->
+            NotificationSettingsUi(
+                daily = prefs.daily,
+                planOfTheDay = prefs.plan,
+                weeklySummary = prefs.weekly
+            )
+        }
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
+                NotificationSettingsUi()
+            )
 
     //initial method to load data from repo/model/db TODO: zrobić dobrze ( w sensie metode...)
     fun loadProfile(initUsername: String, initEmail: String, avatarUri: Uri?) {
@@ -72,7 +101,7 @@ class ProfileScreenViewModel() : ViewModel() {
 
     //simple validation on email - using android utils
     private fun validateEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     private fun validatePassword(password: String): Boolean {
@@ -97,7 +126,7 @@ class ProfileScreenViewModel() : ViewModel() {
             try {
                 //TODO: autoryzacja haseł / zapisywanie i convert pfp / update modelu usera w ROOM
                 //na potrzeby MVP narazie delay tylko
-                kotlinx.coroutines.delay(1000)
+                delay(1000)
 
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
@@ -114,6 +143,19 @@ class ProfileScreenViewModel() : ViewModel() {
             }
 
         }
+    }
+
+    //methods for notifications
+    fun toggleDaily(enabled: Boolean) = viewModelScope.launch {
+        notificationRepo.setDaily(enabled)
+    }
+
+    fun togglePlan(enabled: Boolean) = viewModelScope.launch {
+        notificationRepo.setPlan(enabled)
+    }
+
+    fun toggleWeekly(enabled: Boolean) = viewModelScope.launch {
+        notificationRepo.setWeekly(enabled)
     }
 
 
