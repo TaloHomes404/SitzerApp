@@ -9,7 +9,8 @@ enum class MuscleGroup {
     GLUTES,
     KNEES,
     LEGS,
-    WRISTS
+    WRISTS,
+    CHEST
 
 }
 

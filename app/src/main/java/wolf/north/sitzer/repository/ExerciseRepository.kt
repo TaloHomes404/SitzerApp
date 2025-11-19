@@ -10,174 +10,201 @@ object ExerciseRepository {
 
 
     val exerciseList = listOf(
-
         Exercise(
             id = 1,
-            name = "Plank",
-            description = "Builds core stability, supports proper posture",
+            name = "Bicycle Crunch",
+            description = "Targets obliques and builds rotational core strength with alternating knee-to-elbow movement",
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = "placeholder"
+            videoUrl = "bicycle_crunch"
         ),
         Exercise(
             id = 2,
-            name = "Bird Dog",
-            description = "Improves core coordination and balance",
-            muscleGroup = MuscleGroup.CORE,
-            videoUrl = "placeholder"
+            name = "Standing Calves Raises",
+            description = "Strengthens calf muscles and improves ankle stability for better posture",
+            muscleGroup = MuscleGroup.LEGS,
+            videoUrl = "calves-raises-standing"
         ),
         Exercise(
             id = 3,
             name = "Dead Bug",
-            description = "Trains core stability while moving limbs",
+            description = "Trains core stability while moving limbs independently - essential for functional strength",
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = "placeholder"
+            videoUrl = "deadbug"
         ),
         Exercise(
             id = 4,
-            name = "Hip Bridge",
-            description = "Activates glutes and improves hip extension",
-            muscleGroup = MuscleGroup.HIPS,
-            videoUrl = "placeholder"
+            name = "Single Leg Glute March",
+            description = "Activates glutes and improves single-leg stability and hip control",
+            muscleGroup = MuscleGroup.GLUTES,
+            videoUrl = "single_leg_glute_march"
         ),
         Exercise(
             id = 5,
             name = "Bodyweight Squats",
-            description = "Strengthens legs and improves knee stability",
-            muscleGroup = MuscleGroup.HIPS,
-            videoUrl = "placeholder"
+            description = "Fundamental lower body exercise strengthening quads, glutes and improving knee stability",
+            muscleGroup = MuscleGroup.LEGS,
+            videoUrl = "bodyweight_squat"
         ),
         Exercise(
             id = 6,
             name = "Side Plank",
-            description = "Strengthens oblique muscles for better core support",
+            description = "Strengthens oblique muscles and lateral core for better stability and injury prevention",
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = "placeholder"
+            videoUrl = "side_plank"
         ),
         Exercise(
             id = 7,
-            name = "Chin Tucks",
-            description = "desc",
-            muscleGroup = MuscleGroup.NECK,
-            videoUrl = "placeholder"
+            name = "Push-ups",
+            description = "Classic upper body compound movement targeting chest, shoulders and triceps",
+            muscleGroup = MuscleGroup.CHEST,
+            videoUrl = "pushups"
         ),
         Exercise(
             id = 8,
-            name = "Neck Curls",
-            description = "desc",
-            muscleGroup = MuscleGroup.NECK,
-            videoUrl = "placeholder"
+            name = "Russian Twists",
+            description = "Dynamic rotational core exercise building oblique strength and anti-rotation power",
+            muscleGroup = MuscleGroup.CORE,
+            videoUrl = "russian_twist"
         ),
         Exercise(
             id = 9,
             name = "Wall Angels",
-            description = "Corrects forward shoulder posture, opens chest",
+            description = "Corrects forward shoulder posture, opens chest and improves shoulder mobility",
             muscleGroup = MuscleGroup.SHOULDERS,
-            videoUrl = "placeholder"
+            videoUrl = "wall_angels"
         ),
         Exercise(
             id = 10,
-            name = "Y Raises",
-            description = "Corrects forward shoulder posture",
-            muscleGroup = MuscleGroup.SHOULDERS,
-            videoUrl = "placeholder"
+            name = "Wall Sit",
+            description = "Isometric hold building quad endurance, mental toughness and lower body stamina",
+            muscleGroup = MuscleGroup.LEGS,
+            videoUrl = "wall_sit"
         ),
         Exercise(
             id = 11,
             name = "Reverse Plank",
-            description = "Builds core stability, supports proper posture",
+            description = "Builds posterior chain strength, core stability and opens hip flexors",
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = "placeholder"
+            videoUrl = "reverse_plank"
         ),
         Exercise(
             id = 12,
-            name = "Glutes Bridge",
-            description = "Activates glutes and improves hip extension",
+            name = "Donkey Kicks",
+            description = "Isolates and activates glute muscles while maintaining core stability",
             muscleGroup = MuscleGroup.GLUTES,
-            videoUrl = "placeholder"
+            videoUrl = "donkeykicks1"
         ),
         Exercise(
             id = 13,
-            name = "Single Leg Glutes Bridge",
-            description = "Activates glutes and improves hip extension",
+            name = "Donkey Kicks Variation",
+            description = "Alternative glute activation pattern for complete posterior chain development",
             muscleGroup = MuscleGroup.GLUTES,
-            videoUrl = "placeholder"
+            videoUrl = "donkeykicks2"
         ),
         Exercise(
             id = 14,
             name = "Cobra Pose",
-            description = "lowerback-glute etc",
+            description = "Gentle back extension that stretches hip flexors, opens chest and strengthens lower back",
             muscleGroup = MuscleGroup.BACK,
-            videoUrl = "placeholder"
+            videoUrl = "cobra_pose"
         ),
         Exercise(
             id = 15,
-            name = "Bodyweight Lunges",
-            description = "legs quads core",
+            name = "Walking Lunges",
+            description = "Dynamic lunge variation building leg strength, balance and functional movement patterns",
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = "placeholder"
+            videoUrl = "walking_lunges"
         ),
         Exercise(
             id = 16,
-            name = "Standing Band Pull-Aparts",
-            description = "Strengthens rear delts and upper back",
-            muscleGroup = MuscleGroup.SHOULDERS,
-            videoUrl = "placeholder"
+            name = "Close-Grip Push-ups",
+            description = "Tricep-focused push-up variation that also engages chest and core",
+            muscleGroup = MuscleGroup.CHEST,
+            videoUrl = "closegrip_pushups"
         ),
         Exercise(
             id = 17,
-            name = "Child’s Pose",
-            description = "Relaxes spine and gently stretches the lower back",
-            muscleGroup = MuscleGroup.BACK,
-            videoUrl = "placeholder"
+            name = "Crunches",
+            description = "Classic abdominal exercise targeting the upper rectus abdominis",
+            muscleGroup = MuscleGroup.CORE,
+            videoUrl = "crunches"
         ),
         Exercise(
             id = 18,
-            name = "Standing Calf Raises",
-            description = "Improves lower leg strength and posture support",
-            muscleGroup = MuscleGroup.LEGS,
-            videoUrl = "placeholder"
+            name = "Kneeling Push-ups",
+            description = "Modified push-up perfect for building upper body strength progressively",
+            muscleGroup = MuscleGroup.CHEST,
+            videoUrl = "kneeling_pushups"
         ),
         Exercise(
             id = 19,
             name = "Superman Hold",
-            description = "Strengthens lower back and promotes spinal alignment",
+            description = "Strengthens entire posterior chain and promotes proper spinal alignment",
             muscleGroup = MuscleGroup.BACK,
-            videoUrl = "placeholder"
+            videoUrl = "superman_hold"
         ),
         Exercise(
             id = 20,
-            name = "Wrist Flexor Stretch",
-            description = "bla bla bla strech",
-            muscleGroup = MuscleGroup.WRISTS,
-            videoUrl = "placeholder"
+            name = "Sumo Squat",
+            description = "Wide-stance squat emphasizing inner thighs, glutes and hip mobility",
+            muscleGroup = MuscleGroup.LEGS,
+            videoUrl = "sumo_squat"
         ),
         Exercise(
             id = 21,
-            name = "Wrist Extensor Stretch",
-            description = "bla bla bla strech",
-            muscleGroup = MuscleGroup.WRISTS,
-            videoUrl = "placeholder"
+            name = "Single Leg Quad Stretch",
+            description = "Stretches front thigh muscles and hip flexors, improves flexibility",
+            muscleGroup = MuscleGroup.LEGS,
+            videoUrl = "quad-stretch"
         ),
         Exercise(
             id = 22,
-            name = "Doorway Stretch",
-            description = "bla bla bla strech",
-            muscleGroup = MuscleGroup.SHOULDERS,
-            videoUrl = "placeholder"
+            name = "Hamstrings Stretch Walk",
+            description = "Dynamic hamstring stretch with movement for improved flexibility and mobility",
+            muscleGroup = MuscleGroup.LEGS,
+            videoUrl = "hamstring-single-walk"
         ),
         Exercise(
             id = 23,
-            name = "Wall Sits",
-            description = "bla bla bla wall sit",
+            name = "Reverse Lunges",
+            description = "Knee-friendly lunge variation targeting quads, glutes and improving balance",
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = "placeholder"
+            videoUrl = "reverse_lunges"
         ),
         Exercise(
             id = 24,
-            name = "Scapular Push-ups",
-            description = "bla bla bla wall sit",
-            muscleGroup = MuscleGroup.SHOULDERS,
-            videoUrl = "placeholder"
+            name = "Lying Hamstrings Stretch",
+            description = "Gentle hamstring stretch that relieves lower back tension and improves flexibility",
+            muscleGroup = MuscleGroup.LEGS,
+            videoUrl = "hamstring_stretch"
+        ),
+        Exercise(
+            id = 25,
+            name = "Knee-raises Crunch",
+            description = "Dynamic crunch variation engaging upper abs with knee movement",
+            muscleGroup = MuscleGroup.CORE,
+            videoUrl = "crunch-tobknees"
+        ),
+        Exercise(
+            id = 26,
+            name = "Cat-Cow Pose",
+            description = "Spinal mobility flow promoting back health, flexibility and core awareness",
+            muscleGroup = MuscleGroup.BACK,
+            videoUrl = "cat_cow"
+        ),
+        Exercise(
+            id = 27,
+            name = "Reverse Crunches",
+            description = "Targets lower abdominals and hip flexors with controlled leg movement",
+            muscleGroup = MuscleGroup.CORE,
+            videoUrl = "reverse_crunch"
+        ),
+        Exercise(
+            id = 28,
+            name = "Wall Flexors Stretch",
+            description = "Stretches wrist and forearm flexors, essential for desk workers",
+            muscleGroup = MuscleGroup.WRISTS,
+            videoUrl = "wall_flexors_stretch"
         )
     )
 
