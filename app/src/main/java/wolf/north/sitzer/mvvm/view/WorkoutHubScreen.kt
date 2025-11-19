@@ -40,6 +40,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import wolf.north.sitzer.R
+import wolf.north.sitzer.comps.exerciseVideoPlayer.ExerciseVideoPlayer
 import wolf.north.sitzer.comps.toolsComps.Timer
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -152,11 +154,10 @@ fun WorkoutHubScreen(
                             .background(MaterialTheme.colorScheme.surface),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = "Miejsce na\nzdjęcie/filmik",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                            textAlign = TextAlign.Center
+                        ExerciseVideoPlayer(
+                            videoRes = R.raw.side_plank,
+                            modifier = Modifier
+                                .fillMaxSize()
                         )
                     }
 
@@ -274,6 +275,6 @@ fun WorkoutHubScreen(
 @Composable
 private fun WorkoutHubScreenPreview() {
     MaterialTheme {
-        WorkoutHubScreen ()
+        WorkoutHubScreen()
     }
 }
