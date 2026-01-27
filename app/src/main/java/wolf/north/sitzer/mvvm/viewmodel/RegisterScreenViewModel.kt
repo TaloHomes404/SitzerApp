@@ -23,6 +23,12 @@ class RegisterScreenViewModel @Inject constructor(private val repository: UserRe
     var registrationSuccess by mutableStateOf(false)
     var errorMessage by mutableStateOf("")
 
+    var passwordVisibility by mutableStateOf(false)
+
+
+    fun togglePasswordVisibility(){
+        passwordVisibility = !passwordVisibility
+    }
 
     fun RegisterUser() {
         //Podstawowa walidacja dla rejestracji

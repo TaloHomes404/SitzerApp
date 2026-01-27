@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
@@ -41,6 +43,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -164,13 +167,25 @@ fun RegisterScreen(
                                 Icon(Icons.Default.Key, contentDescription = null)
                             },
                             trailingIcon = {
-                                Icon(Icons.Default.VisibilityOff, contentDescription = null)
+                                Icon(
+                                    imageVector = if (viewModel.passwordVisibility)
+                                        Icons.Default.Visibility
+                                    else
+                                        Icons.Default.VisibilityOff,
+                                    contentDescription = if (viewModel.passwordVisibility) "Hide password" else "Show password",
+                                    modifier = Modifier.clickable {
+                                        viewModel.togglePasswordVisibility()
+                                    }
+                                )
                             },
                             value = viewModel.password,
                             onValueChange = { viewModel.password = it },
                             label = { Text(text = "Password") },
                             placeholder = { Text(text = "Enter your password") },
-                            visualTransformation = PasswordVisualTransformation(),
+                            visualTransformation = if (viewModel.passwordVisibility)
+                                VisualTransformation.None
+                            else
+                                PasswordVisualTransformation(),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 12.dp),
@@ -185,7 +200,10 @@ fun RegisterScreen(
                             onValueChange = { viewModel.confirmPassword = it },
                             label = { Text(text = "Confirm Password") },
                             placeholder = { Text(text = "Confirm your password") },
-                            visualTransformation = PasswordVisualTransformation(),
+                            visualTransformation = if (viewModel.passwordVisibility)
+                                VisualTransformation.None
+                            else
+                                PasswordVisualTransformation(),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 24.dp),
