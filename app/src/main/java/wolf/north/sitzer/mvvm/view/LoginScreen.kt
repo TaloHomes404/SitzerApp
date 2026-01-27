@@ -20,6 +20,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Key
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
@@ -30,6 +31,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,6 +44,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,6 +63,12 @@ fun LoginScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: LoginScreenViewModel = hiltViewModel()
 ) {
+
+    //**
+    //Login screen vals
+    //**
+
+
 
     //Inicjacja nawigacji gdy logowanie sie powiedzie
     LaunchedEffect(viewModel.loginSuccess) {
@@ -147,10 +158,22 @@ fun LoginScreen(
                             Icon(Icons.Default.Key, contentDescription = null)
                         },
                         trailingIcon = {
-                            Icon(Icons.Default.VisibilityOff, contentDescription = null)
+                            Icon(
+                                imageVector = if (viewModel.passwordVisibility)
+                                    Icons.Default.Visibility
+                                else
+                                    Icons.Default.VisibilityOff,
+                                contentDescription = if (viewModel.passwordVisibility) "Hide password" else "Show password",
+                                modifier = Modifier.clickable {
+                                    viewModel.togglePasswordVisibility()
+                                }
+                            )
                         },
                         label = { Text(text = "Password") },
-                        visualTransformation = PasswordVisualTransformation(),
+                        visualTransformation = if (viewModel.passwordVisibility)
+                            VisualTransformation.None
+                        else
+                            PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         modifier = Modifier
                             .fillMaxWidth()

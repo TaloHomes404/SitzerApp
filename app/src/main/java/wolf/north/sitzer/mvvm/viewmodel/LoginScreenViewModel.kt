@@ -19,6 +19,13 @@ class LoginScreenViewModel @Inject constructor(private val repository: UserRepos
     var loginSuccess by mutableStateOf(false)
     var errorMessage by mutableStateOf("")
 
+    var passwordVisibility by mutableStateOf(false)
+
+    fun togglePasswordVisibility() {
+        passwordVisibility = !passwordVisibility
+    }
+
+
     fun changePassword(newPassword: String) {
         password = newPassword
     }
