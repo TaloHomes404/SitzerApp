@@ -66,6 +66,7 @@ import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.profile.ProfileInfoBottomSheet
 import wolf.north.sitzer.mvvm.viewmodel.ProfileScreenViewModel
 import wolf.north.sitzer.navigation.Screens
+import wolf.north.sitzer.ui.theme.SitzerTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,11 +74,8 @@ fun ProfileScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
-
-    //vm
     val viewmodel: ProfileScreenViewModel = hiltViewModel()
 
-    //profile info change bottom sheet controler
     var showProfileBottomSheet by remember { mutableStateOf(false) }
     val profileSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
@@ -89,10 +87,12 @@ fun ProfileScreen(
                         modifier = Modifier.padding(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Profile", color = Color.White)
+                        Text("Profile", color = MaterialTheme.colorScheme.onPrimary)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = colorResource(id = R.color.welcome_screen_bg))
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
             )
         },
         bottomBar = {
@@ -100,8 +100,8 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
-                containerColor = colorResource(R.color.welcome_screen_bg),
-                contentColor = Color.Gray,
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 tonalElevation = 5.dp,
             ) {
                 Row(
@@ -116,16 +116,13 @@ fun ProfileScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-
                         Icon(
                             imageVector = Icons.Outlined.Home,
                             contentDescription = "Menu",
-                            tint = Color.Gray,
-                            modifier = Modifier.clickable {  navController.navigate(Screens.Home)  }
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.clickable { navController.navigate(Screens.Home) }
                         )
-
-                        Text("Home", color = Color.Gray)
-
+                        Text("Home", color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
 
                     Column(
@@ -135,10 +132,10 @@ fun ProfileScreen(
                         Icon(
                             imageVector = Icons.Outlined.SportsGymnastics,
                             contentDescription = "Workouts list bottom icon",
-                            tint = Color.Gray,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
                         )
-                        Text("Workouts", color = Color.Gray)
+                        Text("Workouts", color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
 
                     Column(
@@ -148,10 +145,10 @@ fun ProfileScreen(
                         Icon(
                             imageVector = Icons.Outlined.Person,
                             contentDescription = "Profile",
-                            tint = Color.White,
+                            tint = MaterialTheme.colorScheme.onPrimary,
                             modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
                         )
-                        Text("Profile", color = Color.White)
+                        Text("Profile", color = MaterialTheme.colorScheme.onPrimary)
                     }
                 }
             }
@@ -280,18 +277,19 @@ fun ProfileScreen(
                     MenuOption(
                         icon = Icons.Default.Help,
                         text = "Help",
-                        onClick = { },
+                        onClick = {},
                         showDivider = false
                     )
                 }
             }
         }
     }
+
     if (showProfileBottomSheet) {
         ModalBottomSheet(
             onDismissRequest = { showProfileBottomSheet = false },
             sheetState = profileSheetState,
-            containerColor = Color(0xFF1C1C1E)
+            containerColor = MaterialTheme.colorScheme.surface
         ) {
             ProfileInfoBottomSheet(viewmodel, onDismiss = { showProfileBottomSheet = false })
         }
@@ -346,7 +344,6 @@ private fun MenuOption(
                 tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.size(24.dp)
             )
-
             Spacer(modifier = Modifier.width(16.dp))
 
             Text(
@@ -378,7 +375,7 @@ private fun MenuOption(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ProfileScreenPreview() {
-    MaterialTheme {
+    SitzerTheme {
         ProfileScreen()
     }
 }

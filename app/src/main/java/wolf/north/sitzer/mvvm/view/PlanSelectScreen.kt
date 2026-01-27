@@ -21,6 +21,7 @@ import androidx.compose.material.icons.outlined.SportsGymnastics
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -36,8 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -55,18 +58,17 @@ import wolf.north.sitzer.navigation.Screens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlanSelectScreen(navController: NavHostController = rememberNavController()) {
-
     val viewModel: PlanSelectScreenViewModel = viewModel()
     val selectedCategory by viewModel.selectedCategory.collectAsState()
     val selectedDifficulty by viewModel.selectedDifficulty.collectAsState()
     val filteredPlans by viewModel.plans.collectAsState()
 
-    //bottom sheet control vals
+    // bottom sheet control vals
     var showBottomSheet by remember { mutableStateOf(false) }
     var selectedPlan by remember { mutableStateOf<Plan?>(null) }
-    //more filters dialogbox
+    // more filters dialogbox
     var showMoreFiltersDialog by remember { mutableStateOf(false) }
-    //more filters sorting options show vals
+    // more filters sorting options show vals
     var showDifficultyCarousel by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -77,37 +79,36 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                         modifier = Modifier.padding(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Select Plan", color = Color.White)
+                        Text(
+                            "Select Plan",
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = colorResource(id = R.color.welcome_screen_bg))
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
+                actions = {
+                    Text(
+                        "More Filters",
+                        modifier = Modifier.clickable { showMoreFiltersDialog = true },
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
             )
         },
         content = { paddingValues ->
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
             ) {
-                //3rd row
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 8.dp, end = 16.dp, top = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    SectionTitle("Select A Workout Plan")
-                    Text(
-                        "More Filters",
-                        modifier = Modifier.clickable { showMoreFiltersDialog = true })
-
-                }
-
                 CategoriesCarousel(
                     selectedCategory = selectedCategory,
-                    onCategorySelected = { viewModel.selectedCategory(it) })
+                    onCategorySelected = { viewModel.selectedCategory(it) }
+                )
 
                 if (showDifficultyCarousel) {
                     DifficultyCarousel(
@@ -116,13 +117,12 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                             viewModel.selectedDifficulty(
                                 PlanDifficulty.valueOf(difficultyName)
                             )
-                        })
-
+                        }
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // LazyColumn with plans + filters
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -130,8 +130,6 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     contentPadding = PaddingValues(horizontal = 16.dp)
                 ) {
                     items(filteredPlans) { plan ->
-
-                        //Box for onClick functionality to show bottomsheet + select plan
                         Box(
                             modifier = Modifier.clickable {
                                 selectedPlan = plan
@@ -147,27 +145,22 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                         }
                     }
                 }
+
                 if (showMoreFiltersDialog) {
                     MoreFiltersDialog(
                         onDismiss = { showMoreFiltersDialog = false },
-                        onClear = {
-                            showMoreFiltersDialog = false
-                        },
-                        onDone = {
-                            showMoreFiltersDialog = false
-                        }
+                        onClear = { showMoreFiltersDialog = false },
+                        onDone = { showMoreFiltersDialog = false }
                     )
                 }
             }
-
-
         },
         bottomBar = {
             BottomAppBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
-                containerColor = colorResource(R.color.welcome_screen_bg),
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.Gray,
                 tonalElevation = 5.dp,
             ) {
@@ -178,21 +171,17 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier.clickable { navController.navigate(Screens.Home) }
                     ) {
-
                         Icon(
                             imageVector = Icons.Outlined.Home,
                             contentDescription = "Menu",
-                            tint = Color.Gray,
+                            tint = Color.Gray
                         )
-
                         Text("Home", color = Color.Gray)
-
                     }
 
                     Column(
@@ -202,8 +191,8 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.SportsGymnastics,
-                            contentDescription = "Workouts list bottom icon",
-                            tint = Color.White,
+                            contentDescription = "Workouts",
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                         Text("Workouts", color = Color.Gray)
                     }
@@ -216,7 +205,7 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                         Icon(
                             imageVector = Icons.Outlined.Person,
                             contentDescription = "Profile",
-                            tint = Color.Gray,
+                            tint = Color.Gray
                         )
                         Text("Profile", color = Color.Gray)
                     }
@@ -225,20 +214,18 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
         }
     )
 
-    //Show bottomsheet implementation on PlanSelectScreen
+    // Bottom sheet
     if (showBottomSheet && selectedPlan != null) {
         SelectedPlanBottomSheet(
             plan = selectedPlan!!,
             onDismiss = { showBottomSheet = false },
             onStartWorkout = {
                 showBottomSheet = false
-                //Navigate to workouthub passing plan id as arg
                 navController.navigate(Screens.createWorkoutHubRoute(selectedPlan!!.id))
             },
             exercises = selectedPlan!!.exercises
         )
     }
-
 }
 
 @Preview(showSystemUi = true)

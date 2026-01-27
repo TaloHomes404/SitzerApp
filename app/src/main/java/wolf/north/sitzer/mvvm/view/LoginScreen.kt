@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,20 +25,16 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -63,45 +58,31 @@ fun LoginScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: LoginScreenViewModel = hiltViewModel()
 ) {
-
-    //**
-    //Login screen vals
-    //**
-
-
-
     //Inicjacja nawigacji gdy logowanie sie powiedzie
     LaunchedEffect(viewModel.loginSuccess) {
         if (viewModel.loginSuccess) {
-            navController.navigate(Screens.Home) { popUpTo(Screens.Login) { inclusive = true } }
+            navController.navigate(Screens.Home) {
+                popUpTo(Screens.Login) { inclusive = true }
+            }
         }
     }
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.primary
     ) { paddingValues ->
-        // Layout contentu
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .background(colorResource(R.color.welcome_screen_bg)),
+                .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
             // Logo na górze
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.sitzer_logo_nobg),
-                    contentDescription = "login site Sitzer logo",
-                    contentScale = ContentScale.Crop
-                )
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
+            Image(
+                painter = painterResource(R.drawable.sitzer_logo_nobg),
+                contentDescription = "login site Sitzer logo",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.padding(top = 48.dp, bottom = 24.dp)
+            )
 
             Box(
                 modifier = Modifier
@@ -110,19 +91,21 @@ fun LoginScreen(
                     .clip(
                         RoundedCornerShape(
                             topStart = 32.dp,
-                            topEnd = 32.dp,
-                            bottomEnd = 0.dp,
-                            bottomStart = 0.dp
+                            topEnd = 32.dp
                         )
                     )
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.surface)
                     .padding(24.dp)
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxHeight()
+                ) {
                     Text(
                         text = "Login",
                         fontSize = 30.sp,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
@@ -131,13 +114,13 @@ fun LoginScreen(
                         Text(
                             text = viewModel.errorMessage,
                             fontSize = 14.sp,
-                            color = Color.Red,
+                            color = MaterialTheme.colorScheme.error,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
                     }
 
-                    //Email text field
+                    // Email text field
                     OutlinedTextField(
                         value = viewModel.email,
                         onValueChange = viewModel::changeEmail,
@@ -150,7 +133,7 @@ fun LoginScreen(
                             .padding(bottom = 16.dp)
                     )
 
-                    //Password Text field
+                    // Password Text field
                     OutlinedTextField(
                         value = viewModel.password,
                         onValueChange = viewModel::changePassword,
@@ -187,30 +170,30 @@ fun LoginScreen(
                     ) {
                         Text(
                             text = "Forgot password?",
-                            color = Color.Gray
-                        ) //TODO: zaimplementowac funkcje przywracania hasła
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
 
-                        //Login screen text for creating new account
                         Text(
                             text = "Create an account",
-                            color = Color.Gray,
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.clickable {
                                 navController.navigate(Screens.Register)
-                            })
+                            }
+                        )
                     }
 
                     // Przycisk logowania
                     ElevatedButton(
-                        onClick = {
-                            viewModel.login()
-                        },
+                        onClick = { viewModel.login() },
                         enabled = viewModel.email.isNotBlank() && viewModel.password.isNotBlank(),
                         elevation = ButtonDefaults.elevatedButtonElevation(
                             defaultElevation = 4.dp,
                             pressedElevation = 8.dp
                         ),
-
-                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        ),
                         modifier = Modifier
                             .fillMaxWidth(0.5f)
                             .padding(top = 36.dp)
@@ -219,7 +202,6 @@ fun LoginScreen(
                     ) {
                         Text(text = "Sign in", fontSize = 24.sp)
                     }
-
                 }
             }
         }

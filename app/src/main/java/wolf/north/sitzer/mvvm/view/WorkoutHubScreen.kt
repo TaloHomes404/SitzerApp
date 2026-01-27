@@ -50,37 +50,35 @@ import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.exerciseVideoPlayer.ExerciseVideoPlayer
 import wolf.north.sitzer.comps.toolsComps.Timer
 import wolf.north.sitzer.mvvm.viewmodel.WorkoutHubScreenViewModel
+import wolf.north.sitzer.ui.theme.SitzerTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WorkoutHubScreen(
     navController: NavHostController = rememberNavController(),
     planId: Int? = null,
-
-    ) {
-
+) {
     val viewModel: WorkoutHubScreenViewModel = viewModel()
     val currentPlan by viewModel.currentPlan.collectAsState()
     val currentExerciseIndex by viewModel.currentExerciseIndex.collectAsState()
     val isWorkoutPlaying by viewModel.isWorkoutPaused.collectAsState()
 
-    //With start of the screen load plan
-    //TODO: it can launch loading in later stage
+    // With start of the screen load plan
     LaunchedEffect(planId) {
         if (planId != null && currentPlan == null) {
             viewModel.loadPlanIntoHub(planId)
         }
     }
 
-
-    //safe loading plan into screen
-    //display box if no plan (guarded)
+    // Safe loading plan into screen
     if (currentPlan == null) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                color = MaterialTheme.colorScheme.primary
+            )
         }
         return
     }
@@ -199,7 +197,6 @@ fun WorkoutHubScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-
                         Button(
                             onClick = { /* TODO: pokaż instrukcję popup */ },
                             modifier = Modifier.weight(1f),
@@ -244,12 +241,10 @@ fun WorkoutHubScreen(
                             )
                         }
                     }
-
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-
 
             Timer(
                 modifier = Modifier.fillMaxWidth(),
@@ -259,7 +254,6 @@ fun WorkoutHubScreen(
             )
 
             Spacer(modifier = Modifier.height(24.dp))
-
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -309,7 +303,7 @@ fun WorkoutHubScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun WorkoutHubScreenPreview() {
-    MaterialTheme {
+    SitzerTheme {
         WorkoutHubScreen()
     }
 }

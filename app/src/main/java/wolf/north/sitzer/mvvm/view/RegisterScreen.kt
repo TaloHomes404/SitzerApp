@@ -28,6 +28,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -62,7 +63,6 @@ fun RegisterScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: RegisterScreenViewModel = hiltViewModel()
 ) {
-    // Uruchamianie sekwencji jeżeli rejestracja się powiodła
     LaunchedEffect(viewModel.registrationSuccess) {
         if (viewModel.registrationSuccess) {
             navController.navigate(Screens.Home) {
@@ -72,32 +72,23 @@ fun RegisterScreen(
     }
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.primary
     ) { paddingValues ->
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .background(colorResource(R.color.welcome_screen_bg)),
+                .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             // Logo na górze
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.sitzer_logo_nobg),
-                    contentDescription = "register site Sitzer logo",
-                    contentScale = ContentScale.Crop
-                )
-            }
+            Image(
+                painter = painterResource(R.drawable.sitzer_logo_nobg),
+                contentDescription = "register site Sitzer logo",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.padding(top = 48.dp, bottom = 24.dp)
+            )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Container na białym tle z zaokrąglonymi rogami
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -105,36 +96,37 @@ fun RegisterScreen(
                     .clip(
                         RoundedCornerShape(
                             topStart = 32.dp,
-                            topEnd = 32.dp,
-                            bottomEnd = 0.dp,
-                            bottomStart = 0.dp
+                            topEnd = 32.dp
                         )
                     )
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.surface)
                     .padding(24.dp)
             ) {
-
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxHeight()
+                ) {
                     Text(
                         text = "Create new account",
                         fontSize = 30.sp,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
-
 
                     AnimatedVisibility(visible = viewModel.errorMessage.isNotEmpty()) {
                         Text(
                             text = viewModel.errorMessage,
                             fontSize = 14.sp,
-                            color = Color.Red,
+                            color = MaterialTheme.colorScheme.error,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
                     }
-                    // Zastosowanie OutlinedTextField z poprawnymi labelami
-                    Column(modifier = Modifier.padding(start = 8.dp, end = 8.dp)) {
+
+                    // Formularz rejestracji
+                    Column(modifier = Modifier.padding(horizontal = 8.dp)) {
                         OutlinedTextField(
                             leadingIcon = {
                                 Icon(Icons.Default.Person, contentDescription = null)
@@ -149,10 +141,10 @@ fun RegisterScreen(
                         )
 
                         OutlinedTextField(
-                            value = viewModel.email,
                             leadingIcon = {
                                 Icon(Icons.Default.Email, contentDescription = null)
                             },
+                            value = viewModel.email,
                             onValueChange = { viewModel.email = it },
                             label = { Text(text = "Email") },
                             placeholder = { Text(text = "Enter your email") },
@@ -213,12 +205,16 @@ fun RegisterScreen(
                         ElevatedButton(
                             onClick = {
                                 Log.d("REGISTER", "Clicked register")
-                                viewModel.RegisterUser() },
+                                viewModel.RegisterUser()
+                            },
                             elevation = ButtonDefaults.elevatedButtonElevation(
                                 defaultElevation = 4.dp,
                                 pressedElevation = 8.dp
                             ),
-                            colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                contentColor = MaterialTheme.colorScheme.onPrimary
+                            ),
                             modifier = Modifier
                                 .fillMaxWidth(0.5f)
                                 .padding(top = 8.dp)
@@ -240,5 +236,4 @@ fun RegisterScreen(
 fun RegisterScreenPreview() {
     RegisterScreen()
 }
-
 

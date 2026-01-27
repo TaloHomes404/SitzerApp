@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,13 +46,16 @@ import kotlinx.coroutines.delay
 import wolf.north.sitzer.R
 import wolf.north.sitzer.navigation.AppNavigation
 import wolf.north.sitzer.navigation.Screens
+import wolf.north.sitzer.ui.theme.SitzerTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppNavigation()
+            SitzerTheme {
+                AppNavigation()
+            }
         }
     }
 }
@@ -104,7 +108,7 @@ fun SplashScreen(navController: NavHostController = rememberNavController()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(R.color.welcome_screen_bg)),
+            .background(MaterialTheme.colorScheme.primary),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -127,7 +131,7 @@ fun SplashScreen(navController: NavHostController = rememberNavController()) {
                 text = "Shift your position,\nuplift your spirit!",
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Medium,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onPrimary,
                 textAlign = TextAlign.Center,
                 lineHeight = 28.sp,
                 modifier = Modifier
@@ -143,7 +147,7 @@ fun SplashScreen(navController: NavHostController = rememberNavController()) {
                 modifier = Modifier
                     .size(40.dp)
                     .alpha(progressAlpha),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onPrimary,
                 strokeWidth = 3.dp
             )
         }
@@ -153,6 +157,8 @@ fun SplashScreen(navController: NavHostController = rememberNavController()) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SplashScreenPreview() {
-    SplashScreen()
+    SitzerTheme {
+        SplashScreen()
+    }
 }
 

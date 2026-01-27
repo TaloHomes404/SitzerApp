@@ -3,6 +3,7 @@ package wolf.north.sitzer.mvvm.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -39,7 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,12 +63,8 @@ import wolf.north.sitzer.navigation.Screens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavHostController = rememberNavController()) {
-
-    //vm
     val viewModel: HomeScreenViewModel = hiltViewModel()
-    //list of plans
     val plans by viewModel.plans.collectAsState()
-    //category selected (or to be selected)
     val selectedCategory by viewModel.selectedCategory.collectAsState()
     val filteredPlans = if (selectedCategory != null) {
         viewModel.getPlansForCategory(selectedCategory).take(2)
@@ -75,7 +72,6 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
         plans
     }.take(2)
 
-    //sharedpreferences onboarding value to control state
     val hasSeenOnboarding by viewModel.hasSeenOverboarding.collectAsState()
     val onboardingStep by viewModel.currentOnboardingStep.collectAsState()
     var showOnboarding by remember { mutableStateOf(false) }
@@ -87,10 +83,8 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
         }
     }
 
-
-
     Scaffold(
-        containerColor = Color(0xFFF8F9FA),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
                 title = {
@@ -101,7 +95,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     ) {
                         Image(
                             painter = painterResource(R.drawable.sitzer_logo_nobg),
-                            contentDescription = "login site Sitzer logo",
+                            contentDescription = "login site Sitzer logo ",
                             contentScale = ContentScale.Crop,
                             alignment = Alignment.Center
                         )
@@ -111,13 +105,13 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     IconButton(onClick = { }) {
                         Icon(
                             Icons.Outlined.Notifications,
-                            contentDescription = "notification icon",
+                            contentDescription = "notification icon ",
                             tint = Color.White
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = colorResource(id = R.color.welcome_screen_bg)
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
             )
         },
@@ -129,10 +123,9 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
-
                 item {
-                    Spacer(Modifier.height(4.dp))
-                    SectionTitle("Challenge Yourself With Featured \nDaily Workout!")
+                    Spacer(Modifier.height(6.dp))
+                    SectionTitle("Challenge Yourself With Featured \nDaily Workout! ")
                 }
 
                 item {
@@ -141,8 +134,8 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                             .fillMaxWidth()
                             .padding(horizontal = 12.dp, vertical = 2.dp),
                         image = R.drawable.mobilityimgcard,
-                        workoutName = "Mobility Morning",
-                        buttonText = "Start Session"
+                        workoutName = "Mobility Morning ",
+                        buttonText = "Start Session "
                     )
                 }
 
@@ -152,15 +145,15 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        SectionTitle("Weekly Progress")
+                        SectionTitle("Weekly Progress ")
                         Text(
-                            "See All",
+                            "See All ",
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable { },
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Medium,
-                            color = colorResource(R.color.welcome_screen_bg)
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -172,8 +165,8 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                             .padding(horizontal = 8.dp, vertical = 4.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        ProgressCard(0.00f, "0/3", "Workout Sessions", "This Week")
-                        ProgressCardNumberIndicator(0, "Calories Burned", "This Week")
+                        ProgressCard(0.00f, "0/3 ", "Workout Sessions ", "This Week ")
+                        ProgressCardNumberIndicator(0, "Calories Burned ", "This Week ")
                     }
                 }
 
@@ -185,15 +178,15 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        SectionTitle("Categories")
+                        SectionTitle("Categories ")
                         Text(
-                            "See All",
+                            "See All ",
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable { },
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Medium,
-                            color = colorResource(R.color.welcome_screen_bg)
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -206,12 +199,19 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 }
 
                 items(filteredPlans) { plan ->
-                    ExercisePlan(
-                        plan.imageRes,
-                        plan.name,
-                        plan.duration,
-                        plan.exerciseCount
-                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        ExercisePlan(
+                            plan.imageRes,
+                            plan.name,
+                            plan.duration,
+                            plan.exerciseCount
+                        )
+                    }
                 }
 
                 item {
@@ -229,7 +229,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
-                containerColor = colorResource(R.color.welcome_screen_bg),
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.Gray,
                 tonalElevation = 5.dp,
             ) {
@@ -240,20 +240,16 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-
                         Icon(
                             imageVector = Icons.Outlined.Home,
-                            contentDescription = "Menu",
+                            contentDescription = "Menu ",
                             tint = Color.White
                         )
-
-                        Text("Home", color = Color.White)
-
+                        Text("Home ", color = Color.White)
                     }
 
                     Column(
@@ -263,10 +259,10 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.SportsGymnastics,
-                            contentDescription = "Workouts list bottom icon",
+                            contentDescription = "Workouts list bottom icon ",
                             tint = Color.Gray,
                         )
-                        Text("Workouts", color = Color.Gray)
+                        Text("Workouts ", color = Color.Gray)
                     }
 
                     Column(
@@ -276,10 +272,10 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Person,
-                            contentDescription = "Profile",
+                            contentDescription = "Profile ",
                             tint = Color.Gray,
                         )
-                        Text("Profile", color = Color.Gray)
+                        Text("Profile ", color = Color.Gray)
                     }
                 }
             }
@@ -293,13 +289,12 @@ fun SectionTitle(title: String) {
         text = title,
         fontSize = 22.sp,
         fontWeight = FontWeight.SemiBold,
-        color = Color(0xFF1A1A1A),
+        color = MaterialTheme.colorScheme.onBackground,
         lineHeight = 28.sp,
         letterSpacing = 0.25.sp,
         modifier = Modifier.padding(start = 16.dp, bottom = 2.dp, top = 2.dp)
     )
 }
-
 
 @Preview(showSystemUi = true)
 @Composable
