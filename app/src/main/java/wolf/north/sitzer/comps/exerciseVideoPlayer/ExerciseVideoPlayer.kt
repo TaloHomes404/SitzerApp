@@ -3,6 +3,7 @@ package wolf.north.sitzer.comps.exerciseVideoPlayer
 import android.widget.FrameLayout
 import androidx.annotation.OptIn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,6 +33,12 @@ fun ExerciseVideoPlayer(
             playWhenReady = true
             repeatMode = Player.REPEAT_MODE_ONE
             volume = 0f
+        }
+    }
+
+    DisposableEffect(videoRes) {
+        onDispose {
+            exoPlayer.release()
         }
     }
 

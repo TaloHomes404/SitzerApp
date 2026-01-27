@@ -46,7 +46,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
@@ -70,7 +69,12 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
     val plans by viewModel.plans.collectAsState()
     //category selected (or to be selected)
     val selectedCategory by viewModel.selectedCategory.collectAsState()
-    val filteredPlans = viewModel.getPlansForCategory(selectedCategory)
+    val filteredPlans = if (selectedCategory != null) {
+        viewModel.getPlansForCategory(selectedCategory).take(2)
+    } else {
+        plans
+    }.take(2)
+
     //sharedpreferences onboarding value to control state
     val hasSeenOnboarding by viewModel.hasSeenOverboarding.collectAsState()
     val onboardingStep by viewModel.currentOnboardingStep.collectAsState()
@@ -118,100 +122,106 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             )
         },
         content = { paddingValues ->
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(vertical = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                    .padding(paddingValues),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(bottom = 80.dp)
             ) {
 
-                SectionTitle(
-                    "Challenge Yourself With Featured \nDaily Workout!",
-                )
+                item {
+                    Spacer(Modifier.height(4.dp))
+                    SectionTitle("Challenge Yourself With Featured \nDaily Workout!")
+                }
 
-                WorkoutCardButtoned(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp, vertical = 2.dp),
-                    image = R.drawable.mobilityimgcard,
-                    workoutName = "Mobility Morning",
-                    buttonText = "Start Session"
-                )
-
-
-                // 2nd row
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    SectionTitle("Weekly Progress")
-                    Text(
-                        "See All",
+                item {
+                    WorkoutCardButtoned(
                         modifier = Modifier
-                            .padding(end = 16.dp)
-                            .clickable { /* action */ },
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = colorResource(R.color.welcome_screen_bg)
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp, vertical = 2.dp),
+                        image = R.drawable.mobilityimgcard,
+                        workoutName = "Mobility Morning",
+                        buttonText = "Start Session"
                     )
                 }
 
-
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp, vertical = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    ProgressCard(0.00f, "0/3", "Workout Sessions", "This Week")
-                    ProgressCardNumberIndicator(0, "Calories Burned", "This Week")
-                }
-
-                //3rd row
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    SectionTitle("Categories")
-                    Text(
-                        "See All",
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .clickable { /* action */ },
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = colorResource(R.color.welcome_screen_bg)
-                    )
-                }
-
-                CategoriesCarousel(
-                    selectedCategory = selectedCategory,
-                    onCategorySelected = { viewModel.onCategorySelected(it) })
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // LazyColumn z przefiltrowanymi planami
-                LazyColumn(
-                    Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    contentPadding = PaddingValues(horizontal = 16.dp)
-                ) {
-                    items(filteredPlans) { plan ->
-                        ExercisePlan(plan.imageRes, plan.name, plan.duration, plan.exerciseCount)
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        SectionTitle("Weekly Progress")
+                        Text(
+                            "See All",
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .clickable { },
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = colorResource(R.color.welcome_screen_bg)
+                        )
                     }
                 }
 
-                //Turn on onboarding overlay after 1s with launchedeffect
-                if (showOnboarding && !hasSeenOnboarding) {
-                    OnboardingManager(viewModel = viewModel, currentStep = onboardingStep)
+                item {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        ProgressCard(0.00f, "0/3", "Workout Sessions", "This Week")
+                        ProgressCardNumberIndicator(0, "Calories Burned", "This Week")
+                    }
                 }
 
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        SectionTitle("Categories")
+                        Text(
+                            "See All",
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .clickable { },
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = colorResource(R.color.welcome_screen_bg)
+                        )
+                    }
+                }
+
+                item {
+                    CategoriesCarousel(
+                        selectedCategory = selectedCategory,
+                        onCategorySelected = { viewModel.onCategorySelected(it) }
+                    )
+                }
+
+                items(filteredPlans) { plan ->
+                    ExercisePlan(
+                        plan.imageRes,
+                        plan.name,
+                        plan.duration,
+                        plan.exerciseCount
+                    )
+                }
+
+                item {
+                    if (showOnboarding && !hasSeenOnboarding) {
+                        OnboardingManager(
+                            viewModel = viewModel,
+                            currentStep = onboardingStep
+                        )
+                    }
+                }
             }
         },
         bottomBar = {
@@ -286,7 +296,7 @@ fun SectionTitle(title: String) {
         color = Color(0xFF1A1A1A),
         lineHeight = 28.sp,
         letterSpacing = 0.25.sp,
-        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp, top = 8.dp)
+        modifier = Modifier.padding(start = 16.dp, bottom = 2.dp, top = 2.dp)
     )
 }
 

@@ -23,6 +23,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,6 +32,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,25 +43,50 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.exerciseVideoPlayer.ExerciseVideoPlayer
 import wolf.north.sitzer.comps.toolsComps.Timer
+import wolf.north.sitzer.mvvm.viewmodel.WorkoutHubScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WorkoutHubScreen(
     navController: NavHostController = rememberNavController(),
-    planName: String = "Plan treningowy",
-    currentExercise: Int = 1,
-    totalExercises: Int = 5,
-    exerciseName: String = "Pompki",
-    exerciseDetail: String = "3 serie x 15 powtórzeń",
-    nextExerciseName: String = "Przysiady",
-    onClose: () -> Unit = {},
-    onProblem: () -> Unit = {}
-) {
+    planId: Int? = null,
+
+    ) {
+
+    val viewModel: WorkoutHubScreenViewModel = viewModel()
+    val currentPlan by viewModel.currentPlan.collectAsState()
+    val currentExerciseIndex by viewModel.currentExerciseIndex.collectAsState()
+    val isWorkoutPlaying by viewModel.isWorkoutPaused.collectAsState()
+
+    //With start of the screen load plan
+    //TODO: it can launch loading in later stage
+    LaunchedEffect(planId) {
+        if (planId != null && currentPlan == null) {
+            viewModel.loadPlanIntoHub(planId)
+        }
+    }
+
+
+    //safe loading plan into screen
+    //display box if no plan (guarded)
+    if (currentPlan == null) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+
+    val plan = currentPlan!!
+
     Scaffold(
         topBar = {
             Column(
@@ -74,7 +104,7 @@ fun WorkoutHubScreen(
                         color = MaterialTheme.colorScheme.surfaceVariant,
                         modifier = Modifier.size(40.dp)
                     ) {
-                        IconButton(onClick = onClose) {
+                        IconButton(onClick = { navController.popBackStack() }) {
                             Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = "Zamknij",
@@ -84,7 +114,7 @@ fun WorkoutHubScreen(
                     }
 
                     Text(
-                        text = planName,
+                        text = viewModel.getCurrentExercise()?.name ?: "Name",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.weight(1f),
@@ -97,7 +127,7 @@ fun WorkoutHubScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Exercise $currentExercise / $totalExercises",
+                    text = "Exercise ${currentExerciseIndex + 1} / ${plan.exercises.size}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.fillMaxWidth(),
@@ -129,7 +159,7 @@ fun WorkoutHubScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = exerciseName,
+                        text = viewModel.getCurrentExercise()?.name ?: "Name",
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
@@ -138,7 +168,7 @@ fun WorkoutHubScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = exerciseDetail,
+                        text = viewModel.getCurrentExercise()?.description ?: "Description",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center
@@ -154,11 +184,13 @@ fun WorkoutHubScreen(
                             .background(MaterialTheme.colorScheme.surface),
                         contentAlignment = Alignment.Center
                     ) {
-                        ExerciseVideoPlayer(
-                            videoRes = R.raw.side_plank,
-                            modifier = Modifier
-                                .fillMaxSize()
-                        )
+                        key(currentExerciseIndex) {
+                            ExerciseVideoPlayer(
+                                videoRes = viewModel.getCurrentExercise()?.videoUrl
+                                    ?: R.raw.side_plank,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -220,7 +252,10 @@ fun WorkoutHubScreen(
 
 
             Timer(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                onNext = { viewModel.goToNextExercise() },
+                onPrevious = { viewModel.goToPreviousExercise() },
+                onPlayPause = { }
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -237,7 +272,7 @@ fun WorkoutHubScreen(
                         .clip(RoundedCornerShape(8.dp))
                         .padding(4.dp)
                 ) {
-                    IconButton(onClick = onProblem) {
+                    IconButton(onClick = { }) {
                         Icon(
                             imageVector = Icons.Default.Help,
                             contentDescription = "Problem",
@@ -260,7 +295,7 @@ fun WorkoutHubScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = nextExerciseName,
+                        text = viewModel.getNextExercise()?.name ?: "Koniec treningu",
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurface

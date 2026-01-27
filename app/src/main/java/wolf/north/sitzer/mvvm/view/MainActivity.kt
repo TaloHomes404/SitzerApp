@@ -4,38 +4,44 @@ package wolf.north.sitzer.mvvm.view
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowRightAlt
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import wolf.north.sitzer.R
 import wolf.north.sitzer.navigation.AppNavigation
 import wolf.north.sitzer.navigation.Screens
@@ -52,91 +58,94 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun SplashScreen(navController: NavHostController = rememberNavController()) {
-    Column(
+    var startAnimation by remember { mutableStateOf(false) }
+    var showProgress by remember { mutableStateOf(false) }
+
+    // Animacje
+    LaunchedEffect(Unit) {
+        delay(100)
+        startAnimation = true
+        delay(600)
+        showProgress = true
+        delay(2500)
+        navController.navigate(Screens.Login) {
+            popUpTo(Screens.SplashScreen) { inclusive = true }
+        }
+    }
+
+    val logoAlpha by animateFloatAsState(
+        targetValue = if (startAnimation) 1f else 0f,
+        animationSpec = tween(durationMillis = 800, easing = FastOutSlowInEasing),
+        label = "logo_alpha"
+    )
+
+    val logoScale by animateFloatAsState(
+        targetValue = if (startAnimation) 1f else 0.7f,
+        animationSpec = tween(durationMillis = 800, easing = FastOutSlowInEasing),
+        label = "logo_scale"
+    )
+
+    val textAlpha by animateFloatAsState(
+        targetValue = if (startAnimation) 1f else 0f,
+        animationSpec = tween(
+            durationMillis = 800,
+            delayMillis = 300,
+            easing = FastOutSlowInEasing
+        ),
+        label = "text_alpha"
+    )
+
+    val progressAlpha by animateFloatAsState(
+        targetValue = if (showProgress) 1f else 0f,
+        animationSpec = tween(durationMillis = 400, easing = FastOutSlowInEasing),
+        label = "progress_alpha"
+    )
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(R.color.welcome_screen_bg))
+            .background(colorResource(R.color.welcome_screen_bg)),
+        contentAlignment = Alignment.Center
     ) {
-        // Spacer wypełniający górną część ekranu
-        Spacer(modifier = Modifier.weight(1f))
-
-        // Obrazek na dole
-        Image(
-            painter = painterResource(R.drawable.man_stretch), // tutaj musisz wstawić własny obrazek
-            contentDescription = "Welcome Image",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp)
-                .align(Alignment.End), // Ustawienie obrazka na dole
-            contentScale = ContentScale.FillWidth
-        )
-
-        // Zaokrąglona karta z tekstem i przyciskiem
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    Color.White,
-                    shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp)
-                )
-                .padding(24.dp), // padding wewnątrz karty
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Spacer(modifier = Modifier.height(32.dp)) // Większa przestrzeń na górze
-
-            Text(
-                text = "Shift your position, \n  uplift your spirit!",
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier.align(Alignment.CenterHorizontally) // Wyrównanie do lewej
+            Image(
+                painter = painterResource(R.drawable.sitzer_logo_nobg),
+                contentDescription = "App Logo",
+                modifier = Modifier
+                    .size(180.dp)
+                    .alpha(logoAlpha)
+                    .scale(logoScale)
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = stringResource(R.string.welcome_screen_desc),
-                fontSize = 18.sp,
-                color = Color.Gray,
+                text = "Shift your position,\nuplift your spirit!",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color.White,
+                textAlign = TextAlign.Center,
+                lineHeight = 28.sp,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .align(Alignment.CenterHorizontally),
-                lineHeight = 20.sp
+                    .padding(horizontal = 32.dp)
+                    .alpha(textAlpha)
             )
 
-            Spacer(modifier = Modifier.weight(1f)) // Wypełnia przestrzeń, aby przycisk był na dole
+            Spacer(modifier = Modifier.height(48.dp))
 
-            Button(
-                onClick = {
-                    navController.navigate(Screens.Login) {
-                        popUpTo(Screens.SplashScreen) { inclusive = true }
-                    }
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.welcome_screen_bg)), // przycisk fioletowy
-                shape = RoundedCornerShape(10.dp), // zaokrąglenie przycisku
+            //For testing it's only loading
+            //Add user credentail save + auto-log-on
+            CircularProgressIndicator(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = "Get Started", color = Color.White, fontSize = 24.sp)
-                    Icon(
-                        Icons.Default.ArrowRightAlt,
-                        contentDescription = "Register Icon",
-
-                        modifier = Modifier
-                            .padding(end = 8.dp)
-
-                    )
-                }
-
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
+                    .size(40.dp)
+                    .alpha(progressAlpha),
+                color = Color.White,
+                strokeWidth = 3.dp
+            )
         }
     }
 }

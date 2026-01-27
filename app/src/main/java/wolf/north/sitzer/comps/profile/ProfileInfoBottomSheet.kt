@@ -42,6 +42,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import wolf.north.sitzer.R
 import wolf.north.sitzer.mvvm.viewmodel.ProfileScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -92,7 +93,7 @@ fun ProfileInfoBottomSheet(
             modifier = Modifier.fillMaxWidth()
         ) {
             val avatarPainter = uiState.avatarUri?.let { rememberAsyncImagePainter(it) }
-                ?: rememberAsyncImagePainter("https://picsum.photos/200") // placeholder
+                ?: rememberAsyncImagePainter(R.drawable.pfpp)
 
             Image(
                 painter = avatarPainter,

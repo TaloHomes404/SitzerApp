@@ -147,16 +147,17 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                         }
                     }
                 }
-                MoreFiltersDialog(
-                    onDismiss = { showMoreFiltersDialog = false },
-                    onClear = {
-                        showMoreFiltersDialog = false
-                    },
-                    onDone = {
-                        showMoreFiltersDialog = false
-                    }
-                )
-
+                if (showMoreFiltersDialog) {
+                    MoreFiltersDialog(
+                        onDismiss = { showMoreFiltersDialog = false },
+                        onClear = {
+                            showMoreFiltersDialog = false
+                        },
+                        onDone = {
+                            showMoreFiltersDialog = false
+                        }
+                    )
+                }
             }
 
 
@@ -231,7 +232,8 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
             onDismiss = { showBottomSheet = false },
             onStartWorkout = {
                 showBottomSheet = false
-                navController.navigate(Screens.WorkoutHub)
+                //Navigate to workouthub passing plan id as arg
+                navController.navigate(Screens.createWorkoutHubRoute(selectedPlan!!.id))
             },
             exercises = selectedPlan!!.exercises
         )

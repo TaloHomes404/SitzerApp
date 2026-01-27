@@ -58,12 +58,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.profile.ProfileInfoBottomSheet
 import wolf.north.sitzer.mvvm.viewmodel.ProfileScreenViewModel
+import wolf.north.sitzer.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,7 +75,7 @@ fun ProfileScreen(
 ) {
 
     //vm
-    val viewmodel: ProfileScreenViewModel = viewModel()
+    val viewmodel: ProfileScreenViewModel = hiltViewModel()
 
     //profile info change bottom sheet controler
     var showProfileBottomSheet by remember { mutableStateOf(false) }
@@ -119,7 +121,7 @@ fun ProfileScreen(
                             imageVector = Icons.Outlined.Home,
                             contentDescription = "Menu",
                             tint = Color.Gray,
-                            modifier = Modifier.clickable { /* navController.navigate(Screens.Home) */ }
+                            modifier = Modifier.clickable {  navController.navigate(Screens.Home)  }
                         )
 
                         Text("Home", color = Color.Gray)
@@ -134,7 +136,7 @@ fun ProfileScreen(
                             imageVector = Icons.Outlined.SportsGymnastics,
                             contentDescription = "Workouts list bottom icon",
                             tint = Color.Gray,
-                            modifier = Modifier.clickable { /* navController.navigate(Screens.Plans) */ }
+                            modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
                         )
                         Text("Workouts", color = Color.Gray)
                     }
@@ -147,7 +149,7 @@ fun ProfileScreen(
                             imageVector = Icons.Outlined.Person,
                             contentDescription = "Profile",
                             tint = Color.White,
-                            modifier = Modifier.clickable { /* navController.navigate(Screens.Profile) */ }
+                            modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
                         )
                         Text("Profile", color = Color.White)
                     }

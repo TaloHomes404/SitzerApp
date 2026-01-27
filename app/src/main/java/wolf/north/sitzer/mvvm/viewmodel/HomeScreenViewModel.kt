@@ -59,16 +59,12 @@ class HomeScreenViewModel @Inject constructor(private val userPreferences: UserP
     }
 
     private fun loadPlansForHome() {
-        _plans.value =
-            PlansRepository.getPlansFiltered().take(2) //Load only two for home screen preview
+        _plans.value = PlansRepository.getPlansFiltered()
     }
 
     //Dedicated method to use in homescreen (plan screen dupe)
-    fun getPlansForCategory(category: MuscleGroup? = null): List<Plan> {
-        return if (category == null) {
-            _plans.value
-        } else {
-            _plans.value.filter { it.category == category }
-        }
-    }
+    fun getPlansForCategory(category: MuscleGroup? = null): List<Plan> =
+        if (category == null) _plans.value
+        else _plans.value.filter { it.category == category }
+
 }

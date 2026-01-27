@@ -3,8 +3,11 @@ package wolf.north.sitzer.repository.datastore
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
 data class NotificationPrefs(
     val daily: Boolean,
@@ -12,8 +15,8 @@ data class NotificationPrefs(
     val weekly: Boolean
 )
 
-
-class NotificationsPreferencesRepository(private val context: Context) {
+@Singleton
+class NotificationsPreferencesRepository @Inject constructor(@ApplicationContext private val context: Context) {
 
     companion object {
         private val DAILY_KEY = booleanPreferencesKey("notifications_daily")

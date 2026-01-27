@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import wolf.north.sitzer.repository.datastore.NotificationsPreferencesRepository
+import javax.inject.Inject
 
 
 data class ProfileUiState(
@@ -33,8 +35,8 @@ data class NotificationSettingsUi(
     val weeklySummary: Boolean = true
 )
 
-
-class ProfileScreenViewModel(private val notificationRepo: NotificationsPreferencesRepository) :
+@HiltViewModel
+class ProfileScreenViewModel @Inject constructor(private val notificationRepo: NotificationsPreferencesRepository) :
     ViewModel() {
 
     //vals to hold user profile model in uistate

@@ -7,7 +7,7 @@ data class Exercise(
     val name: String,
     val description: String,
     val muscleGroup: MuscleGroup,
-    val videoUrl: String
+    val videoUrl: Int
 ) {
 
 }

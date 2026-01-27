@@ -39,7 +39,7 @@ fun WorkoutCardButtoned(image: Int, workoutName: String, buttonText: String, mod
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .padding(bottom = 8.dp, start = 4.dp, end = 4.dp),
+                    .padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
                 shape = RoundedCornerShape(16.dp),
                 elevation = CardDefaults.cardElevation(4.dp)
             ) {
