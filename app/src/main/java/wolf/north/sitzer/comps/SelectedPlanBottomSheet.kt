@@ -36,10 +36,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import wolf.north.sitzer.R
+import wolf.north.sitzer.comps.exerciseVideoPlayer.ExerciseVideoPlayer
 import wolf.north.sitzer.mvvm.model.Exercise
 import wolf.north.sitzer.mvvm.model.Plan
 
@@ -130,7 +129,7 @@ fun SelectedPlanBottomSheet(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = plan.difficulty.name,
+                    text = plan.description,
                     color = Color.White.copy(alpha = 0.7f),
                     fontSize = 14.sp,
                     lineHeight = 20.sp
@@ -157,7 +156,7 @@ fun SelectedPlanBottomSheet(
                     )
                 }
 
-                items(exercises) { exercise ->
+                items(plan.exercises) { exercise ->
                     ExerciseItem(exercise)
                 }
             }
@@ -241,23 +240,22 @@ fun ExerciseItem(exercise: Exercise) {
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.FitnessCenter,
-                    contentDescription = null,
-                    tint = Color(0xFFADD45C),
-                    modifier = Modifier.size(24.dp)
+                ExerciseVideoPlayer(
+                    videoRes = exercise.videoUrl,
+                    modifier = Modifier
+                        .fillMaxSize()
                 )
             }
 
             Column {
                 Text(
-                    text = "exercise.name",
+                    text = exercise.name,
                     color = Color.White,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "{exercise.sets} sets × {exercise.reps} reps",
+                    text = exercise.description,
                     color = Color.White.copy(alpha = 0.6f),
                     fontSize = 13.sp
                 )

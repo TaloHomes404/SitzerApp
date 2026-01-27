@@ -1,6 +1,7 @@
 package wolf.north.sitzer.comps.toolsComps
 
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,11 +50,15 @@ fun Timer(
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            onClick = onPrevious,
+            onClick = {
+                Log.d("Timer", "Previous clicked")
+                onPrevious()
+            },
             modifier = Modifier.size(48.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.SkipPrevious,
+
                 contentDescription = "Poprzednie",
                 tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(28.dp)
@@ -71,6 +76,7 @@ fun Timer(
         ) {
             IconButton(
                 onClick = {
+                    Log.d("Timer", "Play/Pause clicked")
                     playing = !playing
                     onPlayPause()
                 },
@@ -88,7 +94,10 @@ fun Timer(
         Spacer(modifier = Modifier.width(16.dp))
 
         IconButton(
-            onClick = onNext,
+            onClick = {
+                Log.d("Timer", "Next clicked")
+                onNext()
+            },
             modifier = Modifier.size(48.dp)
         ) {
             Icon(

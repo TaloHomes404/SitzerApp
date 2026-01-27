@@ -101,12 +101,11 @@ fun ExercisePlan(image: Int, planName: String, duration: Int, exercisesCount: In
                 Box(modifier = Modifier.fillMaxSize()) {
                     Image(
                         painter = painterResource(image),
-                        contentDescription = "Nasza misja",
+                        contentDescription = "plan card description",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )
 
-                    //box gradientowy
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -128,7 +127,7 @@ fun ExercisePlan(image: Int, planName: String, duration: Int, exercisesCount: In
                             verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             Text(
-                                "Bulletproof \nLower-Back",
+                                planName,
                                 color = Color.White,
                                 fontSize = 22.sp,
                                 fontWeight = FontWeight.Bold,
