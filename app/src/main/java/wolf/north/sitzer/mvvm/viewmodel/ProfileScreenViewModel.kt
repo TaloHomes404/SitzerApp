@@ -2,6 +2,10 @@ package wolf.north.sitzer.mvvm.viewmodel
 
 import android.net.Uri
 import android.util.Patterns
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +15,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import wolf.north.sitzer.repository.datastore.NotificationsPreferencesRepository
 import javax.inject.Inject
@@ -26,7 +31,9 @@ data class ProfileUiState(
     val newPassword: String = "",
     val confirmPassword: String = "",
     val isLoading: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val selectedTheme: String? = "System",
+    val selectedLanguage: String? = "Polski"
 )
 
 data class NotificationSettingsUi(
@@ -43,7 +50,18 @@ class ProfileScreenViewModel @Inject constructor(private val notificationRepo: N
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState
 
-    //configurations asigned to val (notifications pref flow)
+    private val _selectedLanguage = MutableStateFlow("  ")
+    val selectedLanguage: StateFlow<String> = _selectedLanguage
+
+    //Password visibility val
+    var passwordVisibility by mutableStateOf(false)
+
+    fun togglePasswordVisibility() {
+        passwordVisibility = !passwordVisibility
+    }
+
+
+    //configurations assigned to val (notifications pref flow)
     val notificationSettings: StateFlow<NotificationSettingsUi> =
         notificationRepo.notificationPrefs.map { prefs ->
             NotificationSettingsUi(
@@ -160,5 +178,18 @@ class ProfileScreenViewModel @Inject constructor(private val notificationRepo: N
         notificationRepo.setWeekly(enabled)
     }
 
+
+    fun selectTheme(theme: String) {
+        when (theme) {
+            "Light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            "Dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            "System" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
+        _uiState.update { it.copy(selectedTheme = theme) }
+    }
+
+    fun selectLanguage(languageCode: String) {
+        _selectedLanguage.value = languageCode
+    }
 
 }

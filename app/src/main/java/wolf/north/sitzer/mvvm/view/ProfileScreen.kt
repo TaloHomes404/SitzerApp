@@ -1,5 +1,6 @@
 package wolf.north.sitzer.mvvm.view
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -52,18 +53,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.profile.ProfileInfoBottomSheet
+import wolf.north.sitzer.comps.profile.SettingsBottomSheet
 import wolf.north.sitzer.mvvm.viewmodel.ProfileScreenViewModel
 import wolf.north.sitzer.navigation.Screens
 import wolf.north.sitzer.ui.theme.SitzerTheme
@@ -78,6 +77,23 @@ fun ProfileScreen(
 
     var showProfileBottomSheet by remember { mutableStateOf(false) }
     val profileSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    var showSettingsBottomSheet by remember { mutableStateOf(false) }
+    val settingsSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    var showSettings by remember { mutableStateOf(false) }
+    var selectedTheme by remember {
+        mutableStateOf(
+            when (AppCompatDelegate.getDefaultNightMode()) {
+                AppCompatDelegate.MODE_NIGHT_YES -> "Dark"
+                AppCompatDelegate.MODE_NIGHT_NO -> "Light"
+                else -> "System"
+            }
+        )
+    }
+    var selectedLanguage by remember {
+        mutableStateOf("English")
+    }
 
     Scaffold(
         topBar = {
@@ -267,7 +283,7 @@ fun ProfileScreen(
                     MenuOption(
                         icon = Icons.Default.Settings,
                         text = "Settings",
-                        onClick = {}
+                        onClick = { showSettingsBottomSheet = true }
                     )
                     MenuOption(
                         icon = Icons.Default.Notifications,
@@ -292,6 +308,18 @@ fun ProfileScreen(
             containerColor = MaterialTheme.colorScheme.surface
         ) {
             ProfileInfoBottomSheet(viewmodel, onDismiss = { showProfileBottomSheet = false })
+        }
+    }
+
+    if (showSettingsBottomSheet) {
+        ModalBottomSheet(
+            sheetState = settingsSheetState,
+            onDismissRequest = { showSettingsBottomSheet = false },
+            containerColor = MaterialTheme.colorScheme.surface
+        ) {
+            SettingsBottomSheet(
+                viewModel = viewmodel,
+                onDismiss = { showSettingsBottomSheet = false })
         }
     }
 }
