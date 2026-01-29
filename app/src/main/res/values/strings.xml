@@ -10,6 +10,40 @@
     <string name="plank_desc">The plank is a core-strengthening exercise that targets multiple muscle groups, including the abs, back, shoulders, and legs. To perform a plank, lie face down, then lift your body onto your forearms and toes, keeping your body straight from head to heels. Engage your core and hold this position without sagging your back or raising your hips.</string>
     <string name="title_activity_profile_screen">ProfileScreen</string>
     <string name="title_activity_app_navigation">AppNavigation</string>
-    <string name="title_activity_onboarding_introduction_overlay">OnboardingIntroductionOverlay
-    </string>
+    <string name="title_activity_onboarding_introduction_overlay">OnboardingIntroductionOverlay</string>
+
+    <!-- Help & Support -->
+    <string name="help_support">Help &amp; Support</string>
+    <string name="close">Close</string>
+
+    <!-- Tabs -->
+    <string name="tab_faq">FAQ</string>
+    <string name="tab_report">Report</string>
+    <string name="tab_contact">Contact</string>
+    <string name="tab_about">About</string>
+
+
+    <!-- FAQ -->
+    <string name="faq_q1">How do I create a daily plan?</string>
+    <string name="faq_a1">Tap the "+" button on the home screen and select activities for your day.</string>
+    <string name="faq_q2">Can I sync my plans across devices?</string>
+    <string name="faq_a2">Yes! Sign in with your account to sync plans automatically.</string>
+    <string name="faq_q3">How do I change my theme?</string>
+    <string name="faq_a3">Go to Profile → Settings → Theme to switch between Light, Dark or System mode.</string>
+
+    <!-- Report -->
+    <string name="report_title">Issue title</string>
+    <string name="report_title_placeholder">e.g. "App crashes when saving plan"</string>
+    <string name="report_type">Issue type</string>
+    <string name="report_desc">Your report helps us improve the app. We\'ll get back to you soon!</string>
+
+    <!-- Contact -->
+    <string name="contact_email">Support email</string>
+    <string name="app_version">App version</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_desc">Learn how we handle your data</string>
+
+    <!-- About -->
+    <string name="about_app">About Sitzer</string>
+    <string name="developer_info">Developer</string>
 </resources>

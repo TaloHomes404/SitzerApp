@@ -61,6 +61,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import wolf.north.sitzer.comps.profile.HelpBottomSheet
+import wolf.north.sitzer.comps.profile.NotificationsBottomSheet
 import wolf.north.sitzer.comps.profile.ProfileInfoBottomSheet
 import wolf.north.sitzer.comps.profile.SettingsBottomSheet
 import wolf.north.sitzer.mvvm.viewmodel.ProfileScreenViewModel
@@ -81,6 +83,9 @@ fun ProfileScreen(
     var showSettingsBottomSheet by remember { mutableStateOf(false) }
     val settingsSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
+    var showNotificationBottomSheet by remember { mutableStateOf(false) }
+    val notificationsSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
     var showSettings by remember { mutableStateOf(false) }
     var selectedTheme by remember {
         mutableStateOf(
@@ -94,6 +99,10 @@ fun ProfileScreen(
     var selectedLanguage by remember {
         mutableStateOf("English")
     }
+
+    var showHelpBottomSheet by remember { mutableStateOf(false) }
+    val helpSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
 
     Scaffold(
         topBar = {
@@ -288,12 +297,12 @@ fun ProfileScreen(
                     MenuOption(
                         icon = Icons.Default.Notifications,
                         text = "Notification",
-                        onClick = {}
+                        onClick = { showNotificationBottomSheet = true }
                     )
                     MenuOption(
                         icon = Icons.Default.Help,
                         text = "Help",
-                        onClick = {},
+                        onClick = { showHelpBottomSheet = true },
                         showDivider = false
                     )
                 }
@@ -311,6 +320,16 @@ fun ProfileScreen(
         }
     }
 
+    if (showHelpBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showHelpBottomSheet = false },
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+            containerColor = MaterialTheme.colorScheme.surface
+        ) {
+            HelpBottomSheet(onClose = { showHelpBottomSheet = false })
+        }
+    }
+
     if (showSettingsBottomSheet) {
         ModalBottomSheet(
             sheetState = settingsSheetState,
@@ -322,6 +341,20 @@ fun ProfileScreen(
                 onDismiss = { showSettingsBottomSheet = false })
         }
     }
+
+    if (showNotificationBottomSheet) {
+        ModalBottomSheet(
+            sheetState = notificationsSheetState,
+            onDismissRequest = { showNotificationBottomSheet = false },
+            containerColor = MaterialTheme.colorScheme.surface
+        ) {
+            NotificationsBottomSheet(
+                viewModel = viewmodel,
+                onDismiss = { showNotificationBottomSheet = false })
+        }
+    }
+
+
 }
 
 @Composable

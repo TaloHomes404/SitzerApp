@@ -33,7 +33,8 @@ data class ProfileUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val selectedTheme: String? = "System",
-    val selectedLanguage: String? = "Polski"
+    val selectedLanguage: String? = "Polski",
+    val notificationMethod: String = "Push"
 )
 
 data class NotificationSettingsUi(
@@ -58,6 +59,10 @@ class ProfileScreenViewModel @Inject constructor(private val notificationRepo: N
 
     fun togglePasswordVisibility() {
         passwordVisibility = !passwordVisibility
+    }
+
+    fun setNotificationMethod(method: String) {
+        _uiState.update { it.copy(notificationMethod = method) }
     }
 
 
