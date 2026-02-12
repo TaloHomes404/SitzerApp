@@ -32,8 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import wolf.north.sitzer.comps.ui.theme.SitzerTheme
 import wolf.north.sitzer.enums.MuscleGroup
+import wolf.north.sitzer.ui.theme.SitzerTheme
 
 @Composable
 fun CategoriesCarousel(selectedCategory: MuscleGroup?, onCategorySelected: (MuscleGroup) -> Unit) {
@@ -51,7 +51,8 @@ fun CategoriesCarousel(selectedCategory: MuscleGroup?, onCategorySelected: (Musc
                 selected = (selectedCategory == category),
                 onClick = { onCategorySelected(category) },
                 label = {
-                    Text(category.name.lowercase().replaceFirstChar { it.uppercase() }) }
+                    Text(category.name.lowercase().replaceFirstChar { it.uppercase() })
+                }
             )
         }
     }

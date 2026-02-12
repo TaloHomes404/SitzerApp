@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import wolf.north.sitzer.R
-import wolf.north.sitzer.comps.ui.theme.SitzerTheme
+import wolf.north.sitzer.ui.theme.SitzerTheme
 
 @Composable
 fun WorkoutCard(image: Int, workoutName: String, description: String) {

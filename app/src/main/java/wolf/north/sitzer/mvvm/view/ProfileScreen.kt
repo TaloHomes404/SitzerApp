@@ -225,6 +225,7 @@ fun ProfileScreen(
                             contentDescription = "Edytuj profil",
                             tint = Color.White,
                             modifier = Modifier.size(18.dp)
+                                .clickable{ showProfileBottomSheet = true }
                         )
                     }
                 }

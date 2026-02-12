@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sitzer</string>
+
+    <string name="title_activity_register_screen">Ekran rejestracji</string>
+
+    <string name="welcome_screen_desc">
+        Zmień swoje nawyki siedzenia i popraw postawę dzięki prostym ćwiczeniom i przypomnieniom.
+        Aplikacja pomaga Ci przejąć kontrolę nad zdrowiem, abyś czuł się bardziej energiczny
+        i wyprostowany przez cały dzień.
+
+        Dołącz do nas w drodze do zdrowszego, bardziej aktywnego stylu życia — Twój kręgosłup Ci podziękuje!
+    </string>
+
+    <string name="title_activity_login_screen">Ekran logowania</string>
+    <string name="title_activity_google_button">Przycisk Google</string>
+    <string name="title_activity_home_screen">Ekran główny</string>
+    <string name="title_activity_workout_screen">Ekran treningu</string>
+    <string name="title_activity_exercise_pick_screen">Wybór ćwiczeń</string>
+
+    <string name="plank_desc">
+        Deska (plank) to ćwiczenie wzmacniające mięśnie core, które angażuje wiele grup mięśniowych,
+        w tym brzuch, plecy, barki i nogi. Aby wykonać deskę, połóż się na brzuchu, a następnie
+        unieś ciało na przedramionach i palcach stóp, utrzymując prostą linię od głowy do pięt.
+        Napnij mięśnie brzucha i utrzymaj pozycję, nie opuszczając bioder ani nie unosząc ich zbyt wysoko.
+    </string>
+
+    <string name="title_activity_profile_screen">Profil</string>
+    <string name="title_activity_app_navigation">Nawigacja aplikacji</string>
+    <string name="title_activity_onboarding_introduction_overlay">Wprowadzenie</string>
+
+    <!-- Help & Support -->
+    <string name="help_support">Pomoc i wsparcie</string>
+    <string name="close">Zamknij</string>
+
+    <!-- Tabs -->
+    <string name="tab_faq">FAQ</string>
+    <string name="tab_report">Zgłoś problem</string>
+    <string name="tab_contact">Kontakt</string>
+    <string name="tab_about">O aplikacji</string>
+
+    <!-- FAQ -->
+    <string name="faq_q1">Jak utworzyć plan dzienny?</string>
+    <string name="faq_a1">Dotknij przycisku „+” na ekranie głównym i wybierz aktywności na dany dzień.</string>
+
+    <string name="faq_q2">Czy mogę synchronizować plany między urządzeniami?</string>
+    <string name="faq_a2">Tak! Zaloguj się na swoje konto, aby automatycznie synchronizować plany.</string>
+
+    <string name="faq_q3">Jak zmienić motyw aplikacji?</string>
+    <string name="faq_a3">Przejdź do Profil → Ustawienia → Motyw, aby wybrać tryb Jasny, Ciemny lub Systemowy.</string>
+
+    <!-- Report -->
+    <string name="report_title">Tytuł zgłoszenia</string>
+    <string name="report_title_placeholder">np. „Aplikacja zawiesza się przy zapisywaniu planu”</string>
+    <string name="report_type">Rodzaj problemu</string>
+    <string name="report_desc">
+        Twoje zgłoszenie pomaga nam ulepszać aplikację.
+        Skontaktujemy się z Tobą wkrótce!
+    </string>
+
+    <!-- Contact -->
+    <string name="contact_email">Adres e-mail wsparcia</string>
+    <string name="app_version">Wersja aplikacji</string>
+    <string name="privacy_policy">Polityka prywatności</string>
+    <string name="privacy_policy_desc">Dowiedz się, jak przetwarzamy Twoje dane</string>
+
+    <!-- About -->
+    <string name="about_app">O aplikacji Sitzer</string>
+    <string name="developer_info">Twórca</string>
+</resources>

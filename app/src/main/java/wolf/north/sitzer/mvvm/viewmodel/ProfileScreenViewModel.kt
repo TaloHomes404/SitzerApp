@@ -2,7 +2,6 @@ package wolf.north.sitzer.mvvm.viewmodel
 
 import android.net.Uri
 import android.util.Patterns
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -185,16 +184,11 @@ class ProfileScreenViewModel @Inject constructor(private val notificationRepo: N
 
 
     fun selectTheme(theme: String) {
-        when (theme) {
-            "Light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            "Dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            "System" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        }
         _uiState.update { it.copy(selectedTheme = theme) }
     }
 
-    fun selectLanguage(languageCode: String) {
-        _selectedLanguage.value = languageCode
+    fun selectLanguage(language: String) {
+        _uiState.update { it.copy(selectedLanguage = language) }
     }
 
 }

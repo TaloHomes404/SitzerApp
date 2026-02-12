@@ -1,5 +1,7 @@
 package wolf.north.sitzer.comps.profile
 
+import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,9 +33,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.os.LocaleListCompat
 import wolf.north.sitzer.mvvm.viewmodel.ProfileScreenViewModel
+import wolf.north.sitzer.utils.LegacyLocaleHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,6 +47,7 @@ fun SettingsBottomSheet(
     onDismiss: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
     val selectedLanguage by viewModel.selectedLanguage.collectAsState()
     val themes = listOf("Light", "Dark", "System")
     val languages = listOf("English", "Polski")
@@ -88,7 +94,7 @@ fun SettingsBottomSheet(
             fontWeight = FontWeight.Medium
         )
         LanguageDropdown(
-            selectedLanguage = selectedLanguage,
+            selectedLanguage = uiState.selectedLanguage ?: "Polski",
             onLanguageSelected = { viewModel.selectLanguage(it) },
             languages = languages
         )
@@ -107,14 +113,45 @@ fun SettingsBottomSheet(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             OutlinedButton(
-                onClick = onDismiss,
+                onClick = { onDismiss() },
                 modifier = Modifier.weight(1f)
             ) {
                 Text("Cancel")
             }
 
             Button(
-                onClick = { onDismiss },
+                onClick = {
+                    //Save and close bottom sheet
+                    onDismiss()
+
+                    //Change theme based on selected option
+                    when (uiState.selectedTheme) {
+                        "Light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        "Dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                    }
+
+                    //Variable depends on picked language from box
+                    val langCode = when (uiState.selectedLanguage) {
+                        "Polski" -> "pl"
+                        "English" -> "en"
+                        else -> "en"
+                    }
+
+                    //**
+                    //Compatibility language select depends on android version
+                    //**
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        // Android 13+
+                        AppCompatDelegate.setApplicationLocales(
+                            LocaleListCompat.forLanguageTags(langCode)
+                        )
+                    } else {
+                        // Android <13 → restart activity
+                        LegacyLocaleHelper.setLocaleAndRestart(context, langCode)
+                    }
+
+                },
                 modifier = Modifier.weight(1f)
             ) {
                 Text("Save")
@@ -171,7 +208,7 @@ private fun ThemeDropdown(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LanguageDropdown(
-    selectedLanguage: String?,
+    selectedLanguage: String,
     onLanguageSelected: (String) -> Unit,
     languages: List<String>
 ) {
@@ -183,7 +220,7 @@ private fun LanguageDropdown(
     ) {
         OutlinedTextField(
             readOnly = true,
-            value = selectedLanguage ?: "Polski",
+            value = selectedLanguage,
             onValueChange = { },
             label = { Text("Select language") },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },

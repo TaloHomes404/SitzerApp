@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sitzer</string>
     <string name="title_activity_register_screen">RegisterScreen</string>
@@ -46,4 +47,5 @@
     <!-- About -->
     <string name="about_app">About Sitzer</string>
     <string name="developer_info">Developer</string>
+    <string name="splashscreen_info1">Shift your position, uplif your spirit!</string>
 </resources>

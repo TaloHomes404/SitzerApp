@@ -18,7 +18,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -28,10 +27,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import wolf.north.sitzer.R
-import wolf.north.sitzer.comps.ui.theme.SitzerTheme
+import wolf.north.sitzer.ui.theme.SitzerTheme
 
 @Composable
-fun WorkoutCardButtoned(image: Int, workoutName: String, buttonText: String, modifier: Modifier = Modifier) {
+fun WorkoutCardButtoned(
+    image: Int,
+    workoutName: String,
+    buttonText: String,
+    modifier: Modifier = Modifier
+) {
     Box(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
