@@ -39,6 +39,64 @@
     <string name="tab_contact">Kontakt</string>
     <string name="tab_about">O aplikacji</string>
 
+    <!-- Notification methods -->
+    <string name="notification_method">Metoda powiadomień</string>
+    <string name="method_push">Push</string>
+    <string name="method_push_full">Powiadomienia push</string>
+    <string name="method_email">E-mail</string>
+
+    <!-- Notification frequency -->
+    <string name="notification_frequency">Częstotliwość powiadomień</string>
+
+    <string name="daily_reminder">Codzienne przypomnienie</string>
+    <string name="daily_reminder_desc">
+        Otrzymuj codzienne przypomnienie o wybranej godzinie
+    </string>
+
+    <string name="plan_for_today">Plan na dziś</string>
+    <string name="plan_for_today_desc">
+        Powiadom, gdy plan na dziś będzie gotowy
+    </string>
+
+    <string name="weekly_summary">Podsumowanie tygodnia</string>
+    <string name="weekly_summary_desc">
+        Otrzymuj tygodniowe podsumowanie swojej aktywności
+    </string>
+
+    <string name="notifications">Powiadomienia</string>
+    <string name="cancel">Anuluj</string>
+    <string name="save">Zapisz</string>
+
+    <!-- Categories / Muscle groups -->
+    <string name="muscle_chest">Klatka piersiowa</string>
+    <string name="muscle_back">Plecy</string>
+    <string name="muscle_legs">Nogi</string>
+    <string name="muscle_arms">Ramiona</string>
+    <string name="muscle_shoulders">Barki</string>
+    <string name="muscle_core">Mięśnie core</string>
+
+    <!-- Difficulty -->
+    <string name="difficulty_beginner">Początkujący</string>
+    <string name="difficulty_intermediate">Średniozaawansowany</string>
+    <string name="difficulty_advanced">Zaawansowany</string>
+
+    <!-- Exercise plan -->
+    <string name="plan_card_description">Karta planu treningowego</string>
+
+    <plurals name="exercises_count">
+        <item quantity="one">%d ćwiczenie</item>
+        <item quantity="few">%d ćwiczenia</item>
+        <item quantity="many">%d ćwiczeń</item>
+        <item quantity="other">%d ćwiczeń</item>
+    </plurals>
+
+    <plurals name="minutes_duration">
+        <item quantity="one">%d minuta</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
+        <item quantity="other">%d minut</item>
+    </plurals>
+
     <!-- FAQ -->
     <string name="faq_q1">Jak utworzyć plan dzienny?</string>
     <string name="faq_a1">Dotknij przycisku „+” na ekranie głównym i wybierz aktywności na dany dzień.</string>

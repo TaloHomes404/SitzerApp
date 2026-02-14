@@ -48,6 +48,61 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_desc">Learn how we handle your data</string>
 
+    <!-- Notification methods -->
+    <string name="notification_method">Notification Method</string>
+    <string name="method_push">Push</string>
+    <string name="method_push_full">Push Notifications</string>
+    <string name="method_email">Email</string>
+
+    <!-- Notification frequency -->
+    <string name="notification_frequency">Notification Frequency</string>
+
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="daily_reminder_desc">
+        Get a daily reminder at your chosen time
+    </string>
+
+    <string name="plan_for_today">Plan for Today</string>
+    <string name="plan_for_today_desc">
+        Notify when today's plan is ready
+    </string>
+
+    <string name="weekly_summary">Weekly Summary</string>
+    <string name="weekly_summary_desc">
+        Get a weekly summary of your activity
+    </string>
+
+    <string name="notifications">Notifications</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+
+    <!-- Categories / Muscle groups -->
+    <string name="muscle_chest">Chest</string>
+    <string name="muscle_back">Back</string>
+    <string name="muscle_legs">Legs</string>
+    <string name="muscle_arms">Arms</string>
+    <string name="muscle_shoulders">Shoulders</string>
+    <string name="muscle_core">Core</string>
+
+    <!-- Difficulty -->
+    <string name="difficulty_beginner">Beginner</string>
+    <string name="difficulty_intermediate">Intermediate</string>
+    <string name="difficulty_advanced">Advanced</string>
+
+    <!-- Exercise plan -->
+    <string name="plan_card_description">Exercise plan card</string>
+
+    <plurals name="exercises_count">
+        <item quantity="one">%d Exercise</item>
+        <item quantity="other">%d Exercises</item>
+    </plurals>
+
+    <plurals name="minutes_duration">
+        <item quantity="one">%d Minute</item>
+        <item quantity="other">%d Minutes</item>
+    </plurals>
+
+
     <!-- About -->
     <string name="about_app">About Sitzer</string>
     <string name="developer_info">Developer</string>

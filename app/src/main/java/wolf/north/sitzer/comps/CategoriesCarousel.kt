@@ -28,10 +28,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import wolf.north.sitzer.R
 import wolf.north.sitzer.enums.MuscleGroup
 import wolf.north.sitzer.ui.theme.SitzerTheme
 
@@ -63,9 +66,9 @@ fun DifficultyCarousel(selectedDifficulty: String, onDifficultySelected: (String
 
     //List of difficulties
     val difficulties = listOf(
-        "Beginner",
-        "Intermediate",
-        "Advanced"
+        stringResource(R.string.difficulty_beginner),
+        stringResource(R.string.difficulty_intermediate),
+        stringResource(R.string.difficulty_advanced)
     )
 
     //Difficulty lazyrow with section name (on default this option is hidden)
@@ -102,7 +105,7 @@ fun ExercisePlan(image: Int, planName: String, duration: Int, exercisesCount: In
                 Box(modifier = Modifier.fillMaxSize()) {
                     Image(
                         painter = painterResource(image),
-                        contentDescription = "plan card description",
+                        contentDescription = stringResource(R.string.plan_card_description),
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )
@@ -137,13 +140,21 @@ fun ExercisePlan(image: Int, planName: String, duration: Int, exercisesCount: In
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 InfoChip(
                                     icon = Icons.Outlined.SportsGymnastics,
-                                    text = "$exercisesCount Exercises"
+                                    text = pluralStringResource(
+                                        R.plurals.exercises_count,
+                                        exercisesCount,
+                                        exercisesCount
+                                    )
                                 )
                             }
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 InfoChip(
                                     icon = Icons.Outlined.Timer,
-                                    text = "$duration Minutes"
+                                    text = pluralStringResource(
+                                        R.plurals.minutes_duration,
+                                        duration,
+                                        duration
+                                    )
                                 )
                             }
                         }
@@ -160,7 +171,6 @@ fun CategoriesPreview() {
     SitzerTheme {
         Row {
             //ExercisePlan(R.drawable.cobraposeimg, "Lower Back", 25, 8)
-
         }
     }
 }

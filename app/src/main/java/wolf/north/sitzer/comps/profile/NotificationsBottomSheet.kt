@@ -30,8 +30,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import wolf.north.sitzer.R
 import wolf.north.sitzer.mvvm.viewmodel.ProfileScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +46,8 @@ fun NotificationsBottomSheet(
 
     // Local state for notification
     var selectedMethod by remember { mutableStateOf("Push") }  // (Push, Email)
-    val methods = listOf("Push Notifications", "Email")
+    val methods =
+        listOf(stringResource(R.string.method_push_full), stringResource(R.string.method_email))
 
     Column(
         modifier = Modifier
@@ -59,13 +62,13 @@ fun NotificationsBottomSheet(
             IconButton(onClick = onDismiss) {
                 Icon(
                     Icons.Default.Close,
-                    contentDescription = "Close",
+                    contentDescription = stringResource(R.string.close),
                     tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             Spacer(Modifier.weight(1f))
             Text(
-                text = "Notifications",
+                text = stringResource(R.string.menu_notifications),
                 style = MaterialTheme.typography.titleLarge
             )
             Spacer(Modifier.weight(1f))
@@ -76,7 +79,7 @@ fun NotificationsBottomSheet(
 
         // Notification Method Section
         Text(
-            "Notification Method",
+            stringResource(R.string.notification_method),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Medium
         )
@@ -111,7 +114,7 @@ fun NotificationsBottomSheet(
 
         // Notification Frequency
         Text(
-            "Notification Frequency",
+            stringResource(R.string.notification_frequency),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Medium
         )
@@ -119,22 +122,22 @@ fun NotificationsBottomSheet(
         Spacer(modifier = Modifier.height(12.dp))
 
         NotificationSwitchItem(
-            title = "Daily Reminder",
-            description = "Get a daily reminder at your chosen time",
+            title = stringResource(R.string.daily_reminder),
+            description = stringResource(R.string.daily_reminder_desc),
             checked = notificationSettings.daily,
             onCheckedChange = { viewModel.toggleDaily(it) }
         )
 
         NotificationSwitchItem(
-            title = "Plan for Today",
-            description = "Notify when today's plan is ready",
+            title = stringResource(R.string.plan_for_today),
+            description = stringResource(R.string.plan_for_today_desc),
             checked = notificationSettings.planOfTheDay,
             onCheckedChange = { viewModel.togglePlan(it) }
         )
 
         NotificationSwitchItem(
-            title = "Weekly Summary",
-            description = "Get a weekly summary of your activity",
+            title = stringResource(R.string.weekly_summary),
+            description = stringResource(R.string.weekly_summary_desc),
             checked = notificationSettings.weeklySummary,
             onCheckedChange = { viewModel.toggleWeekly(it) }
         )
@@ -150,7 +153,7 @@ fun NotificationsBottomSheet(
                 onClick = onDismiss,
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Cancel")
+                Text(stringResource(R.string.cancel))
             }
 
             Button(
@@ -160,7 +163,7 @@ fun NotificationsBottomSheet(
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Save")
+                Text(stringResource(R.string.save))
             }
         }
     }

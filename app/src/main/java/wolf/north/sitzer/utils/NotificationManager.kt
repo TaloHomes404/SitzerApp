@@ -34,7 +34,7 @@ object AppNotificationManager {
         message: String
     ) {
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_background) // wrzuć swoją
+            .setSmallIcon(R.drawable.sitzer_logo_nobg)
             .setContentTitle(title)
             .setContentText(message)
             .setAutoCancel(true)
