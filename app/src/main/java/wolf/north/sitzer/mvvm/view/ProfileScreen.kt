@@ -53,6 +53,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -61,6 +62,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.profile.HelpBottomSheet
 import wolf.north.sitzer.comps.profile.NotificationsBottomSheet
 import wolf.north.sitzer.comps.profile.ProfileInfoBottomSheet
@@ -112,7 +114,10 @@ fun ProfileScreen(
                         modifier = Modifier.padding(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Profile", color = MaterialTheme.colorScheme.onPrimary)
+                        Text(
+                            stringResource(R.string.profile_title),
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -147,7 +152,10 @@ fun ProfileScreen(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.clickable { navController.navigate(Screens.Home) }
                         )
-                        Text("Home", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(
+                            stringResource(R.string.nav_home),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
 
                     Column(
@@ -160,7 +168,10 @@ fun ProfileScreen(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
                         )
-                        Text("Workouts", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(
+                            stringResource(R.string.nav_workouts),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
 
                     Column(
@@ -173,7 +184,10 @@ fun ProfileScreen(
                             tint = MaterialTheme.colorScheme.onPrimary,
                             modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
                         )
-                        Text("Profile", color = MaterialTheme.colorScheme.onPrimary)
+                        Text(
+                            stringResource(R.string.nav_profile),
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
                     }
                 }
             }
@@ -203,7 +217,7 @@ fun ProfileScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Person,
-                        contentDescription = "Zdjęcie profilowe",
+                        contentDescription = stringResource(R.string.profile_image_content_description),
                         modifier = Modifier.size(60.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -222,10 +236,11 @@ fun ProfileScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Edit,
-                            contentDescription = "Edytuj profil",
+                            contentDescription = stringResource(R.string.profile_edit_content_description),
                             tint = Color.White,
-                            modifier = Modifier.size(18.dp)
-                                .clickable{ showProfileBottomSheet = true }
+                            modifier = Modifier
+                                .size(18.dp)
+                                .clickable { showProfileBottomSheet = true }
                         )
                     }
                 }
@@ -287,22 +302,22 @@ fun ProfileScreen(
                 ) {
                     MenuOption(
                         icon = Icons.Default.Person,
-                        text = "Profile info",
+                        text = stringResource(R.string.menu_profile_info),
                         onClick = { showProfileBottomSheet = true }
                     )
                     MenuOption(
                         icon = Icons.Default.Settings,
-                        text = "Settings",
+                        text = stringResource(R.string.menu_settings),
                         onClick = { showSettingsBottomSheet = true }
                     )
                     MenuOption(
                         icon = Icons.Default.Notifications,
-                        text = "Notification",
+                        text = stringResource(R.string.menu_notifications),
                         onClick = { showNotificationBottomSheet = true }
                     )
                     MenuOption(
                         icon = Icons.Default.Help,
-                        text = "Help",
+                        text = stringResource(R.string.menu_help),
                         onClick = { showHelpBottomSheet = true },
                         showDivider = false
                     )
@@ -416,7 +431,10 @@ private fun MenuOption(
 
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = "Przejdź do $text",
+                contentDescription = stringResource(
+                    R.string.cd_go_to_section,
+                    text
+                ),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(16.dp)
             )

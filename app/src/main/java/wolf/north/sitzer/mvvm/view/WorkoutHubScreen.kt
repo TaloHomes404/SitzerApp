@@ -39,6 +39,7 @@ import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -112,7 +113,7 @@ fun WorkoutHubScreen(
                     }
 
                     Text(
-                        text = viewModel.getCurrentExercise()?.name ?: "Name",
+                        text = viewModel.getCurrentExercise()?.name ?: stringResource(R.string.workout_hub_default_name),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.weight(1f),
@@ -157,7 +158,7 @@ fun WorkoutHubScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = viewModel.getCurrentExercise()?.name ?: "Name",
+                        text = viewModel.getCurrentExercise()?.name ?: stringResource(R.string.workout_hub_default_name),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
@@ -166,7 +167,7 @@ fun WorkoutHubScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = viewModel.getCurrentExercise()?.description ?: "Description",
+                        text = viewModel.getCurrentExercise()?.description ?: stringResource(R.string.workout_hub_default_description),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center
@@ -213,7 +214,7 @@ fun WorkoutHubScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Instrukcja",
+                                text = stringResource(R.string.workout_hub_instruction),
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.Medium
                             )
@@ -235,7 +236,7 @@ fun WorkoutHubScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Porady",
+                                text = stringResource(R.string.workout_hub_tips),
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.Medium
                             )
@@ -274,7 +275,7 @@ fun WorkoutHubScreen(
                         )
                     }
                     Text(
-                        text = "Problem?",
+                        text = stringResource(R.string.workout_hub_problem),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -284,12 +285,12 @@ fun WorkoutHubScreen(
                     horizontalAlignment = Alignment.End
                 ) {
                     Text(
-                        text = "Następne ćwiczenie",
+                        text = stringResource(R.string.workout_hub_next_exercise),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = viewModel.getNextExercise()?.name ?: "Koniec treningu",
+                        text = viewModel.getNextExercise()?.name ?: stringResource(R.string.workout_hub_end_of_workout),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurface

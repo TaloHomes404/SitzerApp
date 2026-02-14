@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -76,10 +77,10 @@ fun LoginScreen(
                 .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // Logo na górze
+            // Logo in login section
             Image(
                 painter = painterResource(R.drawable.sitzer_logo_nobg),
-                contentDescription = "login site Sitzer logo",
+                contentDescription = stringResource(R.string.cd_login_logo),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.padding(top = 48.dp, bottom = 24.dp)
             )
@@ -103,7 +104,7 @@ fun LoginScreen(
                     modifier = Modifier.fillMaxHeight()
                 ) {
                     Text(
-                        text = "Login",
+                        text = stringResource(R.string.login_title),
                         fontSize = 30.sp,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold,
@@ -127,7 +128,7 @@ fun LoginScreen(
                         leadingIcon = {
                             Icon(Icons.Default.Email, contentDescription = null)
                         },
-                        label = { Text("Email") },
+                        label = { Text(stringResource(R.string.login_email_label)) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
@@ -146,13 +147,15 @@ fun LoginScreen(
                                     Icons.Default.Visibility
                                 else
                                     Icons.Default.VisibilityOff,
-                                contentDescription = if (viewModel.passwordVisibility) "Hide password" else "Show password",
+                                contentDescription = if (viewModel.passwordVisibility) stringResource(
+                                    R.string.cd_hide_password
+                                ) else stringResource(R.string.cd_show_password),
                                 modifier = Modifier.clickable {
                                     viewModel.togglePasswordVisibility()
                                 }
                             )
                         },
-                        label = { Text(text = "Password") },
+                        label = { Text(text = stringResource(R.string.login_password_label)) },
                         visualTransformation = if (viewModel.passwordVisibility)
                             VisualTransformation.None
                         else
@@ -163,18 +166,18 @@ fun LoginScreen(
                             .padding(bottom = 16.dp)
                     )
 
-                    // Linki pod formularzem
+                    // Action text under forms (password reset and create account)
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
-                            text = "Forgot password?",
+                            text = stringResource(R.string.login_forgot_password),
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
 
                         Text(
-                            text = "Create an account",
+                            text = stringResource(R.string.login_create_account),
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.clickable {
                                 navController.navigate(Screens.Register)
@@ -182,7 +185,7 @@ fun LoginScreen(
                         )
                     }
 
-                    // Przycisk logowania
+                    // Login button
                     ElevatedButton(
                         onClick = { viewModel.login() },
                         enabled = viewModel.email.isNotBlank() && viewModel.password.isNotBlank(),
@@ -200,7 +203,7 @@ fun LoginScreen(
                             .height(48.dp),
                         shape = RoundedCornerShape(24.dp)
                     ) {
-                        Text(text = "Sign in", fontSize = 24.sp)
+                        Text(text = stringResource(R.string.login_sign_in), fontSize = 24.sp)
                     }
                 }
             }

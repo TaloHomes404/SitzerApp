@@ -42,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -125,7 +126,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             ) {
                 item {
                     Spacer(Modifier.height(6.dp))
-                    SectionTitle("Challenge Yourself With Featured \nDaily Workout! ")
+                    SectionTitle(stringResource(R.string.home_featured_workout_title))
                 }
 
                 item {
@@ -145,9 +146,9 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        SectionTitle("Weekly Progress ")
+                        SectionTitle(stringResource(R.string.home_weekly_progress))
                         Text(
-                            "See All ",
+                            stringResource(R.string.home_see_all),
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable { },
@@ -165,8 +166,8 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                             .padding(horizontal = 8.dp, vertical = 4.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        ProgressCard(0.00f, "0/3 ", "Workout Sessions ", "This Week ")
-                        ProgressCardNumberIndicator(0, "Calories Burned ", "This Week ")
+                        ProgressCard(0.00f, "0/3 ", stringResource(R.string.home_workout_sessions), "This Week ")
+                        ProgressCardNumberIndicator(0, stringResource(R.string.home_calories_burned), "This Week ")
                     }
                 }
 
@@ -180,7 +181,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     ) {
                         SectionTitle("Categories ")
                         Text(
-                            "See All ",
+                            stringResource(R.string.home_see_all),
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable { },
@@ -249,7 +250,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                             contentDescription = "Menu ",
                             tint = Color.White
                         )
-                        Text("Home ", color = Color.White)
+                        Text(stringResource(R.string.nav_home), color = Color.White)
                     }
 
                     Column(
@@ -262,7 +263,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                             contentDescription = "Workouts list bottom icon ",
                             tint = Color.Gray,
                         )
-                        Text("Workouts ", color = Color.Gray)
+                        Text(stringResource(R.string.nav_workouts), color = Color.Gray)
                     }
 
                     Column(
@@ -275,7 +276,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                             contentDescription = "Profile ",
                             tint = Color.Gray,
                         )
-                        Text("Profile ", color = Color.Gray)
+                        Text(stringResource(R.string.nav_profile), color = Color.Gray)
                     }
                 }
             }

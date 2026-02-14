@@ -1,7 +1,6 @@
 package wolf.north.sitzer.mvvm.view
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,7 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,10 +35,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -108,7 +105,7 @@ fun RegisterScreen(
                     modifier = Modifier.fillMaxHeight()
                 ) {
                     Text(
-                        text = "Create new account",
+                        text = stringResource(R.string.register_title),
                         fontSize = 30.sp,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold,
@@ -133,8 +130,8 @@ fun RegisterScreen(
                             },
                             value = viewModel.firstName,
                             onValueChange = { viewModel.firstName = it },
-                            label = { Text(text = "First Name") },
-                            placeholder = { Text(text = "Enter your first name") },
+                            label = { Text(text = stringResource(R.string.register_first_name_label)) },
+                            placeholder = { Text(text = stringResource(R.string.register_first_name_placeholder)) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 16.dp)
@@ -146,8 +143,8 @@ fun RegisterScreen(
                             },
                             value = viewModel.email,
                             onValueChange = { viewModel.email = it },
-                            label = { Text(text = "Email") },
-                            placeholder = { Text(text = "Enter your email") },
+                            label = { Text(text = stringResource(R.string.register_email_label)) },
+                            placeholder = { Text(text = stringResource(R.string.register_email_placeholder)) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 12.dp),
@@ -172,8 +169,8 @@ fun RegisterScreen(
                             },
                             value = viewModel.password,
                             onValueChange = { viewModel.password = it },
-                            label = { Text(text = "Password") },
-                            placeholder = { Text(text = "Enter your password") },
+                            label = { Text(text = stringResource(R.string.register_password_label)) },
+                            placeholder = { Text(text = stringResource(R.string.register_password_placeholder)) },
                             visualTransformation = if (viewModel.passwordVisibility)
                                 VisualTransformation.None
                             else
@@ -190,8 +187,8 @@ fun RegisterScreen(
                             },
                             value = viewModel.confirmPassword,
                             onValueChange = { viewModel.confirmPassword = it },
-                            label = { Text(text = "Confirm Password") },
-                            placeholder = { Text(text = "Confirm your password") },
+                            label = { Text(text = stringResource(R.string.register_confirm_password_label)) },
+                            placeholder = { Text(text = stringResource(R.string.register_confirm_password_placeholder)) },
                             visualTransformation = if (viewModel.passwordVisibility)
                                 VisualTransformation.None
                             else
@@ -204,7 +201,6 @@ fun RegisterScreen(
 
                         ElevatedButton(
                             onClick = {
-                                Log.d("REGISTER", "Clicked register")
                                 viewModel.RegisterUser()
                             },
                             elevation = ButtonDefaults.elevatedButtonElevation(
@@ -222,7 +218,7 @@ fun RegisterScreen(
                                 .align(Alignment.CenterHorizontally),
                             shape = RoundedCornerShape(24.dp)
                         ) {
-                            Text(text = "Register", fontSize = 20.sp)
+                            Text(text = stringResource(R.string.register_button), fontSize = 20.sp)
                         }
                     }
                 }

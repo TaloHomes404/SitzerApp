@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -181,7 +182,7 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                             contentDescription = "Menu",
                             tint = Color.Gray
                         )
-                        Text("Home", color = Color.Gray)
+                        Text(stringResource(R.string.nav_home), color = Color.Gray)
                     }
 
                     Column(
@@ -194,7 +195,7 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                             contentDescription = "Workouts",
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
-                        Text("Workouts", color = Color.Gray)
+                        Text(stringResource(R.string.nav_workouts), color = Color.Gray)
                     }
 
                     Column(
@@ -207,7 +208,7 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                             contentDescription = "Profile",
                             tint = Color.Gray
                         )
-                        Text("Profile", color = Color.Gray)
+                        Text(stringResource(R.string.nav_profile), color = Color.Gray)
                     }
                 }
             }
