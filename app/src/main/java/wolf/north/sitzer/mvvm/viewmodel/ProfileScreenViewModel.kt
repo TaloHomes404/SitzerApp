@@ -1,6 +1,7 @@
 package wolf.north.sitzer.mvvm.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.util.Patterns
 import androidx.compose.runtime.getValue
@@ -206,6 +207,33 @@ class ProfileScreenViewModel @Inject constructor(private val notificationRepo: N
 
     fun selectLanguage(language: String) {
         _uiState.update { it.copy(selectedLanguage = language) }
+    }
+
+    fun buildReportEmailIntent(
+        reportType: String,
+        reportTitle: String,
+        reportDescription: String
+    ): Intent {
+        val subject = "[$reportType] $reportTitle"
+        val body = """
+        Type: $reportType
+        Title: $reportTitle
+        
+        Description:
+        $reportDescription
+        
+        ---
+        App: Sitzer
+        Device: ${android.os.Build.MODEL}
+        Android: ${android.os.Build.VERSION.RELEASE}
+    """.trimIndent()
+
+        return Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("support@sitzer.app"))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, body)
+        }
     }
 
 }

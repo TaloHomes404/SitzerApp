@@ -1,8 +1,19 @@
 package wolf.north.sitzer.comps.profile
 
 
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -11,21 +22,39 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Shield
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.BuildConfig
 import wolf.north.sitzer.R
+import wolf.north.sitzer.mvvm.viewmodel.ProfileScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HelpBottomSheet(
+    viewModel: ProfileScreenViewModel,
     onClose: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -45,13 +74,13 @@ fun HelpBottomSheet(
             IconButton(onClick = onClose) {
                 Icon(
                     Icons.Default.Close,
-                    contentDescription = "Close",
+                    contentDescription = stringResource(R.string.close_cd),
                     tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                "Support",
+                stringResource(R.string.support_title),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Medium
@@ -90,7 +119,7 @@ fun HelpBottomSheet(
         // Content area
         when (selectedTab) {
             HelpTab.FAQ -> FAQSection(expandedFaq) { expandedFaq = it }
-            HelpTab.REPORT -> ReportSection()
+            HelpTab.REPORT -> ReportSection(viewModel = viewModel)
             HelpTab.CONTACT -> ContactSection()
             HelpTab.ABOUT -> AboutSection()
         }
@@ -179,30 +208,32 @@ data class FaqItem(val question: String, val answer: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ReportSection() {
+private fun ReportSection(viewModel: ProfileScreenViewModel) {
     var reportTitle by remember { mutableStateOf("") }
-    var reportType by remember { mutableStateOf("Bug") }
-    val reportTypes = listOf("Bug", "UI Issue", "Missing Plan", "Other")
-
+    var reportDescription by remember { mutableStateOf("") }
+    var reportTypeRes by remember {
+        mutableStateOf(R.string.report_type_bug)
+    }
+    val reportTypes = listOf(
+        R.string.report_type_bug,
+        R.string.report_type_ui_issue,
+        R.string.report_type_missing_feature,
+        R.string.report_type_other
+    )
     var expanded by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        OutlinedTextField(
-            value = reportTitle,
-            onValueChange = { reportTitle = it },
-            label = { Text(stringResource(R.string.report_title)) },
-            placeholder = { Text(stringResource(R.string.report_title_placeholder)) },
-            modifier = Modifier.fillMaxWidth()
-        )
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
 
+        // Select report type
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded }
         ) {
             OutlinedTextField(
                 readOnly = true,
-                value = reportType,
-                onValueChange = { },
+                value = stringResource(reportTypeRes),
+                onValueChange = {},
                 label = { Text(stringResource(R.string.report_type)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 modifier = Modifier
@@ -213,11 +244,11 @@ private fun ReportSection() {
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                reportTypes.forEach { type ->
+                reportTypes.forEach { typeRes ->
                     DropdownMenuItem(
-                        text = { Text(type) },
+                        text = { Text(stringResource(typeRes)) },
                         onClick = {
-                            reportType = type
+                            reportTypeRes = typeRes
                             expanded = false
                         }
                     )
@@ -225,13 +256,72 @@ private fun ReportSection() {
             }
         }
 
+        // Title of report
+        OutlinedTextField(
+            value = reportTitle,
+            onValueChange = { reportTitle = it },
+            label = { Text(stringResource(R.string.report_title)) },
+            placeholder = { Text(stringResource(R.string.report_title_placeholder)) },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        // Problem description
+        OutlinedTextField(
+            value = reportDescription,
+            onValueChange = { reportDescription = it },
+            label = { Text(stringResource(R.string.report_issue_label)) },
+            placeholder = { Text(stringResource(R.string.report_issue_placeholder)) },
+            minLines = 3,
+            maxLines = 5,
+            modifier = Modifier.fillMaxWidth()
+        )
+
         Text(
             stringResource(R.string.report_desc),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+
+        //Send report
+        Button(
+            onClick = {
+                val intent = viewModel.buildReportEmailIntent(
+                    reportType = context.getString(reportTypeRes),
+                    reportTitle = reportTitle,
+                    reportDescription = reportDescription
+                )
+
+                try {
+                    context.startActivity(
+                        Intent.createChooser(
+                            intent,
+                            context.getString(R.string.choose_email_client)
+                        )
+                    )
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.no_email_client),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            },
+            enabled = reportTitle.isNotBlank(),  //Enable button only if fields are filled
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Icon(
+                Icons.Default.Email,
+                contentDescription = null,
+                modifier = Modifier.size(18.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.send_report))
+        }
     }
 }
+
 
 @Composable
 private fun ContactSection() {

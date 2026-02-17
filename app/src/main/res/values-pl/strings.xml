@@ -107,14 +107,36 @@
     <string name="faq_q3">Jak zmienić motyw aplikacji?</string>
     <string name="faq_a3">Przejdź do Profil → Ustawienia → Motyw, aby wybrać tryb Jasny, Ciemny lub Systemowy.</string>
 
-    <!-- Report -->
-    <string name="report_title">Tytuł zgłoszenia</string>
-    <string name="report_title_placeholder">np. „Aplikacja zawiesza się przy zapisywaniu planu”</string>
-    <string name="report_type">Rodzaj problemu</string>
-    <string name="report_desc">
-        Twoje zgłoszenie pomaga nam ulepszać aplikację.
-        Skontaktujemy się z Tobą wkrótce!
+
+    <!-- Common -->
+    <string name="close_cd">Zamknij</string>
+    <string name="support_title">Wsparcie</string>
+
+    <!-- Report types -->
+    <string name="report_type">Typ zgłoszenia</string>
+    <string name="report_type_bug">Błąd</string>
+    <string name="report_type_ui_issue">Problem z interfejsem</string>
+    <string name="report_type_missing_feature">Brak funkcji</string>
+    <string name="report_type_other">Inne</string>
+
+    <string name="report_title">Tytuł</string>
+    <string name="report_title_placeholder">
+        Krótki opis problemu
     </string>
+
+    <!-- Report form -->
+    <string name="report_issue_label">Opisz problem</string>
+    <string name="report_issue_placeholder">
+        Co się stało? Kroki do odtworzenia…
+    </string>
+    <string name="report_desc">
+        Podaj jak najwięcej szczegółów, abyśmy mogli szybciej rozwiązać problem.
+    </string>
+    <string name="send_report">Wyślij zgłoszenie</string>
+
+    <!-- Email / intents -->
+    <string name="choose_email_client">Wybierz aplikację e-mail</string>
+    <string name="no_email_client">Nie znaleziono aplikacji e-mail</string>
 
     <!-- Contact -->
     <string name="contact_email">Adres e-mail wsparcia</string>

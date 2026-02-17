@@ -36,11 +36,31 @@
     <string name="faq_q3">How do I change my theme?</string>
     <string name="faq_a3">Go to Profile → Settings → Theme to switch between Light, Dark or System mode.</string>
 
-    <!-- Report -->
-    <string name="report_title">Issue title</string>
-    <string name="report_title_placeholder">e.g. "App crashes when saving plan"</string>
-    <string name="report_type">Issue type</string>
-    <string name="report_desc">Your report helps us improve the app. We\'ll get back to you soon!</string>
+    <!-- Common -->
+    <string name="close_cd">Close</string>
+    <string name="support_title">Support</string>
+
+    <!-- Report types -->
+    <string name="report_type">Report type</string>
+    <string name="report_type_bug">Bug</string>
+    <string name="report_type_ui_issue">UI Issue</string>
+    <string name="report_type_missing_feature">Missing Feature</string>
+    <string name="report_type_other">Other</string>
+
+    <string name="report_title">Title</string>
+    <string name="report_title_placeholder">Short summary of the issue</string>
+
+    <!-- Report form -->
+    <string name="report_issue_label">Describe the issue</string>
+    <string name="report_issue_placeholder">What happened? Steps to reproduce…</string>
+    <string name="report_desc">
+        Please provide as much detail as possible to help us resolve the issue.
+    </string>
+    <string name="send_report">Send report</string>
+
+    <!-- Email / intents -->
+    <string name="choose_email_client">Choose email client</string>
+    <string name="no_email_client">No email client found</string>
 
     <!-- Contact -->
     <string name="contact_email">Support email</string>

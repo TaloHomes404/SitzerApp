@@ -342,7 +342,9 @@ fun ProfileScreen(
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
             containerColor = MaterialTheme.colorScheme.surface
         ) {
-            HelpBottomSheet(onClose = { showHelpBottomSheet = false })
+            HelpBottomSheet(
+                viewmodel,
+                onClose = { showHelpBottomSheet = false })
         }
     }
 
