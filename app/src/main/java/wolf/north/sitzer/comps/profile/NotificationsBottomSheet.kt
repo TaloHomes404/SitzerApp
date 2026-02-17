@@ -1,5 +1,11 @@
 package wolf.north.sitzer.comps.profile
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -42,7 +49,34 @@ fun NotificationsBottomSheet(
     viewModel: ProfileScreenViewModel,
     onDismiss: () -> Unit
 ) {
+    val context = LocalContext.current
     val notificationSettings by viewModel.notificationSettings.collectAsState()
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (!isGranted) {
+            //Permission denied for notifications
+            Toast.makeText(context, "Notification permission denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun requestNotificationPermission(onGranted: () -> Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val granted = context.checkSelfPermission(
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+
+            if (granted) {
+                onGranted()
+            } else {
+                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        } else {
+            // Only is android < 13 bcs it doesn't need permissions
+            onGranted()
+        }
+    }
 
     // Local state for notification
     var selectedMethod by remember { mutableStateOf("Push") }  // (Push, Email)
@@ -125,21 +159,45 @@ fun NotificationsBottomSheet(
             title = stringResource(R.string.daily_reminder),
             description = stringResource(R.string.daily_reminder_desc),
             checked = notificationSettings.daily,
-            onCheckedChange = { viewModel.toggleDaily(it) }
+            onCheckedChange = { enabled ->
+                if (enabled) {
+                    requestNotificationPermission {
+                        viewModel.toggleDaily(context, true)
+                    }
+                } else {
+                    viewModel.toggleDaily(context, false)
+                }
+            }
         )
 
         NotificationSwitchItem(
             title = stringResource(R.string.plan_for_today),
             description = stringResource(R.string.plan_for_today_desc),
             checked = notificationSettings.planOfTheDay,
-            onCheckedChange = { viewModel.togglePlan(it) }
+            onCheckedChange = { enabled ->
+                if (enabled) {
+                    requestNotificationPermission {
+                        viewModel.togglePlan(context, true)
+                    }
+                } else {
+                    viewModel.togglePlan(context, false)
+                }
+            }
         )
 
         NotificationSwitchItem(
             title = stringResource(R.string.weekly_summary),
             description = stringResource(R.string.weekly_summary_desc),
             checked = notificationSettings.weeklySummary,
-            onCheckedChange = { viewModel.toggleWeekly(it) }
+            onCheckedChange = { enabled ->
+                if (enabled) {
+                    requestNotificationPermission {
+                        viewModel.toggleWeekly(context, true)
+                    }
+                } else {
+                    viewModel.toggleWeekly(context, false)
+                }
+            }
         )
 
         Spacer(modifier = Modifier.height(16.dp))

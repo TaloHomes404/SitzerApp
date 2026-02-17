@@ -48,6 +48,7 @@ import wolf.north.sitzer.R
 import wolf.north.sitzer.navigation.AppNavigation
 import wolf.north.sitzer.navigation.Screens
 import wolf.north.sitzer.ui.theme.SitzerTheme
+import wolf.north.sitzer.utils.notifications.AppNotificationManager
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -60,6 +61,9 @@ class MainActivity : ComponentActivity() {
                 AppCompatDelegate.MODE_NIGHT_NO -> false
                 else -> isSystemInDarkTheme() // System default
             }
+
+            //Create notifications channels
+            AppNotificationManager.createChannels(this)
 
             SitzerTheme(darkTheme = isDark) {
                 AppNavigation()

@@ -1,5 +1,6 @@
 package wolf.north.sitzer.mvvm.viewmodel
 
+import android.content.Context
 import android.net.Uri
 import android.util.Patterns
 import androidx.compose.runtime.getValue
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import wolf.north.sitzer.repository.datastore.NotificationsPreferencesRepository
+import wolf.north.sitzer.utils.notifications.NotificationScheduler
 import javax.inject.Inject
 
 
@@ -170,16 +172,31 @@ class ProfileScreenViewModel @Inject constructor(private val notificationRepo: N
     }
 
     //methods for notifications
-    fun toggleDaily(enabled: Boolean) = viewModelScope.launch {
+    fun toggleDaily(context: Context, enabled: Boolean) = viewModelScope.launch {
         notificationRepo.setDaily(enabled)
+        if (enabled) {
+            NotificationScheduler.scheduleDailyReminder(context)
+        } else {
+            NotificationScheduler.cancelDailyReminder(context)
+        }
     }
 
-    fun togglePlan(enabled: Boolean) = viewModelScope.launch {
+    fun togglePlan(context: Context, enabled: Boolean) = viewModelScope.launch {
         notificationRepo.setPlan(enabled)
+        if (enabled) {
+            NotificationScheduler.schedulePlanNotification(context)
+        } else {
+            NotificationScheduler.cancelPlanNotification(context)
+        }
     }
 
-    fun toggleWeekly(enabled: Boolean) = viewModelScope.launch {
+    fun toggleWeekly(context: Context, enabled: Boolean) = viewModelScope.launch {
         notificationRepo.setWeekly(enabled)
+        if (enabled) {
+            NotificationScheduler.scheduleWeeklySummary(context)
+        } else {
+            NotificationScheduler.cancelWeeklySummary(context)
+        }
     }
 
 

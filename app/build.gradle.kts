@@ -88,6 +88,9 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
 
+    // Notifications - Worker
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
