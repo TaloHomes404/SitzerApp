@@ -4,8 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import wolf.north.sitzer.mvvm.model.Exercise
 import wolf.north.sitzer.mvvm.model.Plan
@@ -20,7 +23,16 @@ class WorkoutHubScreenViewModel : ViewModel() {
     val currentExerciseIndex: StateFlow<Int> = _currentExerciseIndex.asStateFlow()
 
     private val _isWorkoutPlaying = MutableStateFlow(false)
-    val isWorkoutPaused: StateFlow<Boolean> = _isWorkoutPlaying.asStateFlow()
+    val isWorkoutPlaying: StateFlow<Boolean> = _isWorkoutPlaying.asStateFlow()
+
+
+    //computed stateflow for next exercise name (ui update in workouthub)
+    val nextExercise: StateFlow<Exercise?> = combine(
+        _currentPlan,
+        _currentExerciseIndex
+    ) { plan, index ->
+        plan?.exercises?.getOrNull(index + 1)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
 
     //Load plan into workout hub and set first exercise

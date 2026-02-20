@@ -35,7 +35,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -62,7 +61,8 @@ fun WorkoutHubScreen(
     val viewModel: WorkoutHubScreenViewModel = viewModel()
     val currentPlan by viewModel.currentPlan.collectAsState()
     val currentExerciseIndex by viewModel.currentExerciseIndex.collectAsState()
-    val isWorkoutPlaying by viewModel.isWorkoutPaused.collectAsState()
+    val isWorkoutPlaying by viewModel.isWorkoutPlaying.collectAsState()
+    val nextExercise by viewModel.nextExercise.collectAsState()
 
     // With start of the screen load plan
     LaunchedEffect(planId) {
@@ -113,7 +113,8 @@ fun WorkoutHubScreen(
                     }
 
                     Text(
-                        text = viewModel.getCurrentExercise()?.name ?: stringResource(R.string.workout_hub_default_name),
+                        text = viewModel.getCurrentExercise()?.name
+                            ?: stringResource(R.string.workout_hub_default_name),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.weight(1f),
@@ -158,7 +159,8 @@ fun WorkoutHubScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = viewModel.getCurrentExercise()?.name ?: stringResource(R.string.workout_hub_default_name),
+                        text = viewModel.getCurrentExercise()?.name
+                            ?: stringResource(R.string.workout_hub_default_name),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
@@ -167,7 +169,8 @@ fun WorkoutHubScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = viewModel.getCurrentExercise()?.description ?: stringResource(R.string.workout_hub_default_description),
+                        text = viewModel.getCurrentExercise()?.description
+                            ?: stringResource(R.string.workout_hub_default_description),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center
@@ -183,13 +186,12 @@ fun WorkoutHubScreen(
                             .background(MaterialTheme.colorScheme.surface),
                         contentAlignment = Alignment.Center
                     ) {
-                        key(currentExerciseIndex) {
-                            ExerciseVideoPlayer(
-                                videoRes = viewModel.getCurrentExercise()?.videoUrl
-                                    ?: R.raw.side_plank,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
+                        ExerciseVideoPlayer(
+                            videoRes = viewModel.getCurrentExercise()?.videoUrl
+                                ?: R.raw.side_plank,
+                            isPlaying = isWorkoutPlaying,
+                            modifier = Modifier.fillMaxSize()
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -251,7 +253,7 @@ fun WorkoutHubScreen(
                 modifier = Modifier.fillMaxWidth(),
                 onNext = { viewModel.goToNextExercise() },
                 onPrevious = { viewModel.goToPreviousExercise() },
-                onPlayPause = { }
+                onPlayPause = { viewModel.playExerciseVideo() }
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -261,26 +263,6 @@ fun WorkoutHubScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .padding(4.dp)
-                ) {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.Default.Help,
-                            contentDescription = "Problem",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                    Text(
-                        text = stringResource(R.string.workout_hub_problem),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
@@ -290,7 +272,8 @@ fun WorkoutHubScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = viewModel.getNextExercise()?.name ?: stringResource(R.string.workout_hub_end_of_workout),
+                        text = nextExercise?.name
+                            ?: stringResource(R.string.workout_hub_end_of_workout),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurface
