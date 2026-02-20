@@ -263,26 +263,6 @@ fun WorkoutHubScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .padding(4.dp)
-                ) {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.Default.Help,
-                            contentDescription = "Problem",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                    Text(
-                        text = stringResource(R.string.workout_hub_problem),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
