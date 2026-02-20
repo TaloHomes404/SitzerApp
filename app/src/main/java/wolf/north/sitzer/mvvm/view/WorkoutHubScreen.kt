@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material3.Button
@@ -251,6 +250,8 @@ fun WorkoutHubScreen(
 
             Timer(
                 modifier = Modifier.fillMaxWidth(),
+                currentExercise = currentExerciseIndex,
+                totalExercises = plan.exercises.size,
                 onNext = { viewModel.goToNextExercise() },
                 onPrevious = { viewModel.goToPreviousExercise() },
                 onPlayPause = { viewModel.playExerciseVideo() }
@@ -260,7 +261,7 @@ fun WorkoutHubScreen(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
