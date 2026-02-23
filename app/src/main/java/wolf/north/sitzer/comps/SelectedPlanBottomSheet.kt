@@ -21,9 +21,10 @@ import androidx.compose.material.icons.outlined.FitnessCenter
 import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -36,9 +37,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import wolf.north.sitzer.comps.exerciseVideoPlayer.ExerciseVideoPlayer
 import wolf.north.sitzer.mvvm.model.Exercise
 import wolf.north.sitzer.mvvm.model.Plan
 
@@ -50,18 +50,18 @@ fun SelectedPlanBottomSheet(
     onStartWorkout: () -> Unit,
     exercises: List<Exercise>,
 ) {
-    //val to control sheet state
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
-        containerColor = Color(0xFF1C1C1E),
+        containerColor = MaterialTheme.colorScheme.surface,  // ← theme
         shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
+            // Image header
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -74,6 +74,7 @@ fun SelectedPlanBottomSheet(
                     modifier = Modifier.fillMaxSize()
                 )
 
+                // Gradient overlay
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -83,14 +84,14 @@ fun SelectedPlanBottomSheet(
                             Brush.verticalGradient(
                                 colors = listOf(
                                     Color.Transparent,
-                                    Color.Black.copy(alpha = 0.8f)
+                                    MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
                                 )
                             )
                         )
                 )
             }
 
-            // plan info panels
+            // Plan info panels
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -99,7 +100,7 @@ fun SelectedPlanBottomSheet(
             ) {
                 PlanInfoItem(
                     icon = Icons.Outlined.Timer,
-                    value = "${plan.duration}",
+                    value = "${plan.duration} min",
                     label = "Time"
                 )
                 PlanInfoItem(
@@ -107,15 +108,14 @@ fun SelectedPlanBottomSheet(
                     value = plan.exerciseCount.toString(),
                     label = "Exercises"
                 )
-
             }
 
-            Divider(
-                color = Color.White.copy(alpha = 0.1f),
+            HorizontalDivider(  // ← Material 3
+                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
 
-
+            // Plan name & description
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -124,34 +124,33 @@ fun SelectedPlanBottomSheet(
             ) {
                 Text(
                     text = plan.name,
-                    color = Color.White,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = plan.description,
-                    color = Color.White.copy(alpha = 0.7f),
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
 
-
-            //Exercises column in plan
+            // Exercises list
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth(),
                 contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-
                 item {
                     Text(
-                        text = "Exercises ${plan.exerciseCount}",
-                        color = Color.White,
-                        fontSize = 18.sp,
+                        text = "Exercises (${plan.exerciseCount})",
+                        style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.padding(top = 8.dp)
                     )
                 }
@@ -161,6 +160,7 @@ fun SelectedPlanBottomSheet(
                 }
             }
 
+            // Start button
             Button(
                 onClick = onStartWorkout,
                 modifier = Modifier
@@ -169,13 +169,13 @@ fun SelectedPlanBottomSheet(
                     .height(56.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFADD45C)
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
                 Text(
                     text = "Start Workout",
-                    color = Color.Black,
-                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -197,19 +197,19 @@ fun PlanInfoItem(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = Color(0xFFADD45C),
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(24.dp)
         )
         Text(
             text = value,
-            color = Color.White,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSurface
         )
         Text(
             text = label,
-            color = Color.White.copy(alpha = 0.6f),
-            fontSize = 12.sp
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }
@@ -220,7 +220,7 @@ fun ExerciseItem(exercise: Exercise) {
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                Color.White.copy(alpha = 0.05f),
+                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
                 shape = RoundedCornerShape(12.dp)
             )
             .padding(12.dp),
@@ -231,33 +231,38 @@ fun ExerciseItem(exercise: Exercise) {
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Thumbnail box - BEZ VIDEO!
             Box(
                 modifier = Modifier
                     .size(48.dp)
                     .background(
-                        Color(0xFFADD45C).copy(alpha = 0.2f),
+                        MaterialTheme.colorScheme.primaryContainer,
                         shape = RoundedCornerShape(8.dp)
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                ExerciseVideoPlayer(
-                    videoRes = exercise.videoUrl,
-                    modifier = Modifier
-                        .fillMaxSize()
+                // Ikona zamiast wideo
+                Icon(
+                    imageVector = Icons.Outlined.FitnessCenter,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                    modifier = Modifier.size(24.dp)
                 )
             }
 
             Column {
                 Text(
                     text = exercise.name,
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = exercise.description,
-                    color = Color.White.copy(alpha = 0.6f),
-                    fontSize = 13.sp
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }
@@ -265,7 +270,7 @@ fun ExerciseItem(exercise: Exercise) {
         Icon(
             imageVector = Icons.Default.ChevronRight,
             contentDescription = null,
-            tint = Color.White.copy(alpha = 0.3f),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
             modifier = Modifier.size(20.dp)
         )
     }
