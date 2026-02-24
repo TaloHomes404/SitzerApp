@@ -197,6 +197,10 @@
     <string name="menu_help">Help</string>
     <string name="menu_navigate_to">Navigate to %1$s</string>
 
+    <!-- Language -->
+    <string name="settings_language">Language</string>
+    <string name="settings_theme">Theme</string>
+
     <!-- Accessibility -->
     <string name="cd_login_logo">Sitzer login logo</string>
     <string name="cd_show_password">Show password</string>

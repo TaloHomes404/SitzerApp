@@ -1,6 +1,7 @@
 package wolf.north.sitzer.mvvm.view
 
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -40,30 +41,84 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.LocaleListCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import wolf.north.sitzer.R
 import wolf.north.sitzer.navigation.AppNavigation
 import wolf.north.sitzer.navigation.Screens
+import wolf.north.sitzer.repository.datastore.UserPreferencesRepository
 import wolf.north.sitzer.ui.theme.SitzerTheme
 import wolf.north.sitzer.utils.notifications.AppNotificationManager
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var userPrefsRepo: UserPreferencesRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Load theme state before start
+        lifecycleScope.launch {
+            val savedTheme = userPrefsRepo.selectedTheme.first()
+            when (savedTheme) {
+                "Light" -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+
+                "Dark" -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+
+                else -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                }
+            }
+
+            val currentMode = AppCompatDelegate.getDefaultNightMode()
+
+            // Load language state before start
+            val savedLanguage = userPrefsRepo.selectedLanguage.first()
+            val langCode = when (savedLanguage) {
+                "Polski" -> "pl"
+                "English" -> "en"
+                else -> "en"
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                // Android 13+ - setApplicationLocales
+                AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(langCode)
+                )
+            } else {
+                // Android <13 - manual locale
+                val locale = java.util.Locale(langCode)
+                java.util.Locale.setDefault(locale)
+                val config = resources.configuration
+                config.setLocale(locale)
+                createConfigurationContext(config)
+                resources.updateConfiguration(config, resources.displayMetrics)
+            }
+        }
+
         setContent {
             val nightMode = AppCompatDelegate.getDefaultNightMode()
             val isDark = when (nightMode) {
                 AppCompatDelegate.MODE_NIGHT_YES -> true
                 AppCompatDelegate.MODE_NIGHT_NO -> false
-                else -> isSystemInDarkTheme() // System default
+                else -> isSystemInDarkTheme()
             }
 
-            //Create notifications channels
-            AppNotificationManager.createChannels(this)
+            // Create notifications channels
+            AppNotificationManager.createChannels(this@MainActivity)
 
             SitzerTheme(darkTheme = isDark) {
                 AppNavigation()
@@ -153,8 +208,6 @@ fun SplashScreen(navController: NavHostController = rememberNavController()) {
 
             Spacer(modifier = Modifier.height(48.dp))
 
-            //For testing it's only loading
-            //Add user credentail save + auto-log-on
             CircularProgressIndicator(
                 modifier = Modifier
                     .size(40.dp)

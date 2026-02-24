@@ -1,6 +1,5 @@
 package wolf.north.sitzer.mvvm.view
 
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -89,18 +88,6 @@ fun ProfileScreen(
     val notificationsSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     var showSettings by remember { mutableStateOf(false) }
-    var selectedTheme by remember {
-        mutableStateOf(
-            when (AppCompatDelegate.getDefaultNightMode()) {
-                AppCompatDelegate.MODE_NIGHT_YES -> "Dark"
-                AppCompatDelegate.MODE_NIGHT_NO -> "Light"
-                else -> "System"
-            }
-        )
-    }
-    var selectedLanguage by remember {
-        mutableStateOf("English")
-    }
 
     var showHelpBottomSheet by remember { mutableStateOf(false) }
     val helpSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
