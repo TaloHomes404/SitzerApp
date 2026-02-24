@@ -34,9 +34,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
+import wolf.north.sitzer.R
 import wolf.north.sitzer.mvvm.viewmodel.ProfileScreenViewModel
 import wolf.north.sitzer.utils.LegacyLocaleHelper
 
@@ -48,7 +50,6 @@ fun SettingsBottomSheet(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
-    val selectedLanguage by viewModel.selectedLanguage.collectAsState()
     val themes = listOf("Light", "Dark", "System")
     val languages = listOf("English", "Polski")
 
@@ -75,12 +76,12 @@ fun SettingsBottomSheet(
 
         // Theme Section
         Text(
-            "Theme",
+            stringResource(R.string.settings_theme),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Medium
         )
         ThemeDropdown(
-            selectedTheme = uiState.selectedTheme ?: "System",
+            selectedTheme = uiState.selectedTheme,
             onThemeSelected = { viewModel.selectTheme(it) },
             themes = themes
         )
@@ -89,12 +90,12 @@ fun SettingsBottomSheet(
 
         // Language Section
         Text(
-            "Language",
+            stringResource(R.string.settings_language),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Medium
         )
         LanguageDropdown(
-            selectedLanguage = uiState.selectedLanguage ?: "Polski",
+            selectedLanguage = uiState.selectedLanguage,
             onLanguageSelected = { viewModel.selectLanguage(it) },
             languages = languages
         )
@@ -116,13 +117,14 @@ fun SettingsBottomSheet(
                 onClick = { onDismiss() },
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Cancel")
+                Text(stringResource(R.string.cancel))
             }
 
             Button(
                 onClick = {
-                    //Save and close bottom sheet
-                    onDismiss()
+
+                    viewModel.selectTheme(uiState.selectedTheme)
+                    viewModel.selectLanguage(uiState.selectedLanguage)
 
                     //Change theme based on selected option
                     when (uiState.selectedTheme) {
@@ -151,10 +153,13 @@ fun SettingsBottomSheet(
                         LegacyLocaleHelper.setLocaleAndRestart(context, langCode)
                     }
 
+                    //Save and close bottom sheet
+                    onDismiss()
+
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Save")
+                Text(stringResource(R.string.save))
             }
         }
     }

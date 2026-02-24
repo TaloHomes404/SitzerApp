@@ -14,11 +14,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import wolf.north.sitzer.repository.datastore.NotificationsPreferencesRepository
+import wolf.north.sitzer.repository.datastore.UserPreferencesRepository
 import wolf.north.sitzer.utils.notifications.NotificationScheduler
 import javax.inject.Inject
 
@@ -34,8 +36,8 @@ data class ProfileUiState(
     val confirmPassword: String = "",
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
-    val selectedTheme: String? = "System",
-    val selectedLanguage: String? = "Polski",
+    val selectedTheme: String = "System",
+    val selectedLanguage: String = "English",
     val notificationMethod: String = "Push"
 )
 
@@ -46,15 +48,32 @@ data class NotificationSettingsUi(
 )
 
 @HiltViewModel
-class ProfileScreenViewModel @Inject constructor(private val notificationRepo: NotificationsPreferencesRepository) :
-    ViewModel() {
+class ProfileScreenViewModel @Inject constructor(
+    private val notificationRepo: NotificationsPreferencesRepository,
+    private val userPrefsRepo: UserPreferencesRepository
+) : ViewModel() {
+
+
+    // Load saved settings on init
+    init {
+        loadSavedSettings()
+    }
+
+    private fun loadSavedSettings() {
+        viewModelScope.launch {
+            val savedTheme = userPrefsRepo.selectedTheme.first()
+            _uiState.update { it.copy(selectedTheme = savedTheme) }
+
+            val savedLanguage = userPrefsRepo.selectedLanguage.first()
+            _uiState.update { it.copy(selectedLanguage = savedLanguage) }
+        }
+    }
+
 
     //vals to hold user profile model in uistate
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState
 
-    private val _selectedLanguage = MutableStateFlow("  ")
-    val selectedLanguage: StateFlow<String> = _selectedLanguage
 
     //Password visibility val
     var passwordVisibility by mutableStateOf(false)
@@ -203,10 +222,18 @@ class ProfileScreenViewModel @Inject constructor(private val notificationRepo: N
 
     fun selectTheme(theme: String) {
         _uiState.update { it.copy(selectedTheme = theme) }
+        // Save immediately
+        viewModelScope.launch {
+            userPrefsRepo.setTheme(theme)
+        }
     }
 
     fun selectLanguage(language: String) {
         _uiState.update { it.copy(selectedLanguage = language) }
+        // Save immediately
+        viewModelScope.launch {
+            userPrefsRepo.setLanguage(language)
+        }
     }
 
     fun buildReportEmailIntent(

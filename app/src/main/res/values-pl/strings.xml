@@ -220,6 +220,10 @@
     <string name="menu_help">Pomoc</string>
     <string name="menu_navigate_to">Przejdź do: %1$s</string>
 
+    <!-- Language -->
+    <string name="settings_language">Język</string>
+    <string name="settings_theme">Motyw</string>
+
     <!-- Accessibility -->
     <string name="cd_login_logo">Logo logowania Sitzer</string>
     <string name="cd_show_password">Pokaż hasło</string>
