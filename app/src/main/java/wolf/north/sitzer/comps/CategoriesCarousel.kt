@@ -20,6 +20,8 @@ import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,12 +41,12 @@ import wolf.north.sitzer.enums.MuscleGroup
 import wolf.north.sitzer.ui.theme.SitzerTheme
 
 @Composable
-fun CategoriesCarousel(selectedCategory: MuscleGroup?, onCategorySelected: (MuscleGroup) -> Unit) {
-
-    //List of category
+fun CategoriesCarousel(
+    selectedCategory: MuscleGroup?,
+    onCategorySelected: (MuscleGroup) -> Unit
+) {
     val categories = MuscleGroup.entries.toTypedArray()
 
-    //Categories lazyrow
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
@@ -54,8 +56,20 @@ fun CategoriesCarousel(selectedCategory: MuscleGroup?, onCategorySelected: (Musc
                 selected = (selectedCategory == category),
                 onClick = { onCategorySelected(category) },
                 label = {
-                    Text(category.name.lowercase().replaceFirstChar { it.uppercase() })
-                }
+                    Text(
+                        category.name.lowercase().replaceFirstChar { it.uppercase() }
+                    )
+                },
+                colors = FilterChipDefaults.filterChipColors(
+                    selectedContainerColor = MaterialTheme.colorScheme.primary,
+                    selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                ),
+                border = FilterChipDefaults.filterChipBorder(
+                    borderColor = MaterialTheme.colorScheme.outline,
+                    selectedBorderColor = MaterialTheme.colorScheme.primary,
+                    enabled = true,
+                    selected = selectedCategory == category
+                )
             )
         }
     }
@@ -91,73 +105,66 @@ fun DifficultyCarousel(selectedDifficulty: String, onDifficultySelected: (String
 
 
 @Composable
-fun ExercisePlan(image: Int, planName: String, duration: Int, exercisesCount: Int) {
-    Box(
+fun ExercisePlan(
+    image: Int,
+    planName: String,
+    duration: Int,
+    exercisesCount: Int
+) {
+    Card(
+        modifier = Modifier
+            .width(320.dp)
+            .height(200.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Card(
+        Box(modifier = Modifier.fillMaxSize()) {
+            Image(
+                painter = painterResource(image),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+
+            // Orange-tinted gradient overlay
+            Box(
                 modifier = Modifier
-                    .width(320.dp)
-                    .height(200.dp),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(2.dp)
+                    .fillMaxSize()
+                    .background(
+                        Brush.horizontalGradient(
+                            colors = listOf(
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),  // Orange tint
+                                Color.Transparent
+                            ),
+                            startX = 0f,
+                            endX = 500f
+                        )
+                    )
             ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Image(
-                        painter = painterResource(image),
-                        contentDescription = stringResource(R.string.plan_card_description),
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        planName,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
                     )
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                Brush.horizontalGradient(
-                                    colors = listOf(
-                                        Color.Black.copy(alpha = 0.7f),
-                                        Color.Transparent
-                                    ),
-                                    startX = 0f,
-                                    endX = 600f
-                                )
-                            )
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .align(Alignment.CenterStart)
-                                .padding(20.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            Text(
-                                planName,
-                                color = Color.White,
-                                fontSize = 22.sp,
-                                fontWeight = FontWeight.Bold,
-                                lineHeight = 28.sp
-                            )
-                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                InfoChip(
-                                    icon = Icons.Outlined.SportsGymnastics,
-                                    text = pluralStringResource(
-                                        R.plurals.exercises_count,
-                                        exercisesCount,
-                                        exercisesCount
-                                    )
-                                )
-                            }
-                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                InfoChip(
-                                    icon = Icons.Outlined.Timer,
-                                    text = pluralStringResource(
-                                        R.plurals.minutes_duration,
-                                        duration,
-                                        duration
-                                    )
-                                )
-                            }
-                        }
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        InfoChip(
+                            icon = Icons.Outlined.SportsGymnastics,
+                            text = "$exercisesCount exercises"
+                        )
+                        InfoChip(
+                            icon = Icons.Outlined.Timer,
+                            text = "$duration min"
+                        )
                     }
                 }
             }
