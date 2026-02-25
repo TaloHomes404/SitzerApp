@@ -27,6 +27,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,9 +35,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -46,6 +51,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import wolf.north.sitzer.R
+import wolf.north.sitzer.comps.ExerciseInfoBottomSheet
 import wolf.north.sitzer.comps.exerciseVideoPlayer.ExerciseVideoPlayer
 import wolf.north.sitzer.comps.toolsComps.Timer
 import wolf.north.sitzer.mvvm.viewmodel.WorkoutHubScreenViewModel
@@ -62,6 +68,11 @@ fun WorkoutHubScreen(
     val currentExerciseIndex by viewModel.currentExerciseIndex.collectAsState()
     val isWorkoutPlaying by viewModel.isWorkoutPlaying.collectAsState()
     val nextExercise by viewModel.nextExercise.collectAsState()
+
+    //State of instruction/tips bottom sheet
+    var showInstructions by remember { mutableStateOf(false) }
+    var showTips by remember { mutableStateOf(false) }
+
 
     // With start of the screen load plan
     LaunchedEffect(planId) {
@@ -84,6 +95,8 @@ fun WorkoutHubScreen(
     }
 
     val plan = currentPlan!!
+    val currentExercise = viewModel.getCurrentExercise()
+
 
     Scaffold(
         topBar = {
@@ -112,7 +125,7 @@ fun WorkoutHubScreen(
                     }
 
                     Text(
-                        text = viewModel.getCurrentExercise()?.name
+                        text = currentExercise?.let { stringResource(it.nameResId) }
                             ?: stringResource(R.string.workout_hub_default_name),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
@@ -158,7 +171,7 @@ fun WorkoutHubScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = viewModel.getCurrentExercise()?.name
+                        text = currentExercise?.let { stringResource(it.nameResId) }
                             ?: stringResource(R.string.workout_hub_default_name),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
@@ -168,7 +181,7 @@ fun WorkoutHubScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = viewModel.getCurrentExercise()?.description
+                        text = currentExercise?.let { stringResource(it.descriptionResId) }
                             ?: stringResource(R.string.workout_hub_default_description),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -200,7 +213,7 @@ fun WorkoutHubScreen(
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         Button(
-                            onClick = { /* TODO: pokaż instrukcję popup */ },
+                            onClick = { showInstructions = true },
                             modifier = Modifier.weight(1f),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -222,7 +235,7 @@ fun WorkoutHubScreen(
                         }
 
                         Button(
-                            onClick = { /* TODO: pokaż porady popup*/ },
+                            onClick = { showTips = true },
                             modifier = Modifier.weight(1f),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -273,7 +286,7 @@ fun WorkoutHubScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = nextExercise?.name
+                        text = nextExercise?.let { stringResource(it.nameResId) }
                             ?: stringResource(R.string.workout_hub_end_of_workout),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
@@ -283,6 +296,47 @@ fun WorkoutHubScreen(
             }
         }
     }
+
+
+
+
+    if (showInstructions && currentExercise != null) {
+        val instructions = currentExercise.instructionsResId?.let {
+            stringArrayResource(it).toList()
+        } ?: emptyList()
+
+        ModalBottomSheet(
+            onDismissRequest = { showInstructions = false },
+            containerColor = MaterialTheme.colorScheme.surface
+        ) {
+            ExerciseInfoBottomSheet(
+                title = stringResource(currentExercise.nameResId),
+                instructions = instructions,
+                tips = emptyList(),
+                onDismiss = { showInstructions = false }
+            )
+        }
+    }
+
+    if (showTips && currentExercise != null) {
+        val tips = currentExercise.tipsResId?.let {
+            stringArrayResource(it).toList()
+        } ?: emptyList()
+        
+        ModalBottomSheet(
+            onDismissRequest = { showTips = false },
+            containerColor = MaterialTheme.colorScheme.surface
+        ) {
+            ExerciseInfoBottomSheet(
+                title = "${stringResource(currentExercise.nameResId)} - Tips",
+                instructions = emptyList(),
+                tips = tips,
+                onDismiss = { showTips = false }
+            )
+        }
+    }
+
+
 }
 
 @Preview(showBackground = true, showSystemUi = true)

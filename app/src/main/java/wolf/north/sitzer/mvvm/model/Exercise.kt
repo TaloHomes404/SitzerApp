@@ -4,10 +4,10 @@ import wolf.north.sitzer.enums.MuscleGroup
 
 data class Exercise(
     val id: Int,
-    val name: String,
-    val description: String,
+    val nameResId: Int,
+    val descriptionResId: Int,
     val muscleGroup: MuscleGroup,
-    val videoUrl: Int
-) {
-
-}
+    val videoUrl: Int,
+    val instructionsResId: Int? = null,
+    val tipsResId: Int? = null
+)

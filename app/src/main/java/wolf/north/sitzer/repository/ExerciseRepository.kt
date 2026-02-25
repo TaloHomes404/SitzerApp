@@ -13,199 +13,255 @@ object ExerciseRepository {
     val exerciseList = listOf(
         Exercise(
             id = 1,
-            name = "Bicycle Crunch",
-            description = "Targets obliques and builds rotational core strength with alternating knee-to-elbow movement",
+            nameResId = R.string.ex_bicycle_crunch_name,
+            descriptionResId = R.string.ex_bicycle_crunch_desc,
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = R.raw.bicycle_crunch
+            videoUrl = R.raw.bicycle_crunch,
+            instructionsResId = R.array.ex_bicycle_crunch_instructions,
+            tipsResId = R.array.ex_bicycle_crunch_tips
         ),
         Exercise(
             id = 2,
-            name = "Standing Calves Raises",
-            description = "Strengthens calf muscles and improves ankle stability for better posture",
+            nameResId = R.string.ex_standing_calf_raises_name,
+            descriptionResId = R.string.ex_standing_calf_raises_desc,
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = R.raw.side_plank
+            videoUrl = R.raw.side_plank,
+            instructionsResId = R.array.ex_standing_calf_raises_instructions,
+            tipsResId = R.array.ex_standing_calf_raises_tips
         ),
         Exercise(
             id = 3,
-            name = "Dead Bug",
-            description = "Trains core stability while moving limbs independently - essential for functional strength",
+            nameResId = R.string.ex_dead_bug_name,
+            descriptionResId = R.string.ex_dead_bug_desc,
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = R.raw.deadbug
+            videoUrl = R.raw.deadbug,
+            instructionsResId = R.array.ex_dead_bug_instructions,
+            tipsResId = R.array.ex_dead_bug_tips
         ),
         Exercise(
             id = 4,
-            name = "Single Leg Glute March",
-            description = "Activates glutes and improves single-leg stability and hip control",
+            nameResId = R.string.ex_single_leg_glute_march_name,
+            descriptionResId = R.string.ex_single_leg_glute_march_desc,
             muscleGroup = MuscleGroup.GLUTES,
-            videoUrl = R.raw.single_leg_glute_march
+            videoUrl = R.raw.single_leg_glute_march,
+            instructionsResId = R.array.ex_single_leg_glute_march_instructions,
+            tipsResId = R.array.ex_single_leg_glute_march_tips
         ),
         Exercise(
             id = 5,
-            name = "Bodyweight Squats",
-            description = "Fundamental lower body exercise strengthening quads, glutes and improving knee stability",
+            nameResId = R.string.ex_bodyweight_squats_name,
+            descriptionResId = R.string.ex_bodyweight_squats_desc,
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = R.raw.bodyweight_squat
+            videoUrl = R.raw.bodyweight_squat,
+            instructionsResId = R.array.ex_bodyweight_squats_instructions,
+            tipsResId = R.array.ex_bodyweight_squats_tips
         ),
         Exercise(
             id = 6,
-            name = "Side Plank",
-            description = "Strengthens oblique muscles and lateral core for better stability and injury prevention",
+            nameResId = R.string.ex_side_plank_name,
+            descriptionResId = R.string.ex_side_plank_desc,
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = R.raw.side_plank
+            videoUrl = R.raw.side_plank,
+            instructionsResId = R.array.ex_side_plank_instructions,
+            tipsResId = R.array.ex_side_plank_tips
         ),
         Exercise(
             id = 7,
-            name = "Push-ups",
-            description = "Classic upper body compound movement targeting chest, shoulders and triceps",
+            nameResId = R.string.ex_pushups_name,
+            descriptionResId = R.string.ex_pushups_desc,
             muscleGroup = MuscleGroup.CHEST,
-            videoUrl = R.raw.pushups
+            videoUrl = R.raw.pushups,
+            instructionsResId = R.array.ex_pushups_instructions,
+            tipsResId = R.array.ex_pushups_tips
         ),
         Exercise(
             id = 8,
-            name = "Russian Twists",
-            description = "Dynamic rotational core exercise building oblique strength and anti-rotation power",
+            nameResId = R.string.ex_russian_twists_name,
+            descriptionResId = R.string.ex_russian_twists_desc,
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = R.raw.russian_twists
+            videoUrl = R.raw.russian_twists,
+            instructionsResId = R.array.ex_russian_twists_instructions,
+            tipsResId = R.array.ex_russian_twists_tips
         ),
         Exercise(
             id = 9,
-            name = "Wall Angels",
-            description = "Corrects forward shoulder posture, opens chest and improves shoulder mobility",
+            nameResId = R.string.ex_wall_angels_name,
+            descriptionResId = R.string.ex_wall_angels_desc,
             muscleGroup = MuscleGroup.SHOULDERS,
-            videoUrl = R.raw.pushups
+            videoUrl = R.raw.pushups,
+            instructionsResId = R.array.ex_wall_angels_instructions,
+            tipsResId = R.array.ex_wall_angels_tips
         ),
         Exercise(
             id = 10,
-            name = "Wall Sit",
-            description = "Isometric hold building quad endurance, mental toughness and lower body stamina",
+            nameResId = R.string.ex_wall_sit_name,
+            descriptionResId = R.string.ex_wall_sit_desc,
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = R.raw.side_plank
+            videoUrl = R.raw.side_plank,
+            instructionsResId = R.array.ex_wall_sit_instructions,
+            tipsResId = R.array.ex_wall_sit_tips
         ),
         Exercise(
             id = 11,
-            name = "Reverse Plank",
-            description = "Builds posterior chain strength, core stability and opens hip flexors",
+            nameResId = R.string.ex_reverse_plank_name,
+            descriptionResId = R.string.ex_reverse_plank_desc,
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = R.raw.reverse_crunch
+            videoUrl = R.raw.reverse_crunch,
+            instructionsResId = R.array.ex_reverse_plank_instructions,
+            tipsResId = R.array.ex_reverse_plank_tips
         ),
         Exercise(
             id = 12,
-            name = "Donkey Kicks",
-            description = "Isolates and activates glute muscles while maintaining core stability",
+            nameResId = R.string.ex_donkey_kicks_name,
+            descriptionResId = R.string.ex_donkey_kicks_desc,
             muscleGroup = MuscleGroup.GLUTES,
-            videoUrl = R.raw.bicycle_crunch
+            videoUrl = R.raw.bicycle_crunch,
+            instructionsResId = R.array.ex_donkey_kicks_instructions,
+            tipsResId = R.array.ex_donkey_kicks_tips
         ),
         Exercise(
             id = 13,
-            name = "Donkey Kicks Variation",
-            description = "Alternative glute activation pattern for complete posterior chain development",
+            nameResId = R.string.ex_donkey_kicks_variation_name,
+            descriptionResId = R.string.ex_donkey_kicks_variation_desc,
             muscleGroup = MuscleGroup.GLUTES,
-            videoUrl = R.raw.bodyweight_squat
+            videoUrl = R.raw.bodyweight_squat,
+            instructionsResId = R.array.ex_donkey_kicks_variation_instructions,
+            tipsResId = R.array.ex_donkey_kicks_variation_tips
         ),
         Exercise(
             id = 14,
-            name = "Cobra Pose",
-            description = "Gentle back extension that stretches hip flexors, opens chest and strengthens lower back",
+            nameResId = R.string.ex_cobra_pose_name,
+            descriptionResId = R.string.ex_cobra_pose_desc,
             muscleGroup = MuscleGroup.BACK,
-            videoUrl = R.raw.cobra_pose
+            videoUrl = R.raw.cobra_pose,
+            instructionsResId = R.array.ex_cobra_pose_instructions,
+            tipsResId = R.array.ex_cobra_pose_tips
         ),
         Exercise(
             id = 15,
-            name = "Walking Lunges",
-            description = "Dynamic lunge variation building leg strength, balance and functional movement patterns",
+            nameResId = R.string.ex_walking_lunges_name,
+            descriptionResId = R.string.ex_walking_lunges_desc,
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = R.raw.walking_lunges
+            videoUrl = R.raw.walking_lunges,
+            instructionsResId = R.array.ex_walking_lunges_instructions,
+            tipsResId = R.array.ex_walking_lunges_tips
         ),
         Exercise(
             id = 16,
-            name = "Close-Grip Push-ups",
-            description = "Tricep-focused push-up variation that also engages chest and core",
+            nameResId = R.string.ex_close_grip_pushups_name,
+            descriptionResId = R.string.ex_close_grip_pushups_desc,
             muscleGroup = MuscleGroup.CHEST,
-            videoUrl = R.raw.closegrip_pushups
+            videoUrl = R.raw.closegrip_pushups,
+            instructionsResId = R.array.ex_close_grip_pushups_instructions,
+            tipsResId = R.array.ex_close_grip_pushups_tips
         ),
         Exercise(
             id = 17,
-            name = "Crunches",
-            description = "Classic abdominal exercise targeting the upper rectus abdominis",
+            nameResId = R.string.ex_crunches_name,
+            descriptionResId = R.string.ex_crunches_desc,
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = R.raw.crunches
+            videoUrl = R.raw.crunches,
+            instructionsResId = R.array.ex_crunches_instructions,
+            tipsResId = R.array.ex_crunches_tips
         ),
         Exercise(
             id = 18,
-            name = "Kneeling Push-ups",
-            description = "Modified push-up perfect for building upper body strength progressively",
+            nameResId = R.string.ex_kneeling_pushups_name,
+            descriptionResId = R.string.ex_kneeling_pushups_desc,
             muscleGroup = MuscleGroup.CHEST,
-            videoUrl = R.raw.kneeling_pushups
+            videoUrl = R.raw.kneeling_pushups,
+            instructionsResId = R.array.ex_kneeling_pushups_instructions,
+            tipsResId = R.array.ex_kneeling_pushups_tips
         ),
         Exercise(
             id = 19,
-            name = "Superman Hold",
-            description = "Strengthens entire posterior chain and promotes proper spinal alignment",
+            nameResId = R.string.ex_superman_hold_name,
+            descriptionResId = R.string.ex_superman_hold_desc,
             muscleGroup = MuscleGroup.BACK,
-            videoUrl = R.raw.superman_hold
+            videoUrl = R.raw.superman_hold,
+            instructionsResId = R.array.ex_superman_hold_instructions,
+            tipsResId = R.array.ex_superman_hold_tips
         ),
         Exercise(
             id = 20,
-            name = "Sumo Squat",
-            description = "Wide-stance squat emphasizing inner thighs, glutes and hip mobility",
+            nameResId = R.string.ex_sumo_squat_name,
+            descriptionResId = R.string.ex_sumo_squat_desc,
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = R.raw.sumo_squat
+            videoUrl = R.raw.sumo_squat,
+            instructionsResId = R.array.ex_sumo_squat_instructions,
+            tipsResId = R.array.ex_sumo_squat_tips
         ),
         Exercise(
             id = 21,
-            name = "Single Leg Quad Stretch",
-            description = "Stretches front thigh muscles and hip flexors, improves flexibility",
+            nameResId = R.string.ex_single_leg_quad_stretch_name,
+            descriptionResId = R.string.ex_single_leg_quad_stretch_desc,
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = R.raw.hamstring_stretch_walk
+            videoUrl = R.raw.hamstring_stretch_walk,
+            instructionsResId = R.array.ex_single_leg_quad_stretch_instructions,
+            tipsResId = R.array.ex_single_leg_quad_stretch_tips
         ),
         Exercise(
             id = 22,
-            name = "Hamstrings Stretch Walk",
-            description = "Dynamic hamstring stretch with movement for improved flexibility and mobility",
+            nameResId = R.string.ex_hamstring_stretch_walk_name,
+            descriptionResId = R.string.ex_hamstring_stretch_walk_desc,
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = R.raw.hamstring_stretch_walk
+            videoUrl = R.raw.hamstring_stretch_walk,
+            instructionsResId = R.array.ex_hamstring_stretch_walk_instructions,
+            tipsResId = R.array.ex_hamstring_stretch_walk_tips
         ),
         Exercise(
             id = 23,
-            name = "Reverse Lunges",
-            description = "Knee-friendly lunge variation targeting quads, glutes and improving balance",
+            nameResId = R.string.ex_reverse_lunges_name,
+            descriptionResId = R.string.ex_reverse_lunges_desc,
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = R.raw.reverse_lunges
+            videoUrl = R.raw.reverse_lunges,
+            instructionsResId = R.array.ex_reverse_lunges_instructions,
+            tipsResId = R.array.ex_reverse_lunges_tips
         ),
         Exercise(
             id = 24,
-            name = "Lying Hamstrings Stretch",
-            description = "Gentle hamstring stretch that relieves lower back tension and improves flexibility",
+            nameResId = R.string.ex_lying_hamstring_stretch_name,
+            descriptionResId = R.string.ex_lying_hamstring_stretch_desc,
             muscleGroup = MuscleGroup.LEGS,
-            videoUrl = R.raw.hamstring_lying_stretch
+            videoUrl = R.raw.hamstring_lying_stretch,
+            instructionsResId = R.array.ex_lying_hamstring_stretch_instructions,
+            tipsResId = R.array.ex_lying_hamstring_stretch_tips
         ),
         Exercise(
             id = 25,
-            name = "Knee-raises Crunch",
-            description = "Dynamic crunch variation engaging upper abs with knee movement",
+            nameResId = R.string.ex_knee_raise_crunch_name,
+            descriptionResId = R.string.ex_knee_raise_crunch_desc,
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = R.raw.crunch_handtoknees
+            videoUrl = R.raw.crunch_handtoknees,
+            instructionsResId = R.array.ex_knee_raise_crunch_instructions,
+            tipsResId = R.array.ex_knee_raise_crunch_tips
         ),
         Exercise(
             id = 26,
-            name = "Cat-Cow Pose",
-            description = "Spinal mobility flow promoting back health, flexibility and core awareness",
+            nameResId = R.string.ex_cat_cow_pose_name,
+            descriptionResId = R.string.ex_cat_cow_pose_desc,
             muscleGroup = MuscleGroup.BACK,
-            videoUrl = R.raw.cat_cow_pose
+            videoUrl = R.raw.cat_cow_pose,
+            instructionsResId = R.array.ex_cat_cow_pose_instructions,
+            tipsResId = R.array.ex_cat_cow_pose_tips
         ),
         Exercise(
             id = 27,
-            name = "Reverse Crunches",
-            description = "Targets lower abdominals and hip flexors with controlled leg movement",
+            nameResId = R.string.ex_reverse_crunches_name,
+            descriptionResId = R.string.ex_reverse_crunches_desc,
             muscleGroup = MuscleGroup.CORE,
-            videoUrl = R.raw.reverse_crunch
+            videoUrl = R.raw.reverse_crunch,
+            instructionsResId = R.array.ex_reverse_crunches_instructions,
+            tipsResId = R.array.ex_reverse_crunches_tips
         ),
         Exercise(
             id = 28,
-            name = "Wall Flexors Stretch",
-            description = "Stretches wrist and forearm flexors, essential for desk workers",
+            nameResId = R.string.ex_wall_flexor_stretch_name,
+            descriptionResId = R.string.ex_wall_flexor_stretch_desc,
             muscleGroup = MuscleGroup.WRISTS,
-            videoUrl = R.raw.hamstring_stretch_walk
+            videoUrl = R.raw.hamstring_stretch_walk,
+            instructionsResId = R.array.ex_wall_flexor_stretch_instructions,
+            tipsResId = R.array.ex_wall_flexor_stretch_tips
         )
     )
 

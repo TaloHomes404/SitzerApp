@@ -212,5 +212,481 @@
 
     <string name="cd_go_to_section">Go to %1$s</string>
 
+    <!-- Exercises List (ENG) -->
+    <!-- Exercise 1: Bicycle Crunch -->
+    <string name="ex_bicycle_crunch_name">Bicycle Crunch</string>
+    <string name="ex_bicycle_crunch_desc">Targets obliques and builds rotational core strength with alternating knee-to-elbow movement</string>
+    <string-array name="ex_bicycle_crunch_instructions">
+        <item>Lie on your back with hands behind head</item>
+        <item>Lift shoulders off ground and bring knees up to 90 degrees</item>
+        <item>Bring right elbow toward left knee while extending right leg</item>
+        <item>Alternate sides in a pedaling motion</item>
+        <item>Keep core engaged throughout the movement</item>
+    </string-array>
+    <string-array name="ex_bicycle_crunch_tips">
+        <item>Focus on rotation quality, not speed</item>
+        <item>Keep lower back pressed to floor</item>
+        <item>Breathe out when crunching</item>
+        <item>Don\'t pull on your neck</item>
+    </string-array>
+
+    <!-- Exercise 2: Standing Calf Raises -->
+    <string name="ex_standing_calf_raises_name">Standing Calf Raises</string>
+    <string name="ex_standing_calf_raises_desc">Strengthens calf muscles and improves ankle stability for better posture</string>
+    <string-array name="ex_standing_calf_raises_instructions">
+        <item>Stand with feet hip-width apart</item>
+        <item>Rise up onto balls of your feet</item>
+        <item>Hold briefly at the top</item>
+        <item>Lower back down with control</item>
+        <item>Repeat for desired reps</item>
+    </string-array>
+    <string-array name="ex_standing_calf_raises_tips">
+        <item>Use a wall for balance if needed</item>
+        <item>Keep movements slow and controlled</item>
+        <item>Squeeze calves at the top</item>
+        <item>Full range of motion for best results</item>
+    </string-array>
+
+    <!-- Exercise 3: Dead Bug -->
+    <string name="ex_dead_bug_name">Dead Bug</string>
+    <string name="ex_dead_bug_desc">Trains core stability while moving limbs independently - essential for functional strength</string>
+    <string-array name="ex_dead_bug_instructions">
+        <item>Lie on back with arms extended toward ceiling</item>
+        <item>Lift legs to 90 degrees at hips and knees</item>
+        <item>Slowly lower opposite arm and leg toward floor</item>
+        <item>Return to start and repeat on other side</item>
+        <item>Keep lower back pressed to floor throughout</item>
+    </string-array>
+    <string-array name="ex_dead_bug_tips">
+        <item>Move slowly and with control</item>
+        <item>Breathe steadily throughout</item>
+        <item>Don\'t arch your lower back</item>
+        <item>Focus on keeping core tight</item>
+    </string-array>
+
+    <!-- Exercise 4: Single Leg Glute March -->
+    <string name="ex_single_leg_glute_march_name">Single Leg Glute March</string>
+    <string name="ex_single_leg_glute_march_desc">Activates glutes and improves single-leg stability and hip control</string>
+    <string-array name="ex_single_leg_glute_march_instructions">
+        <item>Lie on back with knees bent, feet flat</item>
+        <item>Lift hips into bridge position</item>
+        <item>Slowly lift one foot off ground</item>
+        <item>Hold briefly, then lower</item>
+        <item>Alternate legs while maintaining bridge</item>
+    </string-array>
+    <string-array name="ex_single_leg_glute_march_tips">
+        <item>Keep hips level throughout</item>
+        <item>Squeeze glutes at top</item>
+        <item>Move slowly for control</item>
+        <item>Don\'t let hips drop</item>
+    </string-array>
+
+    <!-- Exercise 5: Bodyweight Squats -->
+    <string name="ex_bodyweight_squats_name">Bodyweight Squats</string>
+    <string name="ex_bodyweight_squats_desc">Fundamental lower body exercise strengthening quads, glutes and improving knee stability</string>
+    <string-array name="ex_bodyweight_squats_instructions">
+        <item>Stand with feet shoulder-width apart</item>
+        <item>Keep chest up and core engaged</item>
+        <item>Lower body by bending knees and hips</item>
+        <item>Go down until thighs parallel to ground</item>
+        <item>Push through heels to return to start</item>
+    </string-array>
+    <string-array name="ex_bodyweight_squats_tips">
+        <item>Keep weight on heels</item>
+        <item>Knees track over toes</item>
+        <item>Chest stays up throughout</item>
+        <item>Breathe out when standing up</item>
+    </string-array>
+
+    <!-- Exercise 6: Side Plank -->
+    <string name="ex_side_plank_name">Side Plank</string>
+    <string name="ex_side_plank_desc">Strengthens oblique muscles and lateral core for better stability and injury prevention</string>
+    <string-array name="ex_side_plank_instructions">
+        <item>Lie on your side with elbow under shoulder</item>
+        <item>Stack feet or stagger them for balance</item>
+        <item>Lift hips off ground, forming straight line</item>
+        <item>Hold position keeping body aligned</item>
+        <item>Lower with control and switch sides</item>
+    </string-array>
+    <string-array name="ex_side_plank_tips">
+        <item>Don\'t let hips sag</item>
+        <item>Engage core throughout</item>
+        <item>Keep neck neutral</item>
+        <item>Breathe steadily</item>
+    </string-array>
+
+    <!-- Exercise 7: Push-ups -->
+    <string name="ex_pushups_name">Push-ups</string>
+    <string name="ex_pushups_desc">Classic upper body compound movement targeting chest, shoulders and triceps</string>
+    <string-array name="ex_pushups_instructions">
+        <item>Start in plank position, hands shoulder-width</item>
+        <item>Keep body in straight line from head to heels</item>
+        <item>Lower chest toward ground, elbows at 45 degrees</item>
+        <item>Push back up to starting position</item>
+        <item>Maintain core engagement throughout</item>
+    </string-array>
+    <string-array name="ex_pushups_tips">
+        <item>Don\'t let hips sag</item>
+        <item>Full range of motion for best results</item>
+        <item>Breathe in down, out up</item>
+        <item>Keep core tight throughout</item>
+    </string-array>
+
+    <!-- Exercise 8: Russian Twists -->
+    <string name="ex_russian_twists_name">Russian Twists</string>
+    <string name="ex_russian_twists_desc">Dynamic rotational core exercise building oblique strength and anti-rotation power</string>
+    <string-array name="ex_russian_twists_instructions">
+        <item>Sit with knees bent, feet off ground</item>
+        <item>Lean back slightly, keeping back straight</item>
+        <item>Clasp hands together at chest</item>
+        <item>Rotate torso to one side, then the other</item>
+        <item>Keep core engaged throughout</item>
+    </string-array>
+    <string-array name="ex_russian_twists_tips">
+        <item>Move with control, not momentum</item>
+        <item>Keep chest up</item>
+        <item>Breathe steadily</item>
+        <item>Focus on rotation quality</item>
+    </string-array>
+
+    <!-- Exercise 9: Wall Angels -->
+    <string name="ex_wall_angels_name">Wall Angels</string>
+    <string name="ex_wall_angels_desc">Corrects forward shoulder posture, opens chest and improves shoulder mobility</string>
+    <string-array name="ex_wall_angels_instructions">
+        <item>Stand with back flat against wall</item>
+        <item>Raise arms to shoulder height, elbows bent 90 degrees</item>
+        <item>Keep back, elbows and wrists touching wall</item>
+        <item>Slowly raise arms overhead</item>
+        <item>Lower back down with control</item>
+    </string-array>
+    <string-array name="ex_wall_angels_tips">
+        <item>Keep lower back against wall</item>
+        <item>Move slowly and controlled</item>
+        <item>Don\'t force range of motion</item>
+        <item>Focus on proper form</item>
+    </string-array>
+
+    <!-- Exercise 10: Wall Sit -->
+    <string name="ex_wall_sit_name">Wall Sit</string>
+    <string name="ex_wall_sit_desc">Isometric hold building quad endurance, mental toughness and lower body stamina</string>
+    <string-array name="ex_wall_sit_instructions">
+        <item>Stand with back against wall</item>
+        <item>Slide down until knees at 90 degrees</item>
+        <item>Keep back flat against wall</item>
+        <item>Hold position for desired time</item>
+        <item>Push through heels to stand back up</item>
+    </string-array>
+    <string-array name="ex_wall_sit_tips">
+        <item>Keep knees aligned with ankles</item>
+        <item>Breathe steadily throughout</item>
+        <item>Distribute weight evenly</item>
+        <item>Start with shorter holds</item>
+    </string-array>
+
+    <!-- Exercise 11: Reverse Plank -->
+    <string name="ex_reverse_plank_name">Reverse Plank</string>
+    <string name="ex_reverse_plank_desc">Builds posterior chain strength, core stability and opens hip flexors</string>
+    <string-array name="ex_reverse_plank_instructions">
+        <item>Sit with legs extended, hands behind hips</item>
+        <item>Fingers point toward feet</item>
+        <item>Lift hips, forming straight line from heels to head</item>
+        <item>Hold position, keeping body aligned</item>
+        <item>Lower with control</item>
+    </string-array>
+    <string-array name="ex_reverse_plank_tips">
+        <item>Keep core engaged</item>
+        <item>Don\'t let hips sag</item>
+        <item>Squeeze glutes at top</item>
+        <item>Look up to maintain alignment</item>
+    </string-array>
+
+    <!-- Exercise 12: Donkey Kicks -->
+    <string name="ex_donkey_kicks_name">Donkey Kicks</string>
+    <string name="ex_donkey_kicks_desc">Isolates and activates glute muscles while maintaining core stability</string>
+    <string-array name="ex_donkey_kicks_instructions">
+        <item>Start on hands and knees</item>
+        <item>Keep core engaged and back flat</item>
+        <item>Lift one leg, keeping knee bent 90 degrees</item>
+        <item>Push foot toward ceiling</item>
+        <item>Lower with control and repeat</item>
+    </string-array>
+    <string-array name="ex_donkey_kicks_tips">
+        <item>Squeeze glutes at top</item>
+        <item>Don\'t arch lower back</item>
+        <item>Keep hips level</item>
+        <item>Control the movement</item>
+    </string-array>
+
+    <!-- Exercise 13: Donkey Kicks Variation -->
+    <string name="ex_donkey_kicks_variation_name">Donkey Kicks Variation</string>
+    <string name="ex_donkey_kicks_variation_desc">Alternative glute activation pattern for complete posterior chain development</string>
+    <string-array name="ex_donkey_kicks_variation_instructions">
+        <item>Start on hands and knees</item>
+        <item>Extend one leg straight back</item>
+        <item>Lift leg toward ceiling</item>
+        <item>Squeeze glutes at top</item>
+        <item>Lower with control and repeat</item>
+    </string-array>
+    <string-array name="ex_donkey_kicks_variation_tips">
+        <item>Keep core tight</item>
+        <item>Don\'t hyperextend back</item>
+        <item>Focus on glute contraction</item>
+        <item>Move slowly</item>
+    </string-array>
+
+    <!-- Exercise 14: Cobra Pose -->
+    <string name="ex_cobra_pose_name">Cobra Pose</string>
+    <string name="ex_cobra_pose_desc">Gentle back extension that stretches hip flexors, opens chest and strengthens lower back</string>
+    <string-array name="ex_cobra_pose_instructions">
+        <item>Lie face down with hands under shoulders</item>
+        <item>Press into hands, lifting chest off ground</item>
+        <item>Keep hips on ground</item>
+        <item>Look slightly upward</item>
+        <item>Hold, then lower with control</item>
+    </string-array>
+    <string-array name="ex_cobra_pose_tips">
+        <item>Don\'t force the stretch</item>
+        <item>Keep shoulders relaxed</item>
+        <item>Breathe deeply</item>
+        <item>Engage glutes to protect back</item>
+    </string-array>
+
+    <!-- Exercise 15: Walking Lunges -->
+    <string name="ex_walking_lunges_name">Walking Lunges</string>
+    <string name="ex_walking_lunges_desc">Dynamic lunge variation building leg strength, balance and functional movement patterns</string>
+    <string-array name="ex_walking_lunges_instructions">
+        <item>Stand with feet hip-width apart</item>
+        <item>Step forward into lunge, back knee near floor</item>
+        <item>Push through front heel to step forward</item>
+        <item>Bring back leg through to lunge on other side</item>
+        <item>Continue alternating legs</item>
+    </string-array>
+    <string-array name="ex_walking_lunges_tips">
+        <item>Keep torso upright</item>
+        <item>Front knee over ankle</item>
+        <item>Take controlled steps</item>
+        <item>Engage core throughout</item>
+    </string-array>
+
+    <!-- Exercise 16: Close-Grip Push-ups -->
+    <string name="ex_close_grip_pushups_name">Close-Grip Push-ups</string>
+    <string name="ex_close_grip_pushups_desc">Tricep-focused push-up variation that also engages chest and core</string>
+    <string-array name="ex_close_grip_pushups_instructions">
+        <item>Start in plank position, hands close together</item>
+        <item>Hands should form diamond shape</item>
+        <item>Lower body, keeping elbows close to sides</item>
+        <item>Push back up to starting position</item>
+        <item>Maintain straight body line</item>
+    </string-array>
+    <string-array name="ex_close_grip_pushups_tips">
+        <item>Keep core engaged</item>
+        <item>Elbows stay tucked in</item>
+        <item>Full range of motion</item>
+        <item>Control the descent</item>
+    </string-array>
+
+    <!-- Exercise 17: Crunches -->
+    <string name="ex_crunches_name">Crunches</string>
+    <string name="ex_crunches_desc">Classic abdominal exercise targeting the upper rectus abdominis</string>
+    <string-array name="ex_crunches_instructions">
+        <item>Lie on back with knees bent, feet flat</item>
+        <item>Place hands behind head or across chest</item>
+        <item>Lift shoulders off ground using abs</item>
+        <item>Hold briefly at top</item>
+        <item>Lower with control</item>
+    </string-array>
+    <string-array name="ex_crunches_tips">
+        <item>Don\'t pull on neck</item>
+        <item>Keep lower back on floor</item>
+        <item>Breathe out when crunching</item>
+        <item>Focus on quality, not quantity</item>
+    </string-array>
+
+    <!-- Exercise 18: Kneeling Push-ups -->
+    <string name="ex_kneeling_pushups_name">Kneeling Push-ups</string>
+    <string name="ex_kneeling_pushups_desc">Modified push-up perfect for building upper body strength progressively</string>
+    <string-array name="ex_kneeling_pushups_instructions">
+        <item>Start on hands and knees</item>
+        <item>Walk hands forward, keep knees on ground</item>
+        <item>Form straight line from knees to head</item>
+        <item>Lower chest toward ground</item>
+        <item>Push back up to start</item>
+    </string-array>
+    <string-array name="ex_kneeling_pushups_tips">
+        <item>Keep core engaged</item>
+        <item>Don\'t let hips sag</item>
+        <item>Full range of motion</item>
+        <item>Progress to regular push-ups</item>
+    </string-array>
+
+    <!-- Exercise 19: Superman Hold -->
+    <string name="ex_superman_hold_name">Superman Hold</string>
+    <string name="ex_superman_hold_desc">Strengthens entire posterior chain and promotes proper spinal alignment</string>
+    <string-array name="ex_superman_hold_instructions">
+        <item>Lie face down with arms extended overhead</item>
+        <item>Simultaneously lift arms, chest and legs</item>
+        <item>Keep neck neutral, looking down</item>
+        <item>Hold position for desired time</item>
+        <item>Lower with control</item>
+    </string-array>
+    <string-array name="ex_superman_hold_tips">
+        <item>Engage glutes and back</item>
+        <item>Don\'t hyperextend neck</item>
+        <item>Breathe steadily</item>
+        <item>Start with shorter holds</item>
+    </string-array>
+
+    <!-- Exercise 20: Sumo Squat -->
+    <string name="ex_sumo_squat_name">Sumo Squat</string>
+    <string name="ex_sumo_squat_desc">Wide-stance squat emphasizing inner thighs, glutes and hip mobility</string>
+    <string-array name="ex_sumo_squat_instructions">
+        <item>Stand with feet wider than shoulder-width</item>
+        <item>Turn toes out at 45-degree angle</item>
+        <item>Lower body by bending knees and hips</item>
+        <item>Keep chest up and back straight</item>
+        <item>Push through heels to return to start</item>
+    </string-array>
+    <string-array name="ex_sumo_squat_tips">
+        <item>Knees track over toes</item>
+        <item>Keep weight on heels</item>
+        <item>Squeeze glutes at top</item>
+        <item>Maintain upright torso</item>
+    </string-array>
+
+    <!-- Exercise 21: Single Leg Quad Stretch -->
+    <string name="ex_single_leg_quad_stretch_name">Single Leg Quad Stretch</string>
+    <string name="ex_single_leg_quad_stretch_desc">Stretches front thigh muscles and hip flexors, improves flexibility</string>
+    <string-array name="ex_single_leg_quad_stretch_instructions">
+        <item>Stand on one leg, use wall for balance</item>
+        <item>Bend other knee, bringing foot toward glutes</item>
+        <item>Grasp ankle and gently pull</item>
+        <item>Keep knees together and hips forward</item>
+        <item>Hold stretch, then switch sides</item>
+    </string-array>
+    <string-array name="ex_single_leg_quad_stretch_tips">
+        <item>Don\'t pull too hard</item>
+        <item>Keep standing knee soft</item>
+        <item>Breathe into the stretch</item>
+        <item>Hold 20–30 seconds</item>
+    </string-array>
+
+    <!-- Exercise 22: Hamstring Stretch Walk -->
+    <string name="ex_hamstring_stretch_walk_name">Hamstring Stretch Walk</string>
+    <string name="ex_hamstring_stretch_walk_desc">Dynamic hamstring stretch with movement for improved flexibility and mobility</string>
+    <string-array name="ex_hamstring_stretch_walk_instructions">
+        <item>Stand with feet together</item>
+        <item>Step forward, keeping leg straight</item>
+        <item>Lean forward from hips, reaching toward toes</item>
+        <item>Feel stretch in back of leg</item>
+        <item>Step through and repeat on other side</item>
+    </string-array>
+    <string-array name="ex_hamstring_stretch_walk_tips">
+        <item>Keep back straight</item>
+        <item>Don\'t bounce</item>
+        <item>Move slowly and controlled</item>
+        <item>Breathe throughout</item>
+    </string-array>
+
+    <!-- Exercise 23: Reverse Lunges -->
+    <string name="ex_reverse_lunges_name">Reverse Lunges</string>
+    <string name="ex_reverse_lunges_desc">Knee-friendly lunge variation targeting quads, glutes and improving balance</string>
+    <string-array name="ex_reverse_lunges_instructions">
+        <item>Stand with feet hip-width apart</item>
+        <item>Step backward with one leg</item>
+        <item>Lower back knee toward ground</item>
+        <item>Push through front heel to return</item>
+        <item>Alternate legs</item>
+    </string-array>
+    <string-array name="ex_reverse_lunges_tips">
+        <item>Keep torso upright</item>
+        <item>Front knee over ankle</item>
+        <item>Control the movement</item>
+        <item>Engage core throughout</item>
+    </string-array>
+
+    <!-- Exercise 24: Lying Hamstring Stretch -->
+    <string name="ex_lying_hamstring_stretch_name">Lying Hamstring Stretch</string>
+    <string name="ex_lying_hamstring_stretch_desc">Gentle hamstring stretch that relieves lower back tension and improves flexibility</string>
+    <string-array name="ex_lying_hamstring_stretch_instructions">
+        <item>Lie on back with legs extended</item>
+        <item>Lift one leg, keeping it straight</item>
+        <item>Grasp behind thigh or calf</item>
+        <item>Gently pull leg toward chest</item>
+        <item>Hold stretch, then switch sides</item>
+    </string-array>
+    <string-array name="ex_lying_hamstring_stretch_tips">
+        <item>Keep lower back on floor</item>
+        <item>Don\'t pull too hard</item>
+        <item>Breathe deeply</item>
+        <item>Hold 20–30 seconds</item>
+    </string-array>
+
+    <!-- Exercise 25: Knee Raise Crunch -->
+    <string name="ex_knee_raise_crunch_name">Knee Raise Crunch</string>
+    <string name="ex_knee_raise_crunch_desc">Dynamic crunch variation engaging upper abs with knee movement</string>
+    <string-array name="ex_knee_raise_crunch_instructions">
+        <item>Lie on back with knees bent, feet flat</item>
+        <item>Place hands behind head</item>
+        <item>Lift shoulders and bring knees toward chest</item>
+        <item>Crunch, bringing elbows toward knees</item>
+        <item>Lower with control</item>
+    </string-array>
+    <string-array name="ex_knee_raise_crunch_tips">
+        <item>Don\'t pull on neck</item>
+        <item>Exhale when crunching</item>
+        <item>Keep core engaged</item>
+        <item>Slow and controlled movement</item>
+    </string-array>
+
+    <!-- Exercise 26: Cat-Cow Pose -->
+    <string name="ex_cat_cow_pose_name">Cat-Cow Pose</string>
+    <string name="ex_cat_cow_pose_desc">Spinal mobility flow promoting back health, flexibility and core awareness</string>
+    <string-array name="ex_cat_cow_pose_instructions">
+        <item>Start on hands and knees</item>
+        <item>Arch back, lifting chest and tailbone (Cow)</item>
+        <item>Round spine, tucking chin and tailbone (Cat)</item>
+        <item>Flow smoothly between positions</item>
+        <item>Coordinate with breath</item>
+    </string-array>
+    <string-array name="ex_cat_cow_pose_tips">
+        <item>Move slowly and fluidly</item>
+        <item>Inhale during Cow, exhale during Cat</item>
+        <item>Full spinal range of motion</item>
+        <item>Keep movements controlled</item>
+    </string-array>
+
+    <!-- Exercise 27: Reverse Crunches -->
+    <string name="ex_reverse_crunches_name">Reverse Crunches</string>
+    <string name="ex_reverse_crunches_desc">Targets lower abdominals and hip flexors with controlled leg movement</string>
+    <string-array name="ex_reverse_crunches_instructions">
+        <item>Lie on back with knees bent, feet off ground</item>
+        <item>Place hands by sides or under hips</item>
+        <item>Curl knees toward chest, lifting hips slightly</item>
+        <item>Squeeze abs at top</item>
+        <item>Lower with control</item>
+    </string-array>
+    <string-array name="ex_reverse_crunches_tips">
+        <item>Keep lower back on floor</item>
+        <item>Don\'t use momentum</item>
+        <item>Focus on lower abs</item>
+        <item>Exhale when curling up</item>
+    </string-array>
+
+    <!-- Exercise 28: Wall Flexor Stretch -->
+    <string name="ex_wall_flexor_stretch_name">Wall Flexor Stretch</string>
+    <string name="ex_wall_flexor_stretch_desc">Stretches wrist and forearm flexors, essential for desk workers</string>
+    <string-array name="ex_wall_flexor_stretch_instructions">
+        <item>Stand facing wall at arm\'s length</item>
+        <item>Place palm on wall, fingers pointing down</item>
+        <item>Keep arm straight</item>
+        <item>Gently lean forward to increase stretch</item>
+        <item>Hold, then switch sides</item>
+    </string-array>
+    <string-array name="ex_wall_flexor_stretch_tips">
+        <item>Don\'t force the stretch</item>
+        <item>Keep elbow straight</item>
+        <item>Breathe steadily</item>
+        <item>Hold 15–20 seconds</item>
+    </string-array>
 
 </resources>
