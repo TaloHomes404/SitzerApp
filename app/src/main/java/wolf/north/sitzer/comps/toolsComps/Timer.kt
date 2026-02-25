@@ -27,9 +27,6 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
@@ -46,7 +43,6 @@ fun Timer(
     onPlayPause: () -> Unit = {},
     onNext: () -> Unit = {}
 ) {
-    var playing by remember { mutableStateOf(isPlaying) }
 
     val progress = if (totalExercises > 0) {
         (currentExercise + 1).toFloat() / totalExercises.toFloat()
@@ -88,7 +84,7 @@ fun Timer(
         ) {
             // Background circle
             CircularProgressIndicator(
-                progress = 1f,
+                progress = {1f},
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 strokeWidth = 4.dp,
                 modifier = Modifier.size(80.dp)
@@ -96,7 +92,7 @@ fun Timer(
 
             // Progress arc
             CircularProgressIndicator(
-                progress = animatedProgress,
+                progress = {animatedProgress},
                 color = MaterialTheme.colorScheme.primary,
                 strokeWidth = 4.dp,
                 strokeCap = StrokeCap.Round,
@@ -114,8 +110,8 @@ fun Timer(
                 )
             ) {
                 Icon(
-                    imageVector = if (playing) Icons.Default.Pause else Icons.Default.PlayArrow,
-                    contentDescription = if (playing) "Pause" else "Play",
+                    imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                    contentDescription = if (isPlaying) "Pause" else "Play",
                     modifier = Modifier.size(28.dp)
                 )
             }
@@ -126,7 +122,6 @@ fun Timer(
 
         IconButton(
             onClick = {
-                Log.d("Timer", "Next clicked")
                 onNext()
             },
             modifier = Modifier.size(56.dp)

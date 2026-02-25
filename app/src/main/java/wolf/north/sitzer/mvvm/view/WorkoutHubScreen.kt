@@ -95,7 +95,9 @@ fun WorkoutHubScreen(
     }
 
     val plan = currentPlan!!
-    val currentExercise = viewModel.getCurrentExercise()
+    val currentExercise = remember(currentExerciseIndex, plan) {
+        plan.exercises.getOrNull(currentExerciseIndex)
+    }
 
 
     Scaffold(
@@ -265,6 +267,7 @@ fun WorkoutHubScreen(
                 modifier = Modifier.fillMaxWidth(),
                 currentExercise = currentExerciseIndex,
                 totalExercises = plan.exercises.size,
+                isPlaying = isWorkoutPlaying,
                 onNext = { viewModel.goToNextExercise() },
                 onPrevious = { viewModel.goToPreviousExercise() },
                 onPlayPause = { viewModel.playExerciseVideo() }
@@ -322,7 +325,7 @@ fun WorkoutHubScreen(
         val tips = currentExercise.tipsResId?.let {
             stringArrayResource(it).toList()
         } ?: emptyList()
-        
+
         ModalBottomSheet(
             onDismissRequest = { showTips = false },
             containerColor = MaterialTheme.colorScheme.surface
