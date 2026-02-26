@@ -172,6 +172,7 @@
 
     <!-- Home Screen -->
     <string name="home_featured_workout_title">Rzuć sobie wyzwanie dzięki\nwyróżnionemu treningowi dnia!</string>
+    <string name="home_featured_workout_button">Pokaż Trening</string>
     <string name="home_weekly_progress">Postępy tygodniowe</string>
     <string name="home_see_all">Zobacz wszystkie</string>
     <string name="home_workout_sessions">Sesje treningowe</string>

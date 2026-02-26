@@ -56,16 +56,21 @@ import wolf.north.sitzer.comps.CategoriesCarousel
 import wolf.north.sitzer.comps.ExercisePlan
 import wolf.north.sitzer.comps.ProgressCard
 import wolf.north.sitzer.comps.ProgressCardNumberIndicator
+import wolf.north.sitzer.comps.SelectedPlanBottomSheet
 import wolf.north.sitzer.comps.WorkoutCardButtoned
 import wolf.north.sitzer.comps.onboarding.OnboardingManager
+import wolf.north.sitzer.mvvm.model.Plan
 import wolf.north.sitzer.mvvm.viewmodel.HomeScreenViewModel
 import wolf.north.sitzer.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController = rememberNavController()) {
+fun HomeScreen(
+    navController: NavHostController = rememberNavController()
+) {
     val viewModel: HomeScreenViewModel = hiltViewModel()
     val plans by viewModel.plans.collectAsState()
+    val dailyPlan by viewModel.dailyPlan.collectAsState()
     val selectedCategory by viewModel.selectedCategory.collectAsState()
     val filteredPlans = if (selectedCategory != null) {
         viewModel.getPlansForCategory(selectedCategory).take(2)
@@ -73,9 +78,14 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
         plans
     }.take(2)
 
+
     val hasSeenOnboarding by viewModel.hasSeenOverboarding.collectAsState()
     val onboardingStep by viewModel.currentOnboardingStep.collectAsState()
     var showOnboarding by remember { mutableStateOf(false) }
+
+    //Vals to control visibility of bottom sheet after selecting plan
+    var showBottomSheet by remember { mutableStateOf(false) }
+    var selectedPlan by remember { mutableStateOf<Plan?>(null) }
 
     LaunchedEffect(Unit) {
         if (!hasSeenOnboarding) {
@@ -103,15 +113,6 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                             )
                         }
                     },
-                    actions = {
-                        IconButton(onClick = { }) {
-                            Icon(
-                                Icons.Outlined.Notifications,
-                                contentDescription = "notification icon ",
-                                tint = Color.White
-                            )
-                        }
-                    },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     )
@@ -131,14 +132,24 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                     }
 
                     item {
-                        WorkoutCardButtoned(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 12.dp, vertical = 2.dp),
-                            image = R.drawable.mobilityimgcard,
-                            workoutName = "Mobility Morning ",
-                            buttonText = "Start Session "
-                        )
+                        dailyPlan?.let { plan ->
+                            WorkoutCardButtoned(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 12.dp, vertical = 2.dp)
+                                    .clickable {
+                                        selectedPlan = plan
+                                        showBottomSheet = true
+                                    },
+                                image = plan.imageRes,
+                                workoutName = plan.name,
+                                buttonText = stringResource(R.string.home_featured_workout_button),
+                                onButtonClick = {
+                                    selectedPlan = plan
+                                    showBottomSheet = true
+                                }
+                            )
+                        }
                     }
 
                     item {
@@ -152,7 +163,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                                 stringResource(R.string.home_see_all),
                                 modifier = Modifier
                                     .padding(end = 16.dp)
-                                    .clickable { },
+                                    .clickable { navController.navigate(Screens.Profile) },
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.primary
@@ -194,7 +205,7 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                                 stringResource(R.string.home_see_all),
                                 modifier = Modifier
                                     .padding(end = 16.dp)
-                                    .clickable { },
+                                    .clickable { navController.navigate(Screens.Plans) },
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.primary
@@ -213,7 +224,11 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
+                                .padding(horizontal = 16.dp)
+                                .clickable {
+                                    selectedPlan = plan
+                                    showBottomSheet = true
+                                },
                             contentAlignment = Alignment.Center
                         ) {
                             ExercisePlan(
@@ -288,6 +303,19 @@ fun HomeScreen(navController: NavHostController = rememberNavController()) {
             OnboardingManager(
                 viewModel = viewModel,
                 currentStep = onboardingStep
+            )
+        }
+
+        //Composable from planSelectScreen to use in daily plan selection
+        if (showBottomSheet && selectedPlan != null) {
+            SelectedPlanBottomSheet(
+                plan = selectedPlan!!,
+                onDismiss = { showBottomSheet = false },
+                onStartWorkout = {
+                    showBottomSheet = false
+                    navController.navigate(Screens.createWorkoutHubRoute(selectedPlan!!.id))
+                },
+                exercises = selectedPlan!!.exercises
             )
         }
     }

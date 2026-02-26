@@ -39,8 +39,19 @@ class HomeScreenViewModel @Inject constructor(private val userPreferences: UserP
     private val _selectedCategory = MutableStateFlow<MuscleGroup?>(null)
     val selectedCategory: StateFlow<MuscleGroup?> = _selectedCategory.asStateFlow()
 
+    //Vals to use in homescreen for daily plans
+    private val _dailyPlan = MutableStateFlow<Plan?>(null)
+    val dailyPlan: StateFlow<Plan?> = _dailyPlan.asStateFlow()
+
     init {
         loadPlansForHome()
+        loadDailyPlan()
+    }
+
+    private fun loadDailyPlan() {
+        viewModelScope.launch {
+            _dailyPlan.value = PlansRepository.getDailyPlan()
+        }
     }
 
     //Launch scope to set datastore sharedprefs with onboarding

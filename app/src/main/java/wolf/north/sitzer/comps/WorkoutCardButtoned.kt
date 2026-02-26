@@ -2,6 +2,7 @@ package wolf.north.sitzer.comps
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,7 +44,7 @@ fun WorkoutCardButtoned(
         modifier = modifier
             .fillMaxWidth()
             .height(200.dp)
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 8.dp).clickable{ onButtonClick() },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
@@ -99,12 +100,13 @@ fun WorkoutCardButtoned(
                             containerColor = MaterialTheme.colorScheme.primary,
                             contentColor = MaterialTheme.colorScheme.onPrimary
                         ),
-                        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
+                        contentPadding = PaddingValues(horizontal = 22.dp, vertical = 8.dp)
                     ) {
                         Text(
                             text = buttonText,
                             style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.SemiBold,
+                            softWrap = false,
                         )
                     }
                 }

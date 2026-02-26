@@ -152,6 +152,7 @@
 
     <!-- Home Screen -->
     <string name="home_featured_workout_title">Challenge Yourself With Featured\nDaily Workout!</string>
+    <string name="home_featured_workout_button">Show Workout</string>
     <string name="home_weekly_progress">Weekly Progress</string>
     <string name="home_see_all">See All</string>
     <string name="home_workout_sessions">Workout Sessions</string>
