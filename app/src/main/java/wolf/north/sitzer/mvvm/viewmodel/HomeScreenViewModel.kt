@@ -1,5 +1,6 @@
 package wolf.north.sitzer.mvvm.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +26,13 @@ class HomeScreenViewModel @Inject constructor(private val userPreferences: UserP
         SharingStarted.WhileSubscribed(), false
     )
 
+    //Avatar Uri for topbar
+    val avatarUri: StateFlow<Uri?> = userPreferences.avatarUri.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        null
+    )
+
     //onboarding control values (0-5 steps)
     //read-only to navigate between onboarding popups
     private val _currentOnboardingStep = MutableStateFlow(0)
@@ -42,6 +50,7 @@ class HomeScreenViewModel @Inject constructor(private val userPreferences: UserP
     //Vals to use in homescreen for daily plans
     private val _dailyPlan = MutableStateFlow<Plan?>(null)
     val dailyPlan: StateFlow<Plan?> = _dailyPlan.asStateFlow()
+
 
     init {
         loadPlansForHome()
