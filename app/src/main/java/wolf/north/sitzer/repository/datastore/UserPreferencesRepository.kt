@@ -1,6 +1,7 @@
 package wolf.north.sitzer.repository.datastore
 
 import android.content.Context
+import android.net.Uri
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -21,6 +22,11 @@ class UserPreferencesRepository @Inject constructor(@ApplicationContext private 
     private val ONBOARDING_SHOWN = booleanPreferencesKey("onboarding_shown")
     private val SELECTED_THEME = stringPreferencesKey("selected_theme")
     private val SELECTED_LANGUAGE = stringPreferencesKey("selected_language")
+    private val AVATAR_URI = stringPreferencesKey("avatar_uri")
+
+    //Profile info preferences
+    private val USERNAME = stringPreferencesKey("username")
+    private val EMAIL = stringPreferencesKey("email")
 
 
     val hasSeenOnboarding: Flow<Boolean> = context.dataStore.data
@@ -58,4 +64,34 @@ class UserPreferencesRepository @Inject constructor(@ApplicationContext private 
         }
     }
 
+    //Avatar preference set
+    val avatarUri: Flow<Uri?> = context.dataStore.data
+        .map { prefs -> prefs[AVATAR_URI]?.let { Uri.parse(it) } }
+
+
+    suspend fun setAvatarUri(uri: Uri) {
+        context.dataStore.edit { prefs ->
+            prefs[AVATAR_URI] = uri.toString()
+        }
+    }
+
+    //Username preference set
+    val username: Flow<String> = context.dataStore.data
+        .map { prefs -> prefs[USERNAME] ?: "" }
+
+    suspend fun setUsername(username: String) {
+        context.dataStore.edit { prefs ->
+            prefs[USERNAME] = username
+        }
+    }
+
+    //Email preference set
+    val email: Flow<String> = context.dataStore.data
+        .map { prefs -> prefs[EMAIL] ?: "" }
+
+    suspend fun setEmail(email: String) {
+        context.dataStore.edit { prefs ->
+            prefs[EMAIL] = email
+        }
+    }
 }
