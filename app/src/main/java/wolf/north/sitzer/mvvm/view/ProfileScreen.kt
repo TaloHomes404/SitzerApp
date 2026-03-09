@@ -1,7 +1,7 @@
 package wolf.north.sitzer.mvvm.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,6 +32,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,6 +44,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +54,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -61,6 +65,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.profile.HelpBottomSheet
 import wolf.north.sitzer.comps.profile.NotificationsBottomSheet
@@ -80,37 +85,38 @@ fun ProfileScreen(
 
     var showProfileBottomSheet by remember { mutableStateOf(false) }
     val profileSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-
     var showSettingsBottomSheet by remember { mutableStateOf(false) }
     val settingsSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-
     var showNotificationBottomSheet by remember { mutableStateOf(false) }
     val notificationsSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-
-    var showSettings by remember { mutableStateOf(false) }
-
     var showHelpBottomSheet by remember { mutableStateOf(false) }
-    val helpSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    val avatarUri by viewmodel.avatarUri.collectAsState()
+
 
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Row(
-                        modifier = Modifier.padding(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            stringResource(R.string.profile_title),
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary
+            Box {
+                TopAppBar(
+                    title = {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = stringResource(R.string.profile_title),
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
                 )
-            )
+            }
         },
         bottomBar = {
             BottomAppBar(
@@ -125,51 +131,50 @@ fun ProfileScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 20.dp),
-                    horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        modifier = Modifier.weight(1f)
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Home,
                             contentDescription = "Menu",
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Home) }
+                            modifier = Modifier
+                                .clickable { navController.navigate(Screens.Home) }
                         )
                         Text(
                             stringResource(R.string.nav_home),
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        modifier = Modifier.weight(1f)
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.SportsGymnastics,
-                            contentDescription = "Workouts list bottom icon",
+                            contentDescription = "Workouts",
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
+                            modifier = Modifier
+                                .clickable { navController.navigate(Screens.Plans) }
                         )
                         Text(
                             stringResource(R.string.nav_workouts),
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        modifier = Modifier.weight(1f)
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Person,
                             contentDescription = "Profile",
                             tint = MaterialTheme.colorScheme.onPrimary,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
+                            modifier = Modifier
+                                .clickable { navController.navigate(Screens.Profile) }
                         )
                         Text(
                             stringResource(R.string.nav_profile),
@@ -186,95 +191,11 @@ fun ProfileScreen(
                 .padding(paddingValues)
                 .background(MaterialTheme.colorScheme.background)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(72.dp))
 
-            Box(
-                modifier = Modifier.size(120.dp),
-                contentAlignment = Alignment.BottomEnd
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surfaceVariant),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = stringResource(R.string.profile_image_content_description),
-                        modifier = Modifier.size(60.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-
-                Surface(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .border(3.dp, MaterialTheme.colorScheme.background, CircleShape),
-                    shape = CircleShape,
-                    color = MaterialTheme.colorScheme.primary
-                ) {
-                    IconButton(
-                        onClick = {},
-                        modifier = Modifier.size(36.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = stringResource(R.string.profile_edit_content_description),
-                            tint = Color.White,
-                            modifier = Modifier
-                                .size(18.dp)
-                                .clickable { showProfileBottomSheet = true }
-                        )
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "userName",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = "userEmail",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                StatisticItem(
-                    icon = "⏱️",
-                    value = "0h 0m",
-                    label = "Total time"
-                )
-                StatisticItem(
-                    icon = "🔥",
-                    value = "2124 cal",
-                    label = "Calories burned"
-                )
-                StatisticItem(
-                    icon = "🏋️‍♀️",
-                    value = "420",
-                    label = "Sessions"
-                )
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -285,34 +206,153 @@ fun ProfileScreen(
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Box(
+                        modifier = Modifier.size(100.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        // Avatar circle
+
+                        val avatarPainter = avatarUri?.let { rememberAsyncImagePainter(it) }
+                            ?: painterResource(R.drawable.pfpp)
+
+                        Image(
+                            painter = avatarPainter,
+                            contentDescription = "Avatar",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.primaryContainer)
+                                .clickable { showProfileBottomSheet = true }
+                        )
+
+                        // Edit button
+                        Surface(
+                            modifier = Modifier
+                                .size(32.dp)
+                                .align(Alignment.BottomEnd),
+                            shape = CircleShape,
+                            color = MaterialTheme.colorScheme.primary,
+                            shadowElevation = 2.dp
+                        ) {
+                            IconButton(
+                                onClick = { showProfileBottomSheet = true },
+                                modifier = Modifier.size(32.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = stringResource(R.string.profile_edit_content_description),
+                                    tint = Color.White,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Username
+                    Text(
+                        text = viewmodel.uiState.collectAsState().value.username,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    // Email
+                    Text(
+                        text = viewmodel.uiState.collectAsState().value.email.ifBlank {
+                            stringResource(R.string.profile_no_email)
+                        },
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Statistics in profile components
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                StatisticCard(
+                    icon = "⏱️",
+                    value = "0h 0m",
+                    label = "Total time",
+                    modifier = Modifier.weight(1f)
+                )
+                StatisticCard(
+                    icon = "🔥",
+                    value = "2124",
+                    label = "Calories",
+                    modifier = Modifier.weight(1f)
+                )
+                StatisticCard(
+                    icon = "🏋️",
+                    value = "420",
+                    label = "Sessions",
+                    modifier = Modifier.weight(1f)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Menu options
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Column(modifier = Modifier.padding(8.dp)) {
                     MenuOption(
                         icon = Icons.Default.Person,
+                        iconBackground = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                        iconTint = MaterialTheme.colorScheme.primary,
                         text = stringResource(R.string.menu_profile_info),
                         onClick = { showProfileBottomSheet = true }
                     )
                     MenuOption(
                         icon = Icons.Default.Settings,
+                        iconBackground = MaterialTheme.colorScheme.secondary.copy(alpha = 0.12f),
+                        iconTint = MaterialTheme.colorScheme.secondary,
                         text = stringResource(R.string.menu_settings),
                         onClick = { showSettingsBottomSheet = true }
                     )
                     MenuOption(
                         icon = Icons.Default.Notifications,
+                        iconBackground = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.12f),
+                        iconTint = MaterialTheme.colorScheme.tertiary,
                         text = stringResource(R.string.menu_notifications),
                         onClick = { showNotificationBottomSheet = true }
                     )
                     MenuOption(
                         icon = Icons.Default.Help,
+                        iconBackground = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+                        iconTint = MaterialTheme.colorScheme.onPrimaryContainer,
                         text = stringResource(R.string.menu_help),
                         onClick = { showHelpBottomSheet = true },
                         showDivider = false
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 
+    // Bottom sheets states
     if (showProfileBottomSheet) {
         ModalBottomSheet(
             onDismissRequest = { showProfileBottomSheet = false },
@@ -322,19 +362,15 @@ fun ProfileScreen(
             ProfileInfoBottomSheet(viewmodel, onDismiss = { showProfileBottomSheet = false })
         }
     }
-
     if (showHelpBottomSheet) {
         ModalBottomSheet(
             onDismissRequest = { showHelpBottomSheet = false },
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
             containerColor = MaterialTheme.colorScheme.surface
         ) {
-            HelpBottomSheet(
-                viewmodel,
-                onClose = { showHelpBottomSheet = false })
+            HelpBottomSheet(viewmodel, onClose = { showHelpBottomSheet = false })
         }
     }
-
     if (showSettingsBottomSheet) {
         ModalBottomSheet(
             sheetState = settingsSheetState,
@@ -346,7 +382,6 @@ fun ProfileScreen(
                 onDismiss = { showSettingsBottomSheet = false })
         }
     }
-
     if (showNotificationBottomSheet) {
         ModalBottomSheet(
             sheetState = notificationsSheetState,
@@ -358,40 +393,56 @@ fun ProfileScreen(
                 onDismiss = { showNotificationBottomSheet = false })
         }
     }
-
-
 }
 
 @Composable
-private fun StatisticItem(
+private fun StatisticCard(
     icon: String,
     value: String,
-    label: String
+    label: String,
+    modifier: Modifier = Modifier
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Text(
-            text = icon,
-            fontSize = 28.sp
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = value,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = icon, fontSize = 22.sp)
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = value,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
     }
 }
 
 @Composable
 private fun MenuOption(
     icon: ImageVector,
+    iconBackground: Color,
+    iconTint: Color,
     text: String,
     onClick: () -> Unit,
     showDivider: Boolean = true
@@ -401,41 +452,40 @@ private fun MenuOption(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable(onClick = onClick)
-                .padding(horizontal = 8.dp, vertical = 16.dp),
+                .padding(horizontal = 8.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = text,
-                tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.size(24.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(iconBackground),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = text,
+                    tint = iconTint,
+                    modifier = Modifier.size(22.dp)
+                )
+            }
             Spacer(modifier = Modifier.width(16.dp))
-
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.weight(1f)
             )
-
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = stringResource(
-                    R.string.cd_go_to_section,
-                    text
-                ),
+                contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(20.dp)
             )
         }
-
         if (showDivider) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .padding(horizontal = 16.dp)
-                    .background(MaterialTheme.colorScheme.surfaceVariant)
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                color = MaterialTheme.colorScheme.surfaceVariant
             )
         }
     }

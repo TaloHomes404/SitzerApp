@@ -1,6 +1,7 @@
 package wolf.north.sitzer.mvvm.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,18 +13,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.SportsGymnastics
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -41,7 +42,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,14 +50,15 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.delay
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.CategoriesCarousel
-import wolf.north.sitzer.comps.ExercisePlan
 import wolf.north.sitzer.comps.ProgressCard
 import wolf.north.sitzer.comps.ProgressCardNumberIndicator
 import wolf.north.sitzer.comps.SelectedPlanBottomSheet
 import wolf.north.sitzer.comps.WorkoutCardButtoned
+import wolf.north.sitzer.comps.WorkoutCardMenu
 import wolf.north.sitzer.comps.onboarding.OnboardingManager
 import wolf.north.sitzer.mvvm.model.Plan
 import wolf.north.sitzer.mvvm.viewmodel.HomeScreenViewModel
@@ -78,6 +79,7 @@ fun HomeScreen(
         plans
     }.take(2)
 
+    val avatarUri by viewModel.avatarUri.collectAsState()
 
     val hasSeenOnboarding by viewModel.hasSeenOverboarding.collectAsState()
     val onboardingStep by viewModel.currentOnboardingStep.collectAsState()
@@ -102,14 +104,37 @@ fun HomeScreen(
                     title = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceAround,
-                            modifier = Modifier.fillMaxWidth()
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 8.dp)
                         ) {
+                            Column {
+                                Text(
+                                    text = stringResource(R.string.topbar_greetings),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.85f)
+                                )
+                                Text(
+                                    text = stringResource(R.string.topbar_description),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
+
+                            // Avatar in topbar
+                            val avatarPainter = avatarUri?.let { rememberAsyncImagePainter(it) }
+                                ?: rememberAsyncImagePainter(R.drawable.pfpp)
+
                             Image(
-                                painter = painterResource(R.drawable.sitzer_logo_nobg),
-                                contentDescription = "login site Sitzer logo ",
+                                painter = avatarPainter,
+                                contentDescription = "Avatar",
                                 contentScale = ContentScale.Crop,
-                                alignment = Alignment.Center
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f))
                             )
                         }
                     },
@@ -134,16 +159,12 @@ fun HomeScreen(
                     item {
                         dailyPlan?.let { plan ->
                             WorkoutCardButtoned(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 12.dp, vertical = 2.dp)
-                                    .clickable {
-                                        selectedPlan = plan
-                                        showBottomSheet = true
-                                    },
                                 image = plan.imageRes,
                                 workoutName = plan.name,
-                                buttonText = stringResource(R.string.home_featured_workout_button),
+                                subtitle = plan.name,
+                                exerciseCount = plan.exerciseCount,
+                                duration = plan.duration,
+                                featured = true,
                                 onButtonClick = {
                                     selectedPlan = plan
                                     showBottomSheet = true
@@ -151,6 +172,7 @@ fun HomeScreen(
                             )
                         }
                     }
+
 
                     item {
                         Row(
@@ -221,23 +243,17 @@ fun HomeScreen(
                     }
 
                     items(filteredPlans) { plan ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .clickable {
-                                    selectedPlan = plan
-                                    showBottomSheet = true
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            ExercisePlan(
-                                plan.imageRes,
-                                plan.name,
-                                plan.duration,
-                                plan.exerciseCount
-                            )
-                        }
+                        WorkoutCardMenu(
+                            image = plan.imageRes,
+                            workoutName = plan.name,
+                            difficulty = plan.difficulty.name,
+                            exerciseCount = plan.exerciseCount,
+                            duration = plan.duration,
+                            onClick = {
+                                selectedPlan = plan
+                                showBottomSheet = true
+                            }
+                        )
                     }
                 }
             },
@@ -254,12 +270,12 @@ fun HomeScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 20.dp),
-                        horizontalArrangement = Arrangement.SpaceAround,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
+                            verticalArrangement = Arrangement.Center,
+                            modifier = Modifier.weight(1f)
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.Home,
@@ -272,7 +288,9 @@ fun HomeScreen(
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable { navController.navigate(Screens.Plans) }
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.SportsGymnastics,
@@ -285,7 +303,9 @@ fun HomeScreen(
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
-                            modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable { navController.navigate(Screens.Profile) }
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.Person,

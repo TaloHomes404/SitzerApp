@@ -57,6 +57,7 @@ class ProfileScreenViewModel @Inject constructor(
     // Load saved settings on init
     init {
         loadSavedSettings()
+        loadUserProfile()
     }
 
     private fun loadSavedSettings() {
@@ -74,6 +75,11 @@ class ProfileScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState: StateFlow<ProfileUiState> = _uiState
 
+    val avatarUri: StateFlow<Uri?> = userPrefsRepo.avatarUri.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        null
+    )
 
     //Password visibility val
     var passwordVisibility by mutableStateOf(false)
@@ -102,18 +108,29 @@ class ProfileScreenViewModel @Inject constructor(
                 NotificationSettingsUi()
             )
 
-    //initial method to load data from repo/model/db TODO: zrobić dobrze ( w sensie metode...)
-    fun loadProfile(initUsername: String, initEmail: String, avatarUri: Uri?) {
-        _uiState.value = _uiState.value.copy(
-            username = initUsername,
-            email = initEmail,
-            avatarUri = avatarUri
-        )
+    private fun loadUserProfile() {
+        viewModelScope.launch {
+            // Observable username
+            launch {
+                userPrefsRepo.username.collect { username ->
+                    _uiState.update { it.copy(username = username) }
+                }
+            }
+
+            // Observable email
+            launch {
+                userPrefsRepo.email.collect { email ->
+                    _uiState.update { it.copy(email = email) }
+                }
+            }
+        }
     }
 
     //setters & getters for profile changes
     fun setAvatar(uri: Uri) {
-        _uiState.value = _uiState.value.copy(avatarUri = uri)
+        viewModelScope.launch {
+            userPrefsRepo.setAvatarUri(uri)
+        }
     }
 
     //butttons visibility values
@@ -170,9 +187,19 @@ class ProfileScreenViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
 
             try {
-                //TODO: autoryzacja haseł / zapisywanie i convert pfp / update modelu usera w ROOM
-                //na potrzeby MVP narazie delay tylko
-                delay(1000)
+                val state = _uiState.value
+
+                //Save edited username to datastore
+                if (state.isEditingUsername && state.username.isNotBlank()) {
+                    userPrefsRepo.setUsername(state.username)
+                }
+
+                //Save edited email to datastore
+                if (state.isEditingEmail && validateEmail(state.email)) {
+                    userPrefsRepo.setEmail(state.email)
+                }
+                
+                delay(500) // delay for UX purposes
 
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,

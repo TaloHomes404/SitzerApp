@@ -1,8 +1,9 @@
 package wolf.north.sitzer.mvvm.view
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,8 +12,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
@@ -36,21 +39,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import wolf.north.sitzer.R
 import wolf.north.sitzer.comps.CategoriesCarousel
 import wolf.north.sitzer.comps.DifficultyCarousel
-import wolf.north.sitzer.comps.ExercisePlan
 import wolf.north.sitzer.comps.MoreFiltersDialog
 import wolf.north.sitzer.comps.SelectedPlanBottomSheet
+import wolf.north.sitzer.comps.WorkoutCard
 import wolf.north.sitzer.enums.PlanDifficulty
 import wolf.north.sitzer.mvvm.model.Plan
 import wolf.north.sitzer.mvvm.viewmodel.PlanSelectScreenViewModel
@@ -59,10 +63,12 @@ import wolf.north.sitzer.navigation.Screens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlanSelectScreen(navController: NavHostController = rememberNavController()) {
-    val viewModel: PlanSelectScreenViewModel = viewModel()
+    val viewModel: PlanSelectScreenViewModel = hiltViewModel()
     val selectedCategory by viewModel.selectedCategory.collectAsState()
     val selectedDifficulty by viewModel.selectedDifficulty.collectAsState()
     val filteredPlans by viewModel.plans.collectAsState()
+
+    val avatarUri by viewModel.avatarUri.collectAsState()
 
     // bottom sheet control vals
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -77,27 +83,44 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
             TopAppBar(
                 title = {
                     Row(
-                        modifier = Modifier.padding(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 8.dp)
                     ) {
-                        Text(
-                            "Select Plan",
-                            color = MaterialTheme.colorScheme.onPrimary
+                        Column {
+                            Text(
+                                text = stringResource(R.string.topbar_plan_select),
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
+                            Text(
+                                text = stringResource(R.string.topbar_plan_description),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.75f)
+                            )
+                        }
+
+                        val avatarPainter = avatarUri?.let { rememberAsyncImagePainter(it) }
+                            ?: painterResource(R.drawable.pfpp)
+
+                        Image(
+                            painter = avatarPainter,
+                            contentDescription = "Avatar",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.15f))
+                                .clickable { navController.navigate(Screens.Profile) }
                         )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary
-                ),
-                actions = {
-                    Text(
-                        "More Filters",
-                        modifier = Modifier.clickable { showMoreFiltersDialog = true },
-                        color = MaterialTheme.colorScheme.primary,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                }
+                )
             )
         },
         content = { paddingValues ->
@@ -106,6 +129,29 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     .fillMaxSize()
                     .padding(paddingValues)
             ) {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Categories",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                    Text(
+                        text = "More Filters",
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Medium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable { showMoreFiltersDialog = true }
+                    )
+                }
+
                 CategoriesCarousel(
                     selectedCategory = selectedCategory,
                     onCategorySelected = { viewModel.selectedCategory(it) }
@@ -131,19 +177,18 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     contentPadding = PaddingValues(horizontal = 16.dp)
                 ) {
                     items(filteredPlans) { plan ->
-                        Box(
-                            modifier = Modifier.clickable {
+                        WorkoutCard(
+                            image = plan.imageRes,
+                            workoutName = plan.name,
+                            description = plan.description,
+                            difficulty = plan.difficulty.name,
+                            exerciseCount = plan.exerciseCount,
+                            duration = plan.duration,
+                            onClick = {
                                 selectedPlan = plan
                                 showBottomSheet = true
                             }
-                        ) {
-                            ExercisePlan(
-                                plan.imageRes,
-                                plan.name,
-                                plan.duration,
-                                plan.exerciseCount
-                            )
-                        }
+                        )
                     }
                 }
 
@@ -169,13 +214,14 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 20.dp),
-                    horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.clickable { navController.navigate(Screens.Home) }
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { navController.navigate(Screens.Home) }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Home,
@@ -188,7 +234,9 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.clickable { navController.navigate(Screens.Plans) }
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { navController.navigate(Screens.Plans) }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.SportsGymnastics,
@@ -201,7 +249,9 @@ fun PlanSelectScreen(navController: NavHostController = rememberNavController())
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.clickable { navController.navigate(Screens.Profile) }
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { navController.navigate(Screens.Profile) }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Person,
