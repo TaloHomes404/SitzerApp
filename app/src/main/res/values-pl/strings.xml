@@ -29,6 +29,14 @@
     <string name="title_activity_app_navigation">Nawigacja aplikacji</string>
     <string name="title_activity_onboarding_introduction_overlay">Wprowadzenie</string>
 
+    <!-- Topbar -->
+    <string name="topbar_greetings">Dzień dobry 👋</string>
+    <string name="topbar_description">Poćwiczmy razem!</string>
+
+    <!-- Topbar - PlanSelectScreen -->
+    <string name="topbar_plan_select">Wybierz plan</string>
+    <string name="topbar_plan_description">Wybierz sesję treningową</string>
+
     <!-- Help & Support -->
     <string name="help_support">Pomoc i wsparcie</string>
     <string name="close">Zamknij</string>
@@ -169,6 +177,8 @@
     <string name="register_confirm_password_label">Potwierdź hasło</string>
     <string name="register_confirm_password_placeholder">Potwierdź swoje hasło</string>
     <string name="register_button">Zarejestruj się</string>
+    <string name="register_already_have_account">"Posiadasz już konto?  "</string>
+    <string name="register_sign_in">Zaloguj się</string>
 
     <!-- Home Screen -->
     <string name="home_featured_workout_title">Rzuć sobie wyzwanie dzięki\nwyróżnionemu treningowi dnia!</string>
@@ -186,6 +196,8 @@
     <string name="workout_hub_tips">Wskazówki</string>
     <string name="workout_hub_problem">Problem?</string>
     <string name="cd_app_logo">Logo aplikacji</string>
+    <string name="splash_loading">Ładowanie…</string>
+    <string name="login_no_account">Nie masz konta? </string>
     <string name="splash_tagline">
         Zmień swoją pozycję,\npodnieś swojego ducha!
     </string>
@@ -201,6 +213,10 @@
 
     <!-- Profile Screen -->
     <string name="profile_title">Profil</string>
+
+    <!-- Profile information settings -->
+    <string name="profile_no_email">Brak emaila</string>
+    <string name="profile_placeholder_username">Ustaw nazwę użytkownika</string>
 
     <!-- Profile Image -->
     <string name="profile_image_content_description">Zdjęcie profilowe</string>

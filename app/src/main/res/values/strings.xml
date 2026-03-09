@@ -8,6 +8,7 @@
     <string name="title_activity_home_screen">HomeScreen</string>
     <string name="title_activity_workout_screen">WorkoutScreen</string>
     <string name="cd_app_logo">App logo</string>
+    <string name="splash_loading">Loading...</string>
     <string name="splash_tagline">
         Shift your position,\nuplift your spirit!
     </string>
@@ -16,6 +17,15 @@
     <string name="title_activity_profile_screen">ProfileScreen</string>
     <string name="title_activity_app_navigation">AppNavigation</string>
     <string name="title_activity_onboarding_introduction_overlay">OnboardingIntroductionOverlay</string>
+
+    <!-- Topbar -->
+    <string name="topbar_greetings">Good morning 👋</string>
+    <string name="topbar_description">Let\'s workout</string>
+
+    <!-- Topbar - PlanSelectScreen -->
+    <string name="topbar_plan_select">Select Plan</string>
+    <string name="topbar_plan_description">Choose your workout</string>
+
 
     <!-- Help & Support -->
     <string name="help_support">Help &amp; Support</string>
@@ -137,6 +147,7 @@
     <string name="login_forgot_password">Forgot password?</string>
     <string name="login_create_account">Create an account</string>
     <string name="login_sign_in">Sign in</string>
+    <string name="login_no_account">Don\'t have an account? </string>
 
     <!-- Register Screen -->
     <string name="register_title">Create new account</string>
@@ -147,6 +158,8 @@
     <string name="register_password_label">Password</string>
     <string name="register_password_placeholder">Enter your password</string>
     <string name="register_confirm_password_label">Confirm Password</string>
+    <string name="register_already_have_account">"Already have an account? "</string>
+    <string name="register_sign_in">Sign in</string>
     <string name="register_confirm_password_placeholder">Confirm your password</string>
     <string name="register_button">Register</string>
 
@@ -178,6 +191,11 @@
 
     <!-- Profile Screen -->
     <string name="profile_title">Profile</string>
+
+
+    <!-- Profile information settings -->
+    <string name="profile_no_email">No email set</string>
+    <string name="profile_placeholder_username">Set your username</string>
 
     <!-- Profile Image -->
     <string name="profile_image_content_description">Profile picture</string>
