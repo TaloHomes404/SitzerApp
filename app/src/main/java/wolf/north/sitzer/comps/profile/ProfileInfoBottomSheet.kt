@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -56,6 +57,7 @@ fun ProfileInfoBottomSheet(
     onDismiss: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val avatarUri by viewModel.avatarUri.collectAsState()
 
     //Password visibility state holder
 
@@ -97,8 +99,9 @@ fun ProfileInfoBottomSheet(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
-            val avatarPainter = uiState.avatarUri?.let { rememberAsyncImagePainter(it) }
-                ?: rememberAsyncImagePainter(R.drawable.pfpp)
+
+            val avatarPainter = avatarUri?.let { rememberAsyncImagePainter(it) }
+                ?: painterResource(R.drawable.pfpp)
 
             Image(
                 painter = avatarPainter,

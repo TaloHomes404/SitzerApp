@@ -21,6 +21,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,6 +36,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -132,7 +136,6 @@ fun SplashScreen(navController: NavHostController = rememberNavController()) {
     var startAnimation by remember { mutableStateOf(false) }
     var showProgress by remember { mutableStateOf(false) }
 
-    // Animacje
     LaunchedEffect(Unit) {
         delay(100)
         startAnimation = true
@@ -178,42 +181,83 @@ fun SplashScreen(navController: NavHostController = rememberNavController()) {
             .background(MaterialTheme.colorScheme.primary),
         contentAlignment = Alignment.Center
     ) {
+        Box(
+            modifier = Modifier
+                .size(360.dp)
+                .background(
+                    brush = Brush.radialGradient(
+                        colors = listOf(
+                            Color.White.copy(alpha = 0.12f),
+                            Color.Transparent
+                        )
+                    ),
+                    shape = CircleShape
+                )
+        )
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .alpha(logoAlpha)
+                .scale(logoScale)
         ) {
-            Image(
-                painter = painterResource(R.drawable.sitzer_logo_nobg),
-                contentDescription = stringResource(R.string.cd_app_logo),
+            // Icon
+            Box(
                 modifier = Modifier
-                    .size(180.dp)
-                    .alpha(logoAlpha)
-                    .scale(logoScale)
+                    .size(96.dp)
+                    .background(
+                        color = Color.White.copy(alpha = 0.20f),
+                        shape = RoundedCornerShape(24.dp)
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.sitzer_logo_nobg),
+                    contentDescription = stringResource(R.string.cd_app_logo),
+                    modifier = Modifier.size(60.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text(
+                text = stringResource(R.string.app_name),
+                style = MaterialTheme.typography.displaySmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimary
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = stringResource(R.string.splash_tagline),
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.85f),
                 textAlign = TextAlign.Center,
-                lineHeight = 28.sp,
                 modifier = Modifier
-                    .padding(horizontal = 32.dp)
+                    .padding(horizontal = 40.dp)
                     .alpha(textAlpha)
             )
 
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(56.dp))
 
             CircularProgressIndicator(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(28.dp)
                     .alpha(progressAlpha),
                 color = MaterialTheme.colorScheme.onPrimary,
-                strokeWidth = 3.dp
+                strokeWidth = 2.5.dp
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = stringResource(R.string.splash_loading),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.75f),
+                modifier = Modifier.alpha(progressAlpha)
             )
         }
     }
