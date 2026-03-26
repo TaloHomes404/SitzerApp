@@ -1,29 +1,79 @@
-# Sitzer
+# 🪑 Sitzer - Sitting Posture Correction App
 
-Sitzer is an Android app designed to help improve ergonomics for users working in a sitting position for extended periods.
+[![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://www.android.com/)
+[![Kotlin](https://img.shields.io/badge/Language-Kotlin-purple.svg)](https://kotlinlang.org/)
+[![Jetpack Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-blue.svg)](https://developer.android.com/jetpack/compose)
 
-## Features
-- Daily exercise reminders
-- Muscle strengthening routines
-- Eye exercises for better focus
-- Detailed statistics and reports on completed exercises
+> **Health & Fitness mobile application designed to reduce negative effects of sedentary lifestyle through personalized exercises and posture correction.**
 
-## Requirements
-- Android Studio 202X.X.X or higher
-- Kotlin
-- Jetpack Compose
+---
 
-## How to run the project
-1. Clone the repository: git clone https://github.com/yourusername/sitzer.git
-2. Open the project in Android Studio.
-3. Sync Gradle and run the app on an emulator or a physical device.
+## 📱 Overview
 
+Sitzer is a mobile health application that helps users combat the negative effects of prolonged sitting by:
+- Providing personalized exercise plans targeting key muscle groups
+- Tracking daily workout progress
+- Sending reminders for movement breaks
+- Offering detailed exercise instructions with video guidance
 
-## imgs
+**Project Purpose:** Developed as a portfolio project to demonstrate full-stack Android development and comprehensive QA testing skills.
 
-![WelcomeScreen](https://github.com/user-attachments/assets/76b8afbf-6b35-4629-9582-332cdc124b8d)
-![LoginScreen](https://github.com/user-attachments/assets/053987ff-d381-4d17-8cba-ddaac8643920)
-![RegisterScreen](https://github.com/user-attachments/assets/01fa9ad4-fa99-4259-b2d6-98d8c96db632)
-![HomeScreen](https://github.com/user-attachments/assets/53d28e16-9cd1-4aaa-90b2-f2c18535b998)
-![ExercisePickScreen](https://github.com/user-attachments/assets/b2f83e7d-6916-490d-8183-540ce59a6166)
-![WorkoutScreen](https://github.com/user-attachments/assets/ce85e7de-dc3e-4a43-8c30-295ea6f683f7)
+---
+
+## ✨ Key Features
+
+### 🏃 Workout Management
+- **3 Workout Plans:** Beginner, Intermediate, Advanced
+- **30+ Exercises** with detailed instructions and video demonstrations
+- **Exercise Timer** with audio/visual cues
+- **Progress Tracking** - daily completion statistics
+
+### 👤 User Management
+- Secure authentication (Login/Register)
+- Profile customization (avatar, user data)
+- Persistent user preferences (DataStore)
+
+### 🎨 Customization
+- **Dark/Light Theme** with system default option
+- **Internationalization** (Polish/English)
+- Theme and language persistence across sessions
+
+### 🔔 Smart Notifications
+- Daily workout reminders
+- Customizable notification schedules
+- WorkManager-based background tasks
+
+---
+
+## 🏗️ Architecture & Tech Stack
+
+### Architecture Pattern
+- **MVVM (Model-View-ViewModel)** for separation of concerns
+- **Single Activity** with Jetpack Navigation
+- **Unidirectional Data Flow** with StateFlow
+
+### Core Technologies
+- • Kotlin
+- • UI: Jetpack Compose (declarative UI)
+- • DI: Hilt (dependency injection)
+- • Database: Room + SQLite (local persistence)
+- • Preferences: DataStore (key-value storage)
+- • Background: WorkManager (notifications scheduling)
+- • Navigation: Jetpack Navigation Compose
+- • State: StateFlow, LiveData
+- • Coroutines: Async operations
+
+## 📷 Screenshots
+<p align="center">
+  <img src="screenshots/sitzerLogin.PNG" width="22%" />
+  <img src="screenshots/sitzerRegister.PNG" width="22%" />
+  <img src="screenshots/sitzerHomePage.PNG" width="22%" />
+  <img src="screenshots/sitzerPlans.PNG" width="22%" />
+</p>
+
+<p align="center">
+  <img src="screenshots/sizerPlanbottomsheet.PNG" width="22%" />
+  <img src="screenshots/sitzerProfile.PNG" width="22%" />
+  <img src="screenshots/SitzerWorkoutHub.PNG" width="22%" />
+  <img src="screenshots/SitzerWorkoutHubPlaying.PNG" width="22%" />
+</p>
