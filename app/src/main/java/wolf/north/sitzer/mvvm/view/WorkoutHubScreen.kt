@@ -16,45 +16,90 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import wolf.north.sitzer.R
+import wolf.north.sitzer.comps.ExerciseInfoBottomSheet
+import wolf.north.sitzer.comps.exerciseVideoPlayer.ExerciseVideoPlayer
 import wolf.north.sitzer.comps.toolsComps.Timer
+import wolf.north.sitzer.mvvm.viewmodel.WorkoutHubScreenViewModel
+import wolf.north.sitzer.ui.theme.SitzerTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WorkoutHubScreen(
     navController: NavHostController = rememberNavController(),
-    planName: String = "Plan treningowy",
-    currentExercise: Int = 1,
-    totalExercises: Int = 5,
-    exerciseName: String = "Pompki",
-    exerciseDetail: String = "3 serie x 15 powtórzeń",
-    nextExerciseName: String = "Przysiady",
-    onClose: () -> Unit = {},
-    onProblem: () -> Unit = {}
+    planId: Int? = null,
 ) {
+    val viewModel: WorkoutHubScreenViewModel = viewModel()
+    val currentPlan by viewModel.currentPlan.collectAsState()
+    val currentExerciseIndex by viewModel.currentExerciseIndex.collectAsState()
+    val isWorkoutPlaying by viewModel.isWorkoutPlaying.collectAsState()
+    val nextExercise by viewModel.nextExercise.collectAsState()
+
+    //State of instruction/tips bottom sheet
+    var showInstructions by remember { mutableStateOf(false) }
+    var showTips by remember { mutableStateOf(false) }
+
+
+    // With start of the screen load plan
+    LaunchedEffect(planId) {
+        if (planId != null && currentPlan == null) {
+            viewModel.loadPlanIntoHub(planId)
+        }
+    }
+
+    // Safe loading plan into screen
+    if (currentPlan == null) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+        return
+    }
+
+    val plan = currentPlan!!
+    val currentExercise = remember(currentExerciseIndex, plan) {
+        plan.exercises.getOrNull(currentExerciseIndex)
+    }
+
+
     Scaffold(
         topBar = {
             Column(
@@ -72,7 +117,7 @@ fun WorkoutHubScreen(
                         color = MaterialTheme.colorScheme.surfaceVariant,
                         modifier = Modifier.size(40.dp)
                     ) {
-                        IconButton(onClick = onClose) {
+                        IconButton(onClick = { navController.popBackStack() }) {
                             Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = "Zamknij",
@@ -82,7 +127,8 @@ fun WorkoutHubScreen(
                     }
 
                     Text(
-                        text = planName,
+                        text = currentExercise?.let { stringResource(it.nameResId) }
+                            ?: stringResource(R.string.workout_hub_default_name),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.weight(1f),
@@ -95,7 +141,7 @@ fun WorkoutHubScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Exercise $currentExercise / $totalExercises",
+                    text = "Exercise ${currentExerciseIndex + 1} / ${plan.exercises.size}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.fillMaxWidth(),
@@ -127,7 +173,8 @@ fun WorkoutHubScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = exerciseName,
+                        text = currentExercise?.let { stringResource(it.nameResId) }
+                            ?: stringResource(R.string.workout_hub_default_name),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
@@ -136,7 +183,8 @@ fun WorkoutHubScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = exerciseDetail,
+                        text = currentExercise?.let { stringResource(it.descriptionResId) }
+                            ?: stringResource(R.string.workout_hub_default_description),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center
@@ -152,11 +200,11 @@ fun WorkoutHubScreen(
                             .background(MaterialTheme.colorScheme.surface),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = "Miejsce na\nzdjęcie/filmik",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                            textAlign = TextAlign.Center
+                        ExerciseVideoPlayer(
+                            videoRes = viewModel.getCurrentExercise()?.videoUrl
+                                ?: R.raw.side_plank,
+                            isPlaying = isWorkoutPlaying,
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
 
@@ -166,9 +214,8 @@ fun WorkoutHubScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-
                         Button(
-                            onClick = { /* TODO: pokaż instrukcję popup */ },
+                            onClick = { showInstructions = true },
                             modifier = Modifier.weight(1f),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -183,14 +230,14 @@ fun WorkoutHubScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Instrukcja",
+                                text = stringResource(R.string.workout_hub_instruction),
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.Medium
                             )
                         }
 
                         Button(
-                            onClick = { /* TODO: pokaż porady popup*/ },
+                            onClick = { showTips = true },
                             modifier = Modifier.weight(1f),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -205,61 +252,45 @@ fun WorkoutHubScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Porady",
+                                text = stringResource(R.string.workout_hub_tips),
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.Medium
                             )
                         }
                     }
-
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
-
             Timer(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                currentExercise = currentExerciseIndex,
+                totalExercises = plan.exercises.size,
+                isPlaying = isWorkoutPlaying,
+                onNext = { viewModel.goToNextExercise() },
+                onPrevious = { viewModel.goToPreviousExercise() },
+                onPlayPause = { viewModel.playExerciseVideo() }
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .padding(4.dp)
-                ) {
-                    IconButton(onClick = onProblem) {
-                        Icon(
-                            imageVector = Icons.Default.Help,
-                            contentDescription = "Problem",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                    Text(
-                        text = "Problem?",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
                     Text(
-                        text = "Następne ćwiczenie",
+                        text = stringResource(R.string.workout_hub_next_exercise),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = nextExerciseName,
+                        text = nextExercise?.let { stringResource(it.nameResId) }
+                            ?: stringResource(R.string.workout_hub_end_of_workout),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurface
@@ -268,12 +299,53 @@ fun WorkoutHubScreen(
             }
         }
     }
+
+
+
+
+    if (showInstructions && currentExercise != null) {
+        val instructions = currentExercise.instructionsResId?.let {
+            stringArrayResource(it).toList()
+        } ?: emptyList()
+
+        ModalBottomSheet(
+            onDismissRequest = { showInstructions = false },
+            containerColor = MaterialTheme.colorScheme.surface
+        ) {
+            ExerciseInfoBottomSheet(
+                title = stringResource(currentExercise.nameResId),
+                instructions = instructions,
+                tips = emptyList(),
+                onDismiss = { showInstructions = false }
+            )
+        }
+    }
+
+    if (showTips && currentExercise != null) {
+        val tips = currentExercise.tipsResId?.let {
+            stringArrayResource(it).toList()
+        } ?: emptyList()
+
+        ModalBottomSheet(
+            onDismissRequest = { showTips = false },
+            containerColor = MaterialTheme.colorScheme.surface
+        ) {
+            ExerciseInfoBottomSheet(
+                title = "${stringResource(currentExercise.nameResId)} - Tips",
+                instructions = emptyList(),
+                tips = tips,
+                onDismiss = { showTips = false }
+            )
+        }
+    }
+
+
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun WorkoutHubScreenPreview() {
-    MaterialTheme {
-        WorkoutHubScreen ()
+    SitzerTheme {
+        WorkoutHubScreen()
     }
 }

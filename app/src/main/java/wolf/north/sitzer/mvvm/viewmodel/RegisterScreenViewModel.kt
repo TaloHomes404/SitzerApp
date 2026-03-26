@@ -1,5 +1,6 @@
 package wolf.north.sitzer.mvvm.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,11 +9,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import wolf.north.sitzer.repository.UserRepository
+import wolf.north.sitzer.repository.datastore.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterScreenViewModel @Inject constructor(private val repository: UserRepository) :
-    ViewModel() {
+class RegisterScreenViewModel @Inject constructor(
+    private val repository: UserRepository,
+    private val userPrefsRepo: UserPreferencesRepository
+) : ViewModel() {
 
     var firstName by mutableStateOf("")
     var email by mutableStateOf("")
@@ -22,8 +26,14 @@ class RegisterScreenViewModel @Inject constructor(private val repository: UserRe
     var registrationSuccess by mutableStateOf(false)
     var errorMessage by mutableStateOf("")
 
+    var passwordVisibility by mutableStateOf(false)
 
-    fun RegisterUser() {
+
+    fun togglePasswordVisibility() {
+        passwordVisibility = !passwordVisibility
+    }
+
+    fun registerUser() {
         //Podstawowa walidacja dla rejestracji
         if (firstName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             errorMessage = "Uzupełnij wszystkie pola!"
@@ -45,6 +55,9 @@ class RegisterScreenViewModel @Inject constructor(private val repository: UserRe
         viewModelScope.launch {
 
             try {
+                Log.d("REGISTER", "RegisterUser() run")
+                userPrefsRepo.setUsername(firstName)
+                userPrefsRepo.setEmail(email)
                 repository.registerUserWithCredentials(firstName, email, password)
                 registrationSuccess = true
 

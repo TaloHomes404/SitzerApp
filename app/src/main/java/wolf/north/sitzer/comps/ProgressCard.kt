@@ -1,35 +1,32 @@
 package wolf.north.sitzer.comps
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import wolf.north.sitzer.comps.ui.theme.SitzerTheme
+import wolf.north.sitzer.ui.theme.SitzerTheme
 
 @Composable
 fun ProgressCard(
@@ -41,13 +38,13 @@ fun ProgressCard(
     Card(
         modifier = Modifier
             .width(160.dp)
-            .height(180.dp)
+            .height(160.dp)
             .padding(horizontal = 8.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.surface  // ← theme
         ),
-        elevation = CardDefaults.cardElevation(1.dp),
+        elevation = CardDefaults.cardElevation(2.dp),
     ) {
         Column(
             modifier = Modifier
@@ -56,68 +53,59 @@ fun ProgressCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Ikona więcej
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Icon(
-                    Icons.Outlined.MoreVert,
-                    contentDescription = "display more progress card",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clickable { }
-                )
-            }
-
-            // Główny wskaźnik
+            // Progress ring
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.weight(1f)
             ) {
+                // Background track
+                CircularProgressIndicator(
+                    progress = { 1f },
+                    modifier = Modifier.size(60.dp),
+                    color = MaterialTheme.colorScheme.surfaceVariant,  // ← theme
+                    strokeWidth = 6.dp
+                )
+                // Progress
                 CircularProgressIndicator(
                     progress = { progress },
                     modifier = Modifier.size(60.dp),
-                    color = Color(0xFF4B6FFF),
+                    color = MaterialTheme.colorScheme.primary,  // ← Orange!
                     strokeWidth = 6.dp,
-                    trackColor = Color(0xFFE8EAF0),
-                    gapSize = 0.dp
+                    strokeCap = StrokeCap.Round
                 )
+                // Text
                 Text(
                     text = workoutsCountWeekly,
-                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    letterSpacing = 3.sp,
-                    color = Color(0xFF1A1A1A)
+                    letterSpacing = 1.sp,
+                    color = MaterialTheme.colorScheme.onSurface  // ← theme
                 )
             }
 
-            // Opisy
+            // Labels
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.wrapContentHeight()
             ) {
                 Text(
                     text = progressCardTitle,
-                    fontSize = 14.sp,
+                    style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color(0xFF1A1A1A),
+                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                     maxLines = 1
                 )
                 Text(
                     text = progressCardDescription,
-                    fontSize = 12.sp,
-                    color = Color(0xFF8E8E93),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                     maxLines = 1
                 )
             }
         }
     }
-
 }
 
 
@@ -130,13 +118,13 @@ fun ProgressCardNumberIndicator(
     Card(
         modifier = Modifier
             .width(160.dp)
-            .height(180.dp)
+            .height(160.dp)
             .padding(horizontal = 8.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.surface  // ← theme
         ),
-        elevation = CardDefaults.cardElevation(1.dp),
+        elevation = CardDefaults.cardElevation(2.dp),
     ) {
         Column(
             modifier = Modifier
@@ -145,53 +133,38 @@ fun ProgressCardNumberIndicator(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Ikona więcej
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Icon(
-                    Icons.Outlined.MoreVert,
-                    contentDescription = "display more progress card",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clickable { }
-                )
-            }
-
-            // Główny wskaźnik
+            // Fire indicator
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.weight(1f)
             ) {
+                // Opcja A: Flame emoji z kolorem
                 Text(
-                    text = "$caloriesBurned🔥",
-                    fontSize = 36.sp,
+                    text = "$caloriesBurned",
+                    style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Red,
+                    color = MaterialTheme.colorScheme.primary,  // ← Orange!
                     letterSpacing = 1.5.sp
                 )
             }
 
-            // Opisy
+            // Labels
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.wrapContentHeight()
             ) {
                 Text(
                     text = progressCardTitle,
-                    fontSize = 14.sp,
+                    style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color(0xFF1A1A1A),
+                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                     maxLines = 1
                 )
                 Text(
                     text = progressCardDescription,
-                    fontSize = 12.sp,
-                    color = Color(0xFF8E8E93),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                     maxLines = 1
                 )

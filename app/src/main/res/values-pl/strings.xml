@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sitzer</string>
+
+    <string name="title_activity_register_screen">Ekran rejestracji</string>
+
+    <string name="welcome_screen_desc">
+        Zmień swoje nawyki siedzenia i popraw postawę dzięki prostym ćwiczeniom i przypomnieniom.
+        Aplikacja pomaga Ci przejąć kontrolę nad zdrowiem, abyś czuł się bardziej energiczny
+        i wyprostowany przez cały dzień.
+
+        Dołącz do nas w drodze do zdrowszego, bardziej aktywnego stylu życia — Twój kręgosłup Ci podziękuje!
+    </string>
+
+    <string name="title_activity_login_screen">Ekran logowania</string>
+    <string name="title_activity_google_button">Przycisk Google</string>
+    <string name="title_activity_home_screen">Ekran główny</string>
+    <string name="title_activity_workout_screen">Ekran treningu</string>
+    <string name="title_activity_exercise_pick_screen">Wybór ćwiczeń</string>
+
+    <string name="plank_desc">
+        Deska (plank) to ćwiczenie wzmacniające mięśnie core, które angażuje wiele grup mięśniowych,
+        w tym brzuch, plecy, barki i nogi. Aby wykonać deskę, połóż się na brzuchu, a następnie
+        unieś ciało na przedramionach i palcach stóp, utrzymując prostą linię od głowy do pięt.
+        Napnij mięśnie brzucha i utrzymaj pozycję, nie opuszczając bioder ani nie unosząc ich zbyt wysoko.
+    </string>
+
+    <string name="title_activity_profile_screen">Profil</string>
+    <string name="title_activity_app_navigation">Nawigacja aplikacji</string>
+    <string name="title_activity_onboarding_introduction_overlay">Wprowadzenie</string>
+
+    <!-- Topbar -->
+    <string name="topbar_greetings">Dzień dobry 👋</string>
+    <string name="topbar_description">Poćwiczmy razem!</string>
+
+    <!-- Topbar - PlanSelectScreen -->
+    <string name="topbar_plan_select">Wybierz plan</string>
+    <string name="topbar_plan_description">Wybierz sesję treningową</string>
+
+    <!-- Help & Support -->
+    <string name="help_support">Pomoc i wsparcie</string>
+    <string name="close">Zamknij</string>
+
+    <!-- Tabs -->
+    <string name="tab_faq">FAQ</string>
+    <string name="tab_report">Zgłoś problem</string>
+    <string name="tab_contact">Kontakt</string>
+    <string name="tab_about">O aplikacji</string>
+
+    <!-- Notification methods -->
+    <string name="notification_method">Metoda powiadomień</string>
+    <string name="method_push">Push</string>
+    <string name="method_push_full">Powiadomienia push</string>
+    <string name="method_email">E-mail</string>
+
+    <!-- Notification frequency -->
+    <string name="notification_frequency">Częstotliwość powiadomień</string>
+
+    <string name="daily_reminder">Codzienne przypomnienie</string>
+    <string name="daily_reminder_desc">
+        Otrzymuj codzienne przypomnienie o wybranej godzinie
+    </string>
+
+    <string name="plan_for_today">Plan na dziś</string>
+    <string name="plan_for_today_desc">
+        Powiadom, gdy plan na dziś będzie gotowy
+    </string>
+
+    <string name="weekly_summary">Podsumowanie tygodnia</string>
+    <string name="weekly_summary_desc">
+        Otrzymuj tygodniowe podsumowanie swojej aktywności
+    </string>
+
+    <string name="notifications">Powiadomienia</string>
+    <string name="cancel">Anuluj</string>
+    <string name="save">Zapisz</string>
+
+    <!-- Categories / Muscle groups -->
+    <string name="muscle_chest">Klatka piersiowa</string>
+    <string name="muscle_back">Plecy</string>
+    <string name="muscle_legs">Nogi</string>
+    <string name="muscle_arms">Ramiona</string>
+    <string name="muscle_shoulders">Barki</string>
+    <string name="muscle_core">Mięśnie core</string>
+
+    <!-- Difficulty -->
+    <string name="difficulty_beginner">Początkujący</string>
+    <string name="difficulty_intermediate">Średniozaawansowany</string>
+    <string name="difficulty_advanced">Zaawansowany</string>
+
+    <!-- Exercise plan -->
+    <string name="plan_card_description">Karta planu treningowego</string>
+
+    <plurals name="exercises_count">
+        <item quantity="one">%d ćwiczenie</item>
+        <item quantity="few">%d ćwiczenia</item>
+        <item quantity="many">%d ćwiczeń</item>
+        <item quantity="other">%d ćwiczeń</item>
+    </plurals>
+
+    <plurals name="minutes_duration">
+        <item quantity="one">%d minuta</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
+        <item quantity="other">%d minut</item>
+    </plurals>
+
+    <!-- FAQ -->
+    <string name="faq_q1">Jak utworzyć plan dzienny?</string>
+    <string name="faq_a1">Dotknij przycisku „+” na ekranie głównym i wybierz aktywności na dany dzień.</string>
+
+    <string name="faq_q2">Czy mogę synchronizować plany między urządzeniami?</string>
+    <string name="faq_a2">Tak! Zaloguj się na swoje konto, aby automatycznie synchronizować plany.</string>
+
+    <string name="faq_q3">Jak zmienić motyw aplikacji?</string>
+    <string name="faq_a3">Przejdź do Profil → Ustawienia → Motyw, aby wybrać tryb Jasny, Ciemny lub Systemowy.</string>
+
+
+    <!-- Common -->
+    <string name="close_cd">Zamknij</string>
+    <string name="support_title">Wsparcie</string>
+
+    <!-- Report types -->
+    <string name="report_type">Typ zgłoszenia</string>
+    <string name="report_type_bug">Błąd</string>
+    <string name="report_type_ui_issue">Problem z interfejsem</string>
+    <string name="report_type_missing_feature">Brak funkcji</string>
+    <string name="report_type_other">Inne</string>
+
+    <string name="report_title">Tytuł</string>
+    <string name="report_title_placeholder">
+        Krótki opis problemu
+    </string>
+
+    <!-- Report form -->
+    <string name="report_issue_label">Opisz problem</string>
+    <string name="report_issue_placeholder">
+        Co się stało? Kroki do odtworzenia…
+    </string>
+    <string name="report_desc">
+        Podaj jak najwięcej szczegółów, abyśmy mogli szybciej rozwiązać problem.
+    </string>
+    <string name="send_report">Wyślij zgłoszenie</string>
+
+    <!-- Email / intents -->
+    <string name="choose_email_client">Wybierz aplikację e-mail</string>
+    <string name="no_email_client">Nie znaleziono aplikacji e-mail</string>
+
+    <!-- Contact -->
+    <string name="contact_email">Adres e-mail wsparcia</string>
+    <string name="app_version">Wersja aplikacji</string>
+    <string name="privacy_policy">Polityka prywatności</string>
+    <string name="privacy_policy_desc">Dowiedz się, jak przetwarzamy Twoje dane</string>
+
+    <!-- About -->
+    <string name="about_app">O aplikacji Sitzer</string>
+    <string name="developer_info">Twórca</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Logowanie</string>
+    <string name="login_email_label">E-mail</string>
+    <string name="login_password_label">Hasło</string>
+    <string name="login_hide_password">Ukryj hasło</string>
+    <string name="login_show_password">Pokaż hasło</string>
+    <string name="login_forgot_password">Nie pamiętasz hasła?</string>
+    <string name="login_create_account">Utwórz konto</string>
+    <string name="login_sign_in">Zaloguj się</string>
+
+    <!-- Register Screen -->
+    <string name="register_title">Utwórz nowe konto</string>
+    <string name="register_first_name_label">Imię</string>
+    <string name="register_first_name_placeholder">Wpisz swoje imię</string>
+    <string name="register_email_label">E-mail</string>
+    <string name="register_email_placeholder">Wpisz swój adres e-mail</string>
+    <string name="register_password_label">Hasło</string>
+    <string name="register_password_placeholder">Wpisz swoje hasło</string>
+    <string name="register_confirm_password_label">Potwierdź hasło</string>
+    <string name="register_confirm_password_placeholder">Potwierdź swoje hasło</string>
+    <string name="register_button">Zarejestruj się</string>
+    <string name="register_already_have_account">"Posiadasz już konto?  "</string>
+    <string name="register_sign_in">Zaloguj się</string>
+
+    <!-- Home Screen -->
+    <string name="home_featured_workout_title">Rzuć sobie wyzwanie dzięki\nwyróżnionemu treningowi dnia!</string>
+    <string name="home_featured_workout_button">Pokaż Trening</string>
+    <string name="home_weekly_progress">Postępy tygodniowe</string>
+    <string name="home_see_all">Zobacz wszystkie</string>
+    <string name="home_workout_sessions">Sesje treningowe</string>
+    <string name="home_this_week">Ten tydzień</string>
+    <string name="home_calories_burned">Spalone kalorie</string>
+    <string name="home_categories">Kategorie</string>
+
+    <string name="workout_hub_close">Zamknij</string>
+    <string name="workout_hub_exercise_counter">Ćwiczenie %1$d / %2$d</string>
+    <string name="workout_hub_instruction">Instrukcja</string>
+    <string name="workout_hub_tips">Wskazówki</string>
+    <string name="workout_hub_problem">Problem?</string>
+    <string name="cd_app_logo">Logo aplikacji</string>
+    <string name="splash_loading">Ładowanie…</string>
+    <string name="login_no_account">Nie masz konta? </string>
+    <string name="splash_tagline">
+        Zmień swoją pozycję,\npodnieś swojego ducha!
+    </string>
+    <string name="workout_hub_next_exercise">Następne ćwiczenie</string>
+    <string name="workout_hub_end_of_workout">Koniec treningu</string>
+    <string name="workout_hub_default_name">Nazwa</string>
+    <string name="workout_hub_default_description">Opis</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Strona główna</string>
+    <string name="nav_workouts">Treningi</string>
+    <string name="nav_profile">Profil</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_title">Profil</string>
+
+    <!-- Profile information settings -->
+    <string name="profile_no_email">Brak emaila</string>
+    <string name="profile_placeholder_username">Ustaw nazwę użytkownika</string>
+
+    <!-- Profile Image -->
+    <string name="profile_image_content_description">Zdjęcie profilowe</string>
+    <string name="profile_edit_content_description">Edytuj profil</string>
+
+    <!-- Statistics -->
+    <string name="statistic_total_time">Łączny czas</string>
+    <string name="statistic_calories_burned">Spalone kalorie</string>
+    <string name="statistic_sessions">Sesje</string>
+    <string name="profile_stat_total_time">Łączny czas</string>
+    <string name="profile_stat_calories">Spalone kalorie</string>
+    <string name="profile_stat_sessions">Sesje</string>
+
+    <!-- Menu Options -->
+    <string name="menu_profile_info">Informacje o profilu</string>
+    <string name="menu_settings">Ustawienia</string>
+    <string name="menu_notifications">Powiadomienia</string>
+    <string name="menu_help">Pomoc</string>
+    <string name="menu_navigate_to">Przejdź do: %1$s</string>
+
+    <!-- Language -->
+    <string name="settings_language">Język</string>
+    <string name="settings_theme">Motyw</string>
+
+    <!-- Accessibility -->
+    <string name="cd_login_logo">Logo logowania Sitzer</string>
+    <string name="cd_show_password">Pokaż hasło</string>
+    <string name="cd_hide_password">Ukryj hasło</string>
+
+    <string name="cd_nav_home">Strona główna</string>
+    <string name="cd_nav_workouts">Treningi</string>
+    <string name="cd_nav_profile">Profil</string>
+
+    <string name="cd_go_to_section">Przejdź do %1$s</string>
+
+    <!-- Exercises List (PL) -->
+
+    <!-- Ćwiczenie 1: Rowerek -->
+    <string name="ex_bicycle_crunch_name">Rowerek</string>
+    <string name="ex_bicycle_crunch_desc">Rozwija mięśnie skośne brzucha i rotację tułowia poprzez naprzemienne ruchy łokieć-kolano</string>
+    <string-array name="ex_bicycle_crunch_instructions">
+        <item>Połóż się na plecach z rękami za głową</item>
+        <item>Unieś łopatki i podnieś kolana do 90 stopni</item>
+        <item>Przyciągnij prawy łokieć do lewego kolana, prostując prawą nogę</item>
+        <item>Naprzemiennie zmieniaj strony w ruchu przypominającym pedałowanie</item>
+        <item>Utrzymuj napięcie brzucha przez cały czas</item>
+    </string-array>
+    <string-array name="ex_bicycle_crunch_tips">
+        <item>Skup się na jakości rotacji, nie na szybkości</item>
+        <item>Dolna część pleców przycśnięta do podłogi</item>
+        <item>Wydychaj powietrze przy skręcie</item>
+        <item>Nie ciągnij za szyję</item>
+    </string-array>
+
+    <!-- Ćwiczenie 2: Wznosy na palce -->
+    <string name="ex_standing_calf_raises_name">Wznosy na palce stojąc</string>
+    <string name="ex_standing_calf_raises_desc">Wzmacnia mięśnie łydek i poprawia stabilność kostek dla lepszej postawy</string>
+    <string-array name="ex_standing_calf_raises_instructions">
+        <item>Stań z stopami na szerokość bioder</item>
+        <item>Unieś się na palce stóp</item>
+        <item>Zatrzymaj się na chwilę w górnej pozycji</item>
+        <item>Opuść się z kontrolą</item>
+        <item>Powtórz wymaganą liczbę razy</item>
+    </string-array>
+    <string-array name="ex_standing_calf_raises_tips">
+        <item>Użyj ściany dla równowagi jeśli potrzeba</item>
+        <item>Wykonuj ruchy powoli i kontrolowanie</item>
+        <item>Napnij łydki w górnej pozycji</item>
+        <item>Pełny zakres ruchu dla najlepszych efektów</item>
+    </string-array>
+
+    <!-- Ćwiczenie 3: Martwy robak -->
+    <string name="ex_dead_bug_name">Martwy robak</string>
+    <string name="ex_dead_bug_desc">Trenuje stabilizację korpusu podczas niezależnych ruchów kończyn - kluczowe dla siły funkcjonalnej</string>
+    <string-array name="ex_dead_bug_instructions">
+        <item>Leż na plecach z ramionami wyciągniętymi do góry</item>
+        <item>Unieś nogi do 90 stopni w biodrach i kolanach</item>
+        <item>Powoli opuszczaj przeciwną rękę i nogę w stronę podłogi</item>
+        <item>Wróć do pozycji wyjściowej i powtórz na drugą stronę</item>
+        <item>Utrzymuj dolną część pleców przycśniętą do podłogi</item>
+    </string-array>
+    <string-array name="ex_dead_bug_tips">
+        <item>Poruszaj się powoli i z kontrolą</item>
+        <item>Oddychaj równomiernie</item>
+        <item>Nie wypinaj dolnej części pleców</item>
+        <item>Skup się na napięciu brzucha</item>
+    </string-array>
+
+    <!-- Ćwiczenie 4: Marsz pośladkowy na jednej nodze -->
+    <string name="ex_single_leg_glute_march_name">Marsz pośladkowy na jednej nodze</string>
+    <string name="ex_single_leg_glute_march_desc">Aktywuje pośladki i poprawia stabilność na jednej nodze oraz kontrolę bioder</string>
+    <string-array name="ex_single_leg_glute_march_instructions">
+        <item>Połóż się na plecach z kolanami zgiętymi, stopy płasko</item>
+        <item>Unieś biodra w pozycję mostu</item>
+        <item>Powoli unieś jedną stopę nad podłogę</item>
+        <item>Zatrzymaj się na chwilę, następnie opuść</item>
+        <item>Naprzemiennie zmieniaj nogi utrzymując most</item>
+    </string-array>
+    <string-array name="ex_single_leg_glute_march_tips">
+        <item>Utrzymuj biodra na tym samym poziomie</item>
+        <item>Napnij pośladki w górnej pozycji</item>
+        <item>Poruszaj się powoli dla kontroli</item>
+        <item>Nie pozwól biodom opaść</item>
+    </string-array>
+
+    <!-- Ćwiczenie 5: Przysiady -->
+    <string name="ex_bodyweight_squats_name">Przysiady z własną wagą</string>
+    <string name="ex_bodyweight_squats_desc">Podstawowe ćwiczenie dolnej części ciała wzmacniające czworogłowy, pośladki i poprawiające stabilność kolan</string>
+    <string-array name="ex_bodyweight_squats_instructions">
+        <item>Stań z nogami na szerokość ramion</item>
+        <item>Trzymaj klatkę piersiową podniesioną i napnij brzuch</item>
+        <item>Opuść ciało zginając kolana i biodra</item>
+        <item>Zejdź aż uda będą równolegle do podłogi</item>
+        <item>Wypychaj się przez pięty by wrócić do pozycji wyjściowej</item>
+    </string-array>
+    <string-array name="ex_bodyweight_squats_tips">
+        <item>Utrzymuj ciężar na piętach</item>
+        <item>Kolana w linii z palcami stóp</item>
+        <item>Klatka piersiowa podniesiona przez cały czas</item>
+        <item>Wydychaj powietrze przy wstawaniu</item>
+    </string-array>
+
+    <!-- Ćwiczenie 6: Deska boczna -->
+    <string name="ex_side_plank_name">Deska boczna</string>
+    <string name="ex_side_plank_desc">Wzmacnia mięśnie skośne brzucha i boczny korpus dla lepszej stabilności i zapobiegania kontuzjom</string>
+    <string-array name="ex_side_plank_instructions">
+        <item>Połóż się na boku z łokciem pod ramieniem</item>
+        <item>Ułóż stopy jedna na drugiej lub rozstaw dla równowagi</item>
+        <item>Unieś biodra tworząc prostą linię ciała</item>
+        <item>Utrzymuj pozycję z ciałem wyrównanym</item>
+        <item>Opuść się z kontrolą i zmień stronę</item>
+    </string-array>
+    <string-array name="ex_side_plank_tips">
+        <item>Nie pozwól biodom opaść</item>
+        <item>Napnij brzuch przez cały czas</item>
+        <item>Utrzymuj szyję w neutralnej pozycji</item>
+        <item>Oddychaj równomiernie</item>
+    </string-array>
+
+    <!-- Ćwiczenie 7: Pompki -->
+    <string name="ex_pushups_name">Pompki</string>
+    <string name="ex_pushups_desc">Klasyczne złożone ćwiczenie górnej części ciała angażujące klatkę piersiową, ramiona i tricepsy</string>
+    <string-array name="ex_pushups_instructions">
+        <item>Zacznij w pozycji deski, ręce na szerokość ramion</item>
+        <item>Utrzymuj ciało w prostej linii od głowy do pięt</item>
+        <item>Opuść klatkę w stronę podłogi, łokcie pod kątem 45 stopni</item>
+        <item>Wypchnij się z powrotem do pozycji wyjściowej</item>
+        <item>Utrzymuj napięcie brzucha przez cały czas</item>
+    </string-array>
+    <string-array name="ex_pushups_tips">
+        <item>Nie pozwól biodom opaść</item>
+        <item>Pełny zakres ruchu dla najlepszych efektów</item>
+        <item>Wdech w dół, wydech w górę</item>
+        <item>Utrzymuj brzuch napięty</item>
+    </string-array>
+
+    <!-- Ćwiczenie 8: Rosyjskie skręty -->
+    <string name="ex_russian_twists_name">Rosyjskie skręty</string>
+    <string name="ex_russian_twists_desc">Dynamiczne rotacyjne ćwiczenie brzucha budujące siłę mięśni skośnych</string>
+    <string-array name="ex_russian_twists_instructions">
+        <item>Usiądź z kolanami zgiętymi, stopy nad podłogą</item>
+        <item>Odchyl się lekko do tyłu, utrzymując plecy proste</item>
+        <item>Złącz ręce razem przy klatce piersiowej</item>
+        <item>Obracaj tułów na jedną stronę, następnie na drugą</item>
+        <item>Utrzymuj napięcie brzucha</item>
+    </string-array>
+    <string-array name="ex_russian_twists_tips">
+        <item>Poruszaj się z kontrolą, nie z rozpędu</item>
+        <item>Trzymaj klatkę piersiową podniesioną</item>
+        <item>Oddychaj równomiernie</item>
+        <item>Skup się na jakości rotacji</item>
+    </string-array>
+
+    <!-- Ćwiczenie 9: Anioły przy ścianie -->
+    <string name="ex_wall_angels_name">Anioły przy ścianie</string>
+    <string name="ex_wall_angels_desc">Koryguje przednią postawę ramion, otwiera klatkę piersiową i poprawia mobilność ramion</string>
+    <string-array name="ex_wall_angels_instructions">
+        <item>Stań plecami płasko przy ścianie</item>
+        <item>Podnieś ramiona do wysokości ramion, łokcie zgięte 90 stopni</item>
+        <item>Utrzymuj plecy, łokcie i nadgarstki przy ścianie</item>
+        <item>Powoli podnoś ramiona nad głowę</item>
+        <item>Opuść z kontrolą</item>
+    </string-array>
+    <string-array name="ex_wall_angels_tips">
+        <item>Dolna część pleców przy ścianie</item>
+        <item>Poruszaj się powoli i kontrolowanie</item>
+        <item>Nie wymuszaj zakresu ruchu</item>
+        <item>Skup się na prawidłowej formie</item>
+    </string-array>
+
+    <!-- Ćwiczenie 10: Przysiad przy ścianie -->
+    <string name="ex_wall_sit_name">Przysiad przy ścianie</string>
+    <string name="ex_wall_sit_desc">Izometryczne utrzymanie pozycji budujące wytrzymałość czworogłowego, wytrzymałość psychiczną i kondycję dolnej części ciała</string>
+    <string-array name="ex_wall_sit_instructions">
+        <item>Stań plecami do ściany</item>
+        <item>Zsuń się w dół aż kolana będą pod kątem 90 stopni</item>
+        <item>Utrzymuj plecy płasko przy ścianie</item>
+        <item>Utrzymuj pozycję przez wymagany czas</item>
+        <item>Wypychaj się przez pięty by wstać</item>
+    </string-array>
+    <string-array name="ex_wall_sit_tips">
+        <item>Kolana w linii z kostkami</item>
+        <item>Oddychaj równomiernie</item>
+        <item>Równomiernie rozłóż ciężar</item>
+        <item>Zacznij od krótszych utrzymań</item>
+    </string-array>
+
+    <!-- Ćwiczenie 11: Odwrócona deska -->
+    <string name="ex_reverse_plank_name">Odwrócona deska</string>
+    <string name="ex_reverse_plank_desc">Buduje siłę tylnego łańcucha mięśniowego, stabilizację korpusu i otwiera zgięcia bioder</string>
+    <string-array name="ex_reverse_plank_instructions">
+        <item>Usiądź z wyprostowanymi nogami, ręce za biodrami</item>
+        <item>Palce skierowane w stronę stóp</item>
+        <item>Unieś biodra tworząc prostą linię od pięt do głowy</item>
+        <item>Utrzymuj pozycję z ciałem wyrównanym</item>
+        <item>Opuść z kontrolą</item>
+    </string-array>
+    <string-array name="ex_reverse_plank_tips">
+        <item>Utrzymuj napięcie brzucha</item>
+        <item>Nie pozwól biodom opaść</item>
+        <item>Napnij pośladki w górnej pozycji</item>
+        <item>Patrz w górę dla wyrównania</item>
+    </string-array>
+
+    <!-- Ćwiczenie 12: Kopnięcia osła -->
+    <string name="ex_donkey_kicks_name">Kopnięcia osła</string>
+    <string name="ex_donkey_kicks_desc">Izoluje i aktywuje mięśnie pośladkowe utrzymując stabilizację korpusu</string>
+    <string-array name="ex_donkey_kicks_instructions">
+        <item>Zacznij na rękach i kolanach</item>
+        <item>Napnij brzuch i utrzymuj plecy płasko</item>
+        <item>Unieś jedną nogę, utrzymując kolano zgięte 90 stopni</item>
+        <item>Wypychaj stopę w stronę sufitu</item>
+        <item>Opuść z kontrolą i powtórz</item>
+    </string-array>
+    <string-array name="ex_donkey_kicks_tips">
+        <item>Napnij pośladki w górnej pozycji</item>
+        <item>Nie wyginaj dolnej części pleców</item>
+        <item>Utrzymuj biodra na tym samym poziomie</item>
+        <item>Kontroluj ruch</item>
+    </string-array>
+
+    <!-- Ćwiczenie 13: Kopnięcia osła - wariant -->
+    <string name="ex_donkey_kicks_variation_name">Kopnięcia osła - wariant</string>
+    <string name="ex_donkey_kicks_variation_desc">Alternatywny wzorzec aktywacji pośladków dla kompletnego rozwoju tylnego łańcucha</string>
+    <string-array name="ex_donkey_kicks_variation_instructions">
+        <item>Zacznij na rękach i kolanach</item>
+        <item>Wyprostuj jedną nogę prosto do tyłu</item>
+        <item>Unieś nogę w stronę sufitu</item>
+        <item>Napnij pośladki w górnej pozycji</item>
+        <item>Opuść z kontrolą i powtórz</item>
+    </string-array>
+    <string-array name="ex_donkey_kicks_variation_tips">
+        <item>Utrzymuj napięcie brzucha</item>
+        <item>Nie przeprostowuj pleców</item>
+        <item>Skup się na skurczu pośladków</item>
+        <item>Poruszaj się powoli</item>
+    </string-array>
+
+    <!-- Ćwiczenie 14: Pozycja kobry -->
+    <string name="ex_cobra_pose_name">Pozycja kobry</string>
+    <string name="ex_cobra_pose_desc">Delikatne prostowanie pleców rozciągające zgięcia bioder, otwierające klatkę i wzmacniające dolną część pleców</string>
+    <string-array name="ex_cobra_pose_instructions">
+        <item>Połóż się twarzą w dół z rękami pod ramionami</item>
+        <item>Naciśnij na ręce, unosząc klatkę nad podłogę</item>
+        <item>Utrzymuj biodra na podłodze</item>
+        <item>Patrz lekko do góry</item>
+        <item>Utrzymuj, następnie opuść z kontrolą</item>
+    </string-array>
+    <string-array name="ex_cobra_pose_tips">
+        <item>Nie wymuszaj rozciągnięcia</item>
+        <item>Utrzymuj ramiona rozluźnione</item>
+        <item>Oddychaj głęboko</item>
+        <item>Napnij pośladki dla ochrony pleców</item>
+    </string-array>
+
+    <!-- Ćwiczenie 15: Wypady w marszu -->
+    <string name="ex_walking_lunges_name">Wypady w marszu</string>
+    <string name="ex_walking_lunges_desc">Dynamiczny wariant wypadów budujący siłę nóg, równowagę i funkcjonalne wzorce ruchu</string>
+    <string-array name="ex_walking_lunges_instructions">
+        <item>Stań z nogami na szerokość bioder</item>
+        <item>Zrób krok do przodu w wypad, tylne kolano blisko podłogi</item>
+        <item>Wypychaj się przez przednią piętę by zrobić krok do przodu</item>
+        <item>Przyciągnij tylną nogę do wypadu na drugą stronę</item>
+        <item>Kontynuuj naprzemiennie zmieniając nogi</item>
+    </string-array>
+    <string-array name="ex_walking_lunges_tips">
+        <item>Trzymaj tułów w pozycji pionowej</item>
+        <item>Przednie kolano nad kostką</item>
+        <item>Rób kontrolowane kroki</item>
+        <item>Napnij brzuch przez cały czas</item>
+    </string-array>
+
+    <!-- Ćwiczenie 16: Pompki wąskim chwytem -->
+    <string name="ex_close_grip_pushups_name">Pompki wąskim chwytem</string>
+    <string name="ex_close_grip_pushups_desc">Wariant pompek skupiony na tricepsach, angażujący również klatkę i brzuch</string>
+    <string-array name="ex_close_grip_pushups_instructions">
+        <item>Zacznij w pozycji deski, ręce blisko siebie</item>
+        <item>Ręce powinny tworzyć kształt diamentu</item>
+        <item>Opuść ciało, utrzymując łokcie blisko boków</item>
+        <item>Wypchnij się z powrotem do pozycji wyjściowej</item>
+        <item>Utrzymuj prostą linię ciała</item>
+    </string-array>
+    <string-array name="ex_close_grip_pushups_tips">
+        <item>Utrzymuj napięcie brzucha</item>
+        <item>Łokcie blisko ciała</item>
+        <item>Pełny zakres ruchu</item>
+        <item>Kontroluj opadanie</item>
+    </string-array>
+
+    <!-- Ćwiczenie 17: Brzuszki -->
+    <string name="ex_crunches_name">Brzuszki</string>
+    <string name="ex_crunches_desc">Klasyczne ćwiczenie brzucha celujące w górną część mięśnia prostego brzucha</string>
+    <string-array name="ex_crunches_instructions">
+        <item>Połóż się na plecach z kolanami zgiętymi, stopy płasko</item>
+        <item>Umieść ręce za głową lub na klatce piersiowej</item>
+        <item>Unieś ramiona używając mięśni brzucha</item>
+        <item>Zatrzymaj się na chwilę w górnej pozycji</item>
+        <item>Opuść z kontrolą</item>
+    </string-array>
+    <string-array name="ex_crunches_tips">
+        <item>Nie ciągnij za szyję</item>
+        <item>Dolna część pleców na podłodze</item>
+        <item>Wydychaj powietrze przy skurczu</item>
+        <item>Skup się na jakości, nie ilości</item>
+    </string-array>
+
+    <!-- Ćwiczenie 18: Pompki na kolanach -->
+    <string name="ex_kneeling_pushups_name">Pompki na kolanach</string>
+    <string name="ex_kneeling_pushups_desc">Zmodyfikowane pompki idealne do progresywnego budowania siły górnej części ciała</string>
+    <string-array name="ex_kneeling_pushups_instructions">
+        <item>Zacznij na rękach i kolanach</item>
+        <item>Przejdź rękami do przodu, kolana na podłodze</item>
+        <item>Utwórz prostą linię od kolan do głowy</item>
+        <item>Opuść klatkę w stronę podłogi</item>
+        <item>Wypchnij się z powrotem do pozycji startowej</item>
+    </string-array>
+    <string-array name="ex_kneeling_pushups_tips">
+        <item>Utrzymuj napięcie brzucha</item>
+        <item>Nie pozwól biodom opaść</item>
+        <item>Pełny zakres ruchu</item>
+        <item>Przejdź do zwykłych pompek</item>
+    </string-array>
+
+    <!-- Ćwiczenie 19: Utrzymanie supermana -->
+    <string name="ex_superman_hold_name">Utrzymanie supermana</string>
+    <string name="ex_superman_hold_desc">Wzmacnia cały tylny łańcuch mięśniowy i promuje prawidłowe wyrównanie kręgosłupa</string>
+    <string-array name="ex_superman_hold_instructions">
+        <item>Połóż się twarzą w dół z ramionami wyciągniętymi nad głowę</item>
+        <item>Jednocześnie unieś ramiona, klatkę i nogi</item>
+        <item>Utrzymuj szyję w neutralnej pozycji, patrz w dół</item>
+        <item>Utrzymuj pozycję przez wymagany czas</item>
+        <item>Opuść z kontrolą</item>
+    </string-array>
+    <string-array name="ex_superman_hold_tips">
+        <item>Napnij pośladki i plecy</item>
+        <item>Nie przeprostowuj szyi</item>
+        <item>Oddychaj równomiernie</item>
+        <item>Zacznij od krótszych utrzymań</item>
+    </string-array>
+
+    <!-- Ćwiczenie 20: Przysiad sumo -->
+    <string name="ex_sumo_squat_name">Przysiad sumo</string>
+    <string name="ex_sumo_squat_desc">Szeroki przysiad akcentujący wewnętrzną część ud, pośladki i mobilność bioder</string>
+    <string-array name="ex_sumo_squat_instructions">
+        <item>Stań z nogami szerszymi niż ramiona</item>
+        <item>Obróć palce stóp na zewnątrz pod kątem 45 stopni</item>
+        <item>Opuść ciało zginając kolana i biodra</item>
+        <item>Trzymaj klatkę podniesioną i plecy proste</item>
+        <item>Wypychaj się przez pięty by wrócić do pozycji wyjściowej</item>
+    </string-array>
+    <string-array name="ex_sumo_squat_tips">
+        <item>Kolana w linii z palcami stóp</item>
+        <item>Utrzymuj ciężar na piętach</item>
+        <item>Napnij pośladki w górnej pozycji</item>
+        <item>Utrzymuj tułów w pozycji pionowej</item>
+    </string-array>
+
+    <!-- Ćwiczenie 21: Rozciąganie czworogłowego na jednej nodze -->
+    <string name="ex_single_leg_quad_stretch_name">Rozciąganie czworogłowego na jednej nodze</string>
+    <string name="ex_single_leg_quad_stretch_desc">Rozciąga mięśnie przedniej części uda i zgięcia bioder, poprawia elastyczność</string>
+    <string-array name="ex_single_leg_quad_stretch_instructions">
+        <item>Stań na jednej nodze, użyj ściany dla równowagi</item>
+        <item>Zegnij drugie kolano, przyciągając stopę w stronę pośladków</item>
+        <item>Chwyć kostkę i delikatnie pociągnij</item>
+        <item>Utrzymuj kolana razem i biodra do przodu</item>
+        <item>Utrzymaj rozciągnięcie, następnie zmień stronę</item>
+    </string-array>
+    <string-array name="ex_single_leg_quad_stretch_tips">
+        <item>Nie ciągnij zbyt mocno</item>
+        <item>Utrzymuj stojące kolano lekko ugięte</item>
+        <item>Oddychaj w rozciągnięcie</item>
+        <item>Utrzymuj 20–30 sekund</item>
+    </string-array>
+
+    <!-- Ćwiczenie 22: Marsz z rozciąganiem ścięgien -->
+    <string name="ex_hamstring_stretch_walk_name">Marsz z rozciąganiem ścięgien</string>
+    <string name="ex_hamstring_stretch_walk_desc">Dynamiczne rozciąganie ścięgien podkolanowych z ruchem dla poprawy elastyczności i mobilności</string>
+    <string-array name="ex_hamstring_stretch_walk_instructions">
+        <item>Stań ze stopami razem</item>
+        <item>Zrób krok do przodu, utrzymując nogę prostą</item>
+        <item>Pochyl się do przodu od bioder, sięgając w stronę palców</item>
+        <item>Poczuj rozciągnięcie z tyłu nogi</item>
+        <item>Przejdź dalej i powtórz na drugą stronę</item>
+    </string-array>
+    <string-array name="ex_hamstring_stretch_walk_tips">
+        <item>Utrzymuj plecy proste</item>
+        <item>Nie podskakuj</item>
+        <item>Poruszaj się powoli i kontrolowanie</item>
+        <item>Oddychaj przez cały czas</item>
+    </string-array>
+
+    <!-- Ćwiczenie 23: Wypady w tył -->
+    <string name="ex_reverse_lunges_name">Wypady w tył</string>
+    <string name="ex_reverse_lunges_desc">Przyjazny dla kolan wariant wypadów celujący w czworogłowe, pośladki i poprawiający równowagę</string>
+    <string-array name="ex_reverse_lunges_instructions">
+        <item>Stań z nogami na szerokość bioder</item>
+        <item>Zrób krok do tyłu jedną nogą</item>
+        <item>Opuść tylne kolano w stronę podłogi</item>
+        <item>Wypychaj się przez przednią piętę by wrócić</item>
+        <item>Naprzemiennie zmieniaj nogi</item>
+    </string-array>
+    <string-array name="ex_reverse_lunges_tips">
+        <item>Trzymaj tułów w pozycji pionowej</item>
+        <item>Przednie kolano nad kostką</item>
+        <item>Kontroluj ruch</item>
+        <item>Napnij brzuch przez cały czas</item>
+    </string-array>
+
+    <!-- Ćwiczenie 24: Rozciąganie ścięgien leżąc -->
+    <string name="ex_lying_hamstring_stretch_name">Rozciąganie ścięgien leżąc</string>
+    <string name="ex_lying_hamstring_stretch_desc">Delikatne rozciąganie ścięgien podkolanowych łagodzące napięcie dolnej części pleców</string>
+    <string-array name="ex_lying_hamstring_stretch_instructions">
+        <item>Połóż się na plecach z wyprostowanymi nogami</item>
+        <item>Unieś jedną nogę, utrzymując ją prostą</item>
+        <item>Chwyć za udo lub łydkę</item>
+        <item>Delikatnie przyciągnij nogę w stronę klatki piersiowej</item>
+        <item>Utrzymaj rozciągnięcie, następnie zmień stronę</item>
+    </string-array>
+    <string-array name="ex_lying_hamstring_stretch_tips">
+        <item>Dolna część pleców na podłodze</item>
+        <item>Nie ciągnij zbyt mocno</item>
+        <item>Oddychaj głęboko</item>
+        <item>Utrzymuj 20–30 sekund</item>
+    </string-array>
+
+    <!-- Ćwiczenie 25: Brzuszki z podciąganiem kolan -->
+    <string name="ex_knee_raise_crunch_name">Brzuszki z podciąganiem kolan</string>
+    <string name="ex_knee_raise_crunch_desc">Dynamiczny wariant brzuszków angażujący górne partie brzucha z ruchem kolan</string>
+    <string-array name="ex_knee_raise_crunch_instructions">
+        <item>Połóż się na plecach z kolanami zgiętymi, stopy płasko</item>
+        <item>Umieść ręce za głową</item>
+        <item>Unieś ramiona i przyciągnij kolana w stronę klatki</item>
+        <item>Skurcz, przyciągając łokcie w stronę kolan</item>
+        <item>Opuść z kontrolą</item>
+    </string-array>
+    <string-array name="ex_knee_raise_crunch_tips">
+        <item>Nie ciągnij za szyję</item>
+        <item>Wydychaj powietrze przy skurczu</item>
+        <item>Utrzymuj napięcie brzucha</item>
+        <item>Powolny i kontrolowany ruch</item>
+    </string-array>
+
+    <!-- Ćwiczenie 26: Kot-Krowa -->
+    <string name="ex_cat_cow_pose_name">Pozycja Kot-Krowa</string>
+    <string name="ex_cat_cow_pose_desc">Przepływ mobilności kręgosłupa promujący zdrowie pleców, elastyczność i świadomość korpusu</string>
+    <string-array name="ex_cat_cow_pose_instructions">
+        <item>Zacznij na rękach i kolanach</item>
+        <item>Wygnij plecy, unosząc klatkę i ogon (Krowa)</item>
+        <item>Zaokrąglij kręgosłup, podwijając brodę i ogon (Kot)</item>
+        <item>Płynnie przechodź między pozycjami</item>
+        <item>Koordynuj z oddechem</item>
+    </string-array>
+    <string-array name="ex_cat_cow_pose_tips">
+        <item>Poruszaj się powoli i płynnie</item>
+        <item>Wdech przy Krowie, wydech przy Kocie</item>
+        <item>Pełny zakres ruchu kręgosłupa</item>
+        <item>Utrzymuj ruchy kontrolowane</item>
+    </string-array>
+
+    <!-- Ćwiczenie 27: Odwrócone brzuszki -->
+    <string name="ex_reverse_crunches_name">Odwrócone brzuszki</string>
+    <string name="ex_reverse_crunches_desc">Celuje w dolne partie brzucha i zgięcia bioder z kontrolowanym ruchem nóg</string>
+    <string-array name="ex_reverse_crunches_instructions">
+        <item>Połóż się na plecach z kolanami zgiętymi, stopy nad podłogą</item>
+        <item>Umieść ręce przy bokach lub pod biodrami</item>
+        <item>Podciągnij kolana w stronę klatki, unosząc biodra lekko</item>
+        <item>Napnij brzuch w górnej pozycji</item>
+        <item>Opuść z kontrolą</item>
+    </string-array>
+    <string-array name="ex_reverse_crunches_tips">
+        <item>Dolna część pleców na podłodze</item>
+        <item>Nie używaj rozpędu</item>
+        <item>Skup się na dolnych partiach brzucha</item>
+        <item>Wydychaj powietrze przy podciąganiu</item>
+    </string-array>
+
+    <!-- Ćwiczenie 28: Rozciąganie zginaczy przy ścianie -->
+    <string name="ex_wall_flexor_stretch_name">Rozciąganie zginaczy przy ścianie</string>
+    <string name="ex_wall_flexor_stretch_desc">Rozciąga zgięcia nadgarstka i przedramienia, niezbędne dla pracowników biurowych</string>
+    <string-array name="ex_wall_flexor_stretch_instructions">
+        <item>Stań zwrócony w stronę ściany na długość ramienia</item>
+        <item>Umieść dłoń na ścianie, palce skierowane w dół</item>
+        <item>Utrzymuj ramię proste</item>
+        <item>Delikatnie pochyl się do przodu aby zwiększyć rozciągnięcie</item>
+        <item>Utrzymaj, następnie zmień stronę</item>
+    </string-array>
+    <string-array name="ex_wall_flexor_stretch_tips">
+        <item>Nie wymuszaj rozciągnięcia</item>
+        <item>Utrzymuj łokieć prosty</item>
+        <item>Oddychaj równomiernie</item>
+        <item>Utrzymuj 15–20 sekund</item>
+    </string-array>
+
+</resources>
