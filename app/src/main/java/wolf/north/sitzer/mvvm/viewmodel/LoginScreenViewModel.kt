@@ -8,16 +8,26 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import wolf.north.sitzer.repository.UserRepository
+import wolf.north.sitzer.repository.datastore.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginScreenViewModel @Inject constructor(private val repository: UserRepository) :
-    ViewModel() {
+class LoginScreenViewModel @Inject constructor(
+    private val repository: UserRepository,
+    private val userPrefsRepo: UserPreferencesRepository
+) : ViewModel() {
 
     var email by mutableStateOf("")
     var password by mutableStateOf("")
     var loginSuccess by mutableStateOf(false)
     var errorMessage by mutableStateOf("")
+
+    var passwordVisibility by mutableStateOf(false)
+
+    fun togglePasswordVisibility() {
+        passwordVisibility = !passwordVisibility
+    }
+
 
     fun changePassword(newPassword: String) {
         password = newPassword
@@ -41,6 +51,7 @@ class LoginScreenViewModel @Inject constructor(private val repository: UserRepos
             val user = repository.loginUser(email, password)
             if (user != null) {
                 loginSuccess = true
+                userPrefsRepo.setEmail(email)
                 errorMessage = ""
             } else {
                 errorMessage = "Zły email lub hasło"

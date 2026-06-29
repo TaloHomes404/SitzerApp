@@ -1,4 +1,293 @@
 package wolf.north.sitzer.mvvm.viewmodel
 
-class ProfileScreenViewModel {
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Patterns
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import wolf.north.sitzer.repository.datastore.NotificationsPreferencesRepository
+import wolf.north.sitzer.repository.datastore.UserPreferencesRepository
+import wolf.north.sitzer.utils.notifications.NotificationScheduler
+import javax.inject.Inject
+
+
+data class ProfileUiState(
+    val avatarUri: Uri? = null,
+    val username: String = "",
+    val email: String = "",
+    val isEditingUsername: Boolean = false,
+    val isEditingEmail: Boolean = false,
+    val isEditingPassword: Boolean = false,
+    val newPassword: String = "",
+    val confirmPassword: String = "",
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null,
+    val selectedTheme: String = "System",
+    val selectedLanguage: String = "English",
+    val notificationMethod: String = "Push"
+)
+
+data class NotificationSettingsUi(
+    val daily: Boolean = true,
+    val planOfTheDay: Boolean = true,
+    val weeklySummary: Boolean = true
+)
+
+@HiltViewModel
+class ProfileScreenViewModel @Inject constructor(
+    private val notificationRepo: NotificationsPreferencesRepository,
+    private val userPrefsRepo: UserPreferencesRepository
+) : ViewModel() {
+
+
+    // Load saved settings on init
+    init {
+        loadSavedSettings()
+        loadUserProfile()
+    }
+
+    private fun loadSavedSettings() {
+        viewModelScope.launch {
+            val savedTheme = userPrefsRepo.selectedTheme.first()
+            _uiState.update { it.copy(selectedTheme = savedTheme) }
+
+            val savedLanguage = userPrefsRepo.selectedLanguage.first()
+            _uiState.update { it.copy(selectedLanguage = savedLanguage) }
+        }
+    }
+
+
+    //vals to hold user profile model in uistate
+    private val _uiState = MutableStateFlow(ProfileUiState())
+    val uiState: StateFlow<ProfileUiState> = _uiState
+
+    val avatarUri: StateFlow<Uri?> = userPrefsRepo.avatarUri.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        null
+    )
+
+    //Password visibility val
+    var passwordVisibility by mutableStateOf(false)
+
+    fun togglePasswordVisibility() {
+        passwordVisibility = !passwordVisibility
+    }
+
+    fun setNotificationMethod(method: String) {
+        _uiState.update { it.copy(notificationMethod = method) }
+    }
+
+
+    //configurations assigned to val (notifications pref flow)
+    val notificationSettings: StateFlow<NotificationSettingsUi> =
+        notificationRepo.notificationPrefs.map { prefs ->
+            NotificationSettingsUi(
+                daily = prefs.daily,
+                planOfTheDay = prefs.plan,
+                weeklySummary = prefs.weekly
+            )
+        }
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
+                NotificationSettingsUi()
+            )
+
+    private fun loadUserProfile() {
+        viewModelScope.launch {
+            // Observable username
+            launch {
+                userPrefsRepo.username.collect { username ->
+                    _uiState.update { it.copy(username = username) }
+                }
+            }
+
+            // Observable email
+            launch {
+                userPrefsRepo.email.collect { email ->
+                    _uiState.update { it.copy(email = email) }
+                }
+            }
+        }
+    }
+
+    //setters & getters for profile changes
+    fun setAvatar(uri: Uri) {
+        viewModelScope.launch {
+            userPrefsRepo.setAvatarUri(uri)
+        }
+    }
+
+    //butttons visibility values
+    fun toggleEditUsername() {
+        _uiState.value = _uiState.value.copy(isEditingUsername = !_uiState.value.isEditingUsername)
+    }
+
+    fun toggleEditEmail() {
+        _uiState.value = _uiState.value.copy(isEditingEmail = !_uiState.value.isEditingEmail)
+    }
+
+    fun toggleEditPassword() {
+        _uiState.value = _uiState.value.copy(isEditingPassword = !_uiState.value.isEditingPassword)
+    }
+
+    fun onEmailChange(value: String) {
+        _uiState.value = _uiState.value.copy(email = value)
+    }
+
+    fun onUsernameChange(value: String) {
+        _uiState.value = _uiState.value.copy(username = value)
+    }
+
+    fun onNewPasswordChange(value: String) {
+        _uiState.value = _uiState.value.copy(newPassword = value)
+    }
+
+    fun onConfirmPasswordChange(value: String) {
+        _uiState.value = _uiState.value.copy(confirmPassword = value)
+    }
+
+    //simple validation on email - using android utils
+    private fun validateEmail(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun validatePassword(password: String): Boolean {
+        return password.length >= 5
+    }
+
+    //validate function before enabling confirm button
+    fun canSubmitChanges(): Boolean {
+        val state = _uiState.value
+        val emailOK = !state.isEditingEmail || validateEmail(state.email)
+        val passwordOK =
+            !state.isEditingPassword || validatePassword(state.newPassword) && state.newPassword == state.confirmPassword
+
+        return emailOK && passwordOK && !state.isLoading
+    }
+
+    fun onSubmitChanges(onResult: (success: Boolean, message: String?) -> Unit) {
+
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+
+            try {
+                val state = _uiState.value
+
+                //Save edited username to datastore
+                if (state.isEditingUsername && state.username.isNotBlank()) {
+                    userPrefsRepo.setUsername(state.username)
+                }
+
+                //Save edited email to datastore
+                if (state.isEditingEmail && validateEmail(state.email)) {
+                    userPrefsRepo.setEmail(state.email)
+                }
+                
+                delay(500) // delay for UX purposes
+
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    isEditingUsername = false,
+                    isEditingEmail = false,
+                    isEditingPassword = false,
+                    newPassword = "",
+                    confirmPassword = ""
+                )
+                onResult(true, null)
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = e.message)
+                onResult(false, e.message)
+            }
+
+        }
+    }
+
+    //methods for notifications
+    fun toggleDaily(context: Context, enabled: Boolean) = viewModelScope.launch {
+        notificationRepo.setDaily(enabled)
+        if (enabled) {
+            NotificationScheduler.scheduleDailyReminder(context)
+        } else {
+            NotificationScheduler.cancelDailyReminder(context)
+        }
+    }
+
+    fun togglePlan(context: Context, enabled: Boolean) = viewModelScope.launch {
+        notificationRepo.setPlan(enabled)
+        if (enabled) {
+            NotificationScheduler.schedulePlanNotification(context)
+        } else {
+            NotificationScheduler.cancelPlanNotification(context)
+        }
+    }
+
+    fun toggleWeekly(context: Context, enabled: Boolean) = viewModelScope.launch {
+        notificationRepo.setWeekly(enabled)
+        if (enabled) {
+            NotificationScheduler.scheduleWeeklySummary(context)
+        } else {
+            NotificationScheduler.cancelWeeklySummary(context)
+        }
+    }
+
+
+    fun selectTheme(theme: String) {
+        _uiState.update { it.copy(selectedTheme = theme) }
+        // Save immediately
+        viewModelScope.launch {
+            userPrefsRepo.setTheme(theme)
+        }
+    }
+
+    fun selectLanguage(language: String) {
+        _uiState.update { it.copy(selectedLanguage = language) }
+        // Save immediately
+        viewModelScope.launch {
+            userPrefsRepo.setLanguage(language)
+        }
+    }
+
+    fun buildReportEmailIntent(
+        reportType: String,
+        reportTitle: String,
+        reportDescription: String
+    ): Intent {
+        val subject = "[$reportType] $reportTitle"
+        val body = """
+        Type: $reportType
+        Title: $reportTitle
+        
+        Description:
+        $reportDescription
+        
+        ---
+        App: Sitzer
+        Device: ${android.os.Build.MODEL}
+        Android: ${android.os.Build.VERSION.RELEASE}
+    """.trimIndent()
+
+        return Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("support@sitzer.app"))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, body)
+        }
+    }
+
 }
